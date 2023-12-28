@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/event-shop/static/css/main.7cda0caf.css",
+    "main.js": "/event-shop/static/js/main.96b8ce21.js",
+    "index.html": "/event-shop/index.html",
+    "main.7cda0caf.css.map": "/event-shop/static/css/main.7cda0caf.css.map",
+    "main.96b8ce21.js.map": "/event-shop/static/js/main.96b8ce21.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7cda0caf.css",
+    "static/js/main.96b8ce21.js"
+  ]
+}
