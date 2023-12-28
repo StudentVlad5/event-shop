@@ -44,11 +44,11 @@
       "last 1 safari version"
     ]
   },
-  "description": "services for lower",
+  "description": "services for event",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StudentVlad5/event-shop.git"
+    "url": "git+https://github.com/StudentVlad5/event-shop"
   },
   "author": "Brand_Maze",
   "license": "UNLICENSED",
