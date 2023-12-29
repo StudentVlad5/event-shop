@@ -1,18 +1,18 @@
 import 'modern-normalize';
-import AOS from 'aos';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
-import { App } from 'components/App';
+import { persistor, store } from './redux/store';
+import { App } from './components/App';
 import { GlobalStyle } from 'components/baseStyles/GlobalStyle';
 import { ThemeStatus } from 'components/ThemeStatus/ThemeProvider';
-import { StatusProvider } from 'components/ContextStatus/ContextStatus';
 
+import AOS from 'aos';
+import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
+import { StatusProvider } from 'components/ContextStatus/ContextStatus';
 
 AOS.init();
 
