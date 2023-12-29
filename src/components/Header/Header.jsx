@@ -1,6 +1,3 @@
-export const HeaderComp = () => {
- 
-  return (
-    <h3>HeaderComp</h3>
-  );
+export const Header = () => {
+  return <h1>Header</h1>;
 };
