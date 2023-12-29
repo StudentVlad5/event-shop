@@ -15,7 +15,7 @@ import {
   EventDate,
   EventTitle,
 } from '../EventsList/EventList.styled';
-import defaultImg from 'images/events/default.jpg';
+import defaultImg from 'images/No-image-available.webp';
 
 export const ArchiveEventsList = ({ events }) => {
   const { t } = useTranslation();

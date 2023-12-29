@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from 'routes/RestrictedRoute';
 import { PrivateRoute } from 'routes/PrivateRoute';
-import { refreshUser } from 'redux/auth/operations';
-import { selectIsRefreshing, getPermission } from 'redux/auth/selectors';
+import { refreshUser } from '../redux/auth/operations';
+import { selectIsRefreshing, getPermission } from '../redux/auth/selectors';
 import { SharedLayout } from 'components/SharedLayout/SharedLayout';
-import { HeaderComp } from './Header/Header';
-import { FooterComp } from './Footer/Footer';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -26,9 +24,9 @@ export const App = () => {
   const SpecialistPage = lazy(() => import('pages/SpecialistPage'));
   const EventsPage = lazy(() => import('pages/EventsPage'));
   const EventDetailsPage = lazy(() => import('pages/EventDetailsPage'));
-  const AboutUsrPage = lazy(() => import('pages/AboutUsrPage'));
+  const AboutUsPage = lazy(() => import('pages/AboutUsPage'));
   const UserPage = lazy(() => import('pages/UserPage'));
-  const AdminPage = lazy(() => import('pages/Admin/AdminPage'));
+  const AdminPage = lazy(() => import('pages/AdminPage'));
 
   return isRefreshing ? (
     <></>
@@ -125,7 +123,7 @@ export const App = () => {
             <Route path="events/:id" element={<EventDetailsPage />} />
             <Route path="team" element={<TeamPage />} />
             <Route path="events/:id" element={<SpecialistPage />} />
-            <Route path="about" element={<AboutUsrPage />} />
+            <Route path="about" element={<AboutUsPage />} />
 
             <Route path="*" element={<HomePage />} />
           </Route>

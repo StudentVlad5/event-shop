@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { addModal } from 'redux/modal/operation';
+// import { addModal } from '../redux/modal/operation';
 import { openModalWindow } from 'hooks/modalWindow';
-import { Container } from 'components/baseStyles/CommonStyle.styled';
 import { BackButton } from 'helpers/BackLink/BackLink';
-import { BtnLight } from 'components/baseStyles/Button.styled';
-import { RegisterModal } from '../RegisterModal/RegisterModal';
 import { BASE_URL_IMG } from 'helpers/constants';
-import defaultImg from 'images/events/default.jpg';
 import { EventsSection } from '../Events.styled';
+// import { RegisterModal } from '../RegisterModal/RegisterModal';
+import { Container } from 'components/baseStyles/CommonStyle.styled';
+import { BtnLight } from 'components/baseStyles/Button.styled';
 import {
   EventDescr,
   EventDescrBox,
@@ -20,7 +20,7 @@ import {
   HeadingItemData,
   HeadingItemTitle,
 } from './EventDetails.styled';
-import { useTranslation } from 'react-i18next';
+import defaultImg from 'images/No-image-available.webp';
 
 export const EventDetails = ({ event }) => {
   const { date, time, duration, location, title, description, image } = event;
@@ -32,11 +32,11 @@ export const EventDetails = ({ event }) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.currentTarget.dataset.modal === 'event') {
-      dispatch(
-        addModal({
-          modal: e.currentTarget.dataset.modal,
-        })
-      );
+      // dispatch(
+      //   addModal({
+      //     modal: e.currentTarget.dataset.modal,
+      //   })
+      // );
       setTimeout(() => openModalWindow(e, null), 200);
     }
   };
@@ -98,7 +98,7 @@ export const EventDetails = ({ event }) => {
           </BtnLight>
         </Container>
       </EventsSection>
-      <RegisterModal event={event} />
+      {/* <RegisterModal event={event} /> */}
     </>
   );
 };

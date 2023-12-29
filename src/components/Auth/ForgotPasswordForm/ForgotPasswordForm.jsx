@@ -1,13 +1,13 @@
-import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useFormik, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
+// import { forgotPasswordAuth } from '../redux/auth/operations';
 import schemas from 'utils/schemas';
-import { forgotPasswordAuth } from 'redux/auth/operations';
-import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
-import { useNavigate } from 'react-router-dom';
-import { theme } from 'components/baseStyles/Variables.styled.js';
 import { onSuccess } from 'helpers/Messages/NotifyMessages.jsx';
+import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
+import { theme } from 'components/baseStyles/Variables.styled.js';
 import {
   FormInputLogin,
   FormStyled,
@@ -22,7 +22,6 @@ import {
   Error,
   FormField,
 } from 'components/baseStyles/Form.styled.js';
-import { useTranslation } from 'react-i18next';
 
 const ForgotPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,11 +32,11 @@ const ForgotPasswordForm = () => {
   const onSubmit = ({ values }) => {
     setIsLoading(true);
     const { email } = values;
-    dispatch(
-      forgotPasswordAuth({
-        email,
-      }),
-    );
+    // dispatch(
+    //   forgotPasswordAuth({
+    //     email,
+    //   })
+    // );
     onSuccess('password has been changed. Please check your email');
     setIsLoading(false);
     navigate(`/signin`);
@@ -83,7 +82,7 @@ const ForgotPasswordForm = () => {
                 style={{
                   borderColor: showAccentValidateInput(
                     formik.values.email,
-                    formik.errors.email,
+                    formik.errors.email
                   ),
                 }}
                 name="email"

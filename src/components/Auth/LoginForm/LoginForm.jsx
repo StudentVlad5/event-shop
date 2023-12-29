@@ -1,10 +1,13 @@
-import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useFormik, Formik } from 'formik';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
+import { useFormik, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
+// import { logIn } from '../redux/auth/operations';
 import schemas from 'utils/schemas';
 import { theme } from 'components/baseStyles/Variables.styled';
+import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
+import { Error, FormField, FormLabel } from 'components/baseStyles/Form.styled';
 import {
   TitleLogin,
   ErrorBox,
@@ -16,10 +19,6 @@ import {
   FormContainer,
   FormStyled,
 } from './LoginForm.styled';
-import { logIn } from 'redux/auth/operations';
-import { Error, FormField, FormLabel } from 'components/baseStyles/Form.styled';
-import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
-import { useTranslation } from 'react-i18next';
 
 export const LoginForm = () => {
   const { t } = useTranslation();
@@ -31,12 +30,12 @@ export const LoginForm = () => {
   const onSubmit = values => {
     setIsLoading(true);
     const { email, password } = values;
-    dispatch(
-      logIn({
-        email,
-        password,
-      }),
-    );
+    // dispatch(
+    //   logIn({
+    //     email,
+    //     password,
+    //   })
+    // );
     setIsLoading(false);
   };
   const formik = useFormik({
@@ -83,7 +82,7 @@ export const LoginForm = () => {
                 style={{
                   borderColor: showAccentValidateInput(
                     formik.values.email,
-                    formik.errors.email,
+                    formik.errors.email
                   ),
                 }}
                 name="email"
@@ -105,7 +104,7 @@ export const LoginForm = () => {
                 style={{
                   borderColor: showAccentValidateInput(
                     formik.values.password,
-                    formik.errors.password,
+                    formik.errors.password
                   ),
                 }}
                 name="password"

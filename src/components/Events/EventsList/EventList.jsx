@@ -13,7 +13,7 @@ import {
   EventTitle,
   List,
 } from './EventList.styled';
-import defaultImg from 'images/events/default.jpg';
+import defaultImg from 'images/No-image-available.webp';
 
 export const EventsList = ({ events }) => {
   const { t } = useTranslation();

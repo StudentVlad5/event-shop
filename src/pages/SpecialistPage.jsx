@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { SEO } from 'utils/SEO';
-import { Specialist } from 'components/Specialist/Specialist';
+import { Specialist } from 'components/Team/Specialist/Specialist';
 
 const SpecialistPage = () => {
   useEffect(() => {
