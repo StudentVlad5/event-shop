@@ -121,8 +121,8 @@ export const App = () => {
 
             <Route path="events" element={<EventsPage />} />
             <Route path="events/:id" element={<EventDetailsPage />} />
-            <Route path="team" element={<TeamPage />} />
-            <Route path="events/:id" element={<SpecialistPage />} />
+            <Route path="specialists" element={<TeamPage />} />
+            <Route path="specialists/:id" element={<SpecialistPage />} />
             <Route path="about" element={<AboutUsPage />} />
 
             <Route path="*" element={<HomePage />} />
