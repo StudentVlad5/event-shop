@@ -101,7 +101,7 @@ export const App = () => {
 
             <Route
               path="login"
-              element={
+              element= {
                 <RestrictedRoute
                   redirectTo={permission === 'admin' ? '/admin' : '/user'}
                   component={<LoginPage />}

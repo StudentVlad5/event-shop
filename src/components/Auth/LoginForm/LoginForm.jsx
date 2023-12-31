@@ -43,7 +43,7 @@ export const LoginForm = () => {
       email: '',
       password: '',
     },
-    validationSchema: schemas.schemasLogin,
+    // validationSchema: schemas.schemasLogin,
     onSubmit,
   });
 
@@ -68,7 +68,9 @@ export const LoginForm = () => {
   return (
     <Section>
       <Container>
-        <Formik validationSchema={schemas.schemasLogin}>
+        <Formik 
+        // validationSchema={schemas.schemasLogin}
+          >
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
             <TitleLogin>{t('Log In')}</TitleLogin>
             <FormField>
@@ -87,7 +89,7 @@ export const LoginForm = () => {
                 }}
                 name="email"
                 type="email"
-                validate={schemas.schemasLogin.email}
+                // validate={schemas.schemasLogin.email}
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}

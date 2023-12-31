@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { theme } from './Variables.styled';
 
 const puffInCenterAnimation = keyframes`
   0% {
@@ -50,7 +51,7 @@ const Title = styled.h1`
   font-weight: 700;
   line-height: 79.992px; /* 121.2% */
   letter-spacing: -1px;
-  color: ${props => props.theme.white_text};
+  color: ${theme.white};
 
   animation: ${puffInCenterAnimation} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
     both;
@@ -71,7 +72,7 @@ const Headline = styled.h2`
   font-weight: 700;
   line-height: 55.02px; /* 114.625% */
 
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.white};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 24px;
@@ -90,7 +91,7 @@ const Subtitle = styled.p`
   line-height: 32.004px; /* 177.8% */
   text-align: center;
 
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.white};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 16px;
