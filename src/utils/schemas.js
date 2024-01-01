@@ -6,10 +6,7 @@ const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -
 const registerSchema = Yup.object().shape({
   name: Yup.string().required("Require field"),
   email: Yup.string().email("Invalid email").required("Require field"),
-  phone: Yup.number()
-    .nullable(true)
-    .required("Require field")
-    .matches(phoneRegExp, "Phone number is not valid"),
+  phone: Yup.number().nullable(true).required("Require field"),
 });
 
 const schemasLogin = Yup.object().shape({
@@ -29,10 +26,10 @@ const updateUserSchema = Yup.object().shape({
   name: Yup.string().required("Require field"),
   surname: Yup.string(),
   email: Yup.string().email("Invalid email").required("Require field"),
-  phone: Yup.number()
-    .nullable(true)
-    .required("Require field")
-    .matches(phoneRegExp, "Phone number is not valid"),
+  phone: Yup.number(),
+  // .nullable(true)
+  // .required("Require field")
+  // .matches(phoneRegExp, "Phone number is not valid"),
   avatar: Yup.string(),
   favorites: Yup.array(),
   events: Yup.array(),
@@ -43,15 +40,15 @@ const createUserSchema = Yup.object().shape({
   name: Yup.string().required("Require field"),
   surname: Yup.string(),
   email: Yup.string().email("Invalid email").required("Require field"),
-  password: Yup.string()
-    .min(7, "Password too short (min 7)")
-    .max(32, "Password too long (max 32)")
-    .matches(/^\s*\S+\s*$/, "Password must be without spaces")
-    .required("Require field"),
-  phone: Yup.number()
-    .nullable(true)
-    .required("Require field")
-    .matches(phoneRegExp, "Phone number is not valid"),
+  password: Yup.string(),
+  // .min(7, "Password too short (min 7)")
+  // .max(32, "Password too long (max 32)")
+  // .matches(/^\s*\S+\s*$/, "Password must be without spaces")
+  // .required("Require field"),
+  phone: Yup.number(),
+  // .nullable(true)
+  // .required("Require field")
+  // .matches(phoneRegExp, "Phone number is not valid"),
   avatar: Yup.string(),
   favorites: Yup.array(),
   events: Yup.array(),
@@ -59,14 +56,14 @@ const createUserSchema = Yup.object().shape({
 });
 
 const updatePasswordSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(7, "Password too short (min 7)")
-    .max(32, "Password too long (max 32)")
-    .matches(/^\s*\S+\s*$/, "Password must be without spaces")
-    .required("Require field"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Your passwords do not match")
-    .required("Require field"),
+  password: Yup.string(),
+  // .min(7, "Password too short (min 7)")
+  // .max(32, "Password too long (max 32)")
+  // .matches(/^\s*\S+\s*$/, "Password must be without spaces")
+  // .required("Require field"),
+  confirmPassword: Yup.string(),
+  // .oneOf([Yup.ref("password")], "Your passwords do not match")
+  // .required("Require field"),
 });
 
 // ----- EVENTS -----//
@@ -101,25 +98,25 @@ const updatePasswordSchema = Yup.object().shape({
 // });
 
 // ----- Team -----//
-const schemasTeam = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Require field"),
-  phone: Yup.number()
-    .nullable(true)
-    .required("Require field")
-    .matches(phoneRegExp, "Phone number is not valid"),
-  rating: Yup.number().nullable(true),
-  image: Yup.string().required("Require field"),
-  status: Yup.string().required("Require field"),
+// const schemasTeam = Yup.object().shape({
+//   email: Yup.string().email("Invalid email").required("Require field"),
+//   phone: Yup.number()
+//     .nullable(true)
+//     .required("Require field")
+//     .matches(phoneRegExp, "Phone number is not valid"),
+//   rating: Yup.number().nullable(true),
+//   image: Yup.string().required("Require field"),
+//   status: Yup.string().required("Require field"),
 
-  nameFr: Yup.string().required("Require field"),
-  descriptionFr: Yup.string().required("Require field"),
+//   nameFr: Yup.string().required("Require field"),
+//   descriptionFr: Yup.string().required("Require field"),
 
-  nameUa: Yup.string().required("Require field"),
-  descriptionUa: Yup.string().required("Require field"),
+//   nameUa: Yup.string().required("Require field"),
+//   descriptionUa: Yup.string().required("Require field"),
 
-  nameRu: Yup.string().required("Require field"),
-  descriptionRu: Yup.string().required("Require field"),
-});
+//   nameRu: Yup.string().required("Require field"),
+//   descriptionRu: Yup.string().required("Require field"),
+// });
 
 const schemas = {
   registerSchema,
@@ -128,8 +125,8 @@ const schemas = {
   updateUserSchema,
   createUserSchema,
   updatePasswordSchema,
-  schemasEvents,
-  schemasTeam,
+  // schemasEvents,
+  // schemasTeam,
 };
 
 export default schemas;

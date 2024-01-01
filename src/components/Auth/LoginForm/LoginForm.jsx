@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { useFormik, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-// import { logIn } from '../redux/auth/operations';
+
 import schemas from 'utils/schemas';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
@@ -19,6 +19,7 @@ import {
   FormContainer,
   FormStyled,
 } from './LoginForm.styled';
+import { logIn } from '../../../redux/auth/operations';
 
 export const LoginForm = () => {
   const { t } = useTranslation();
@@ -30,12 +31,12 @@ export const LoginForm = () => {
   const onSubmit = values => {
     setIsLoading(true);
     const { email, password } = values;
-    // dispatch(
-    //   logIn({
-    //     email,
-    //     password,
-    //   })
-    // );
+    dispatch(
+      logIn({
+        email,
+        password,
+      })
+    );
     setIsLoading(false);
   };
   const formik = useFormik({
@@ -43,7 +44,7 @@ export const LoginForm = () => {
       email: '',
       password: '',
     },
-    // validationSchema: schemas.schemasLogin,
+    validationSchema: schemas.schemasLogin,
     onSubmit,
   });
 
@@ -69,7 +70,7 @@ export const LoginForm = () => {
     <Section>
       <Container>
         <Formik 
-        // validationSchema={schemas.schemasLogin}
+        validationSchema={schemas.schemasLogin}
           >
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
             <TitleLogin>{t('Log In')}</TitleLogin>

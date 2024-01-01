@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useFormik, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 // import { forgotPasswordAuth } from '../redux/auth/operations';
-// import schemas from 'utils/schemas';
+import schemas from 'utils/schemas';
 import { onSuccess } from 'helpers/Messages/NotifyMessages.jsx';
 import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
 import { theme } from 'components/baseStyles/Variables.styled.js';
@@ -67,7 +67,7 @@ const ForgotPasswordForm = () => {
 
   return (
     <Section>
-      {/* <Container>
+      <Container>
         <Formik validationSchema={schemas.changePasswordSchema}>
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
             <TitleLogin>{'Forgot Password'}</TitleLogin>
@@ -113,7 +113,7 @@ const ForgotPasswordForm = () => {
             </BoxText>
           </FormStyled>
         </Formik>
-      </Container> */}
+      </Container>
     </Section>
   );
 };
