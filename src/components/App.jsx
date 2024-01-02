@@ -49,43 +49,55 @@ export const App = () => {
                   <PrivateRoute redirectTo="/login" component={<AdminPage />} />
                 }
               >
-              <Route
-                path="categories"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Categories />} />
-                }
-              />
-              <Route
-                path="specialists"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Specialists />} />
-                }
-              />
-              <Route
-                path="events"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Events />} />
-                }
-              />
-              <Route
-                path="activate_events"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Activate_events />} />
-                }
-              />
-              <Route
-                path="orders"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Orders />} />
-                }
-              />
-              <Route
-                path="dashboard"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Dashboard />} />
-                }
-              />
-                
+                <Route
+                  path="categories"
+                  element={
+                    <PrivateRoute
+                      redirectTo="/login"
+                      component={<Categories />}
+                    />
+                  }
+                />
+                <Route
+                  path="specialists"
+                  element={
+                    <PrivateRoute
+                      redirectTo="/login"
+                      component={<Specialists />}
+                    />
+                  }
+                />
+                <Route
+                  path="events"
+                  element={
+                    <PrivateRoute redirectTo="/login" component={<Events />} />
+                  }
+                />
+                <Route
+                  path="activate_events"
+                  element={
+                    <PrivateRoute
+                      redirectTo="/login"
+                      component={<Activate_events />}
+                    />
+                  }
+                />
+                <Route
+                  path="orders"
+                  element={
+                    <PrivateRoute redirectTo="/login" component={<Orders />} />
+                  }
+                />
+                <Route
+                  path="dashboard"
+                  element={
+                    <PrivateRoute
+                      redirectTo="/login"
+                      component={<Dashboard />}
+                    />
+                  }
+                />
+
                 {/* <Route
                   path="profile"
                   element={
@@ -117,7 +129,7 @@ export const App = () => {
 
             <Route
               path="login"
-              element= {
+              element={
                 <RestrictedRoute
                   redirectTo={permission === 'admin' ? '/admin' : '/user'}
                   component={<LoginPage />}
