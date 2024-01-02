@@ -20,6 +20,9 @@ import {
 import uuid4 from "uuid4";
 import PropTypes from 'prop-types';
 import { useState } from "react";
+import { updateCategoryData } from 'services/APIservice';
+import { onLoaded, onLoading } from 'helpers/Loader/Loader';
+import { onFetchError } from 'helpers/Messages/NotifyMessages';
 
 function EditToolbar({ setRows, setRowModesModel }) {
 
@@ -131,10 +134,27 @@ const Categories = () => {
       },
     },
   ];
-
   
   const [rows, setRows] = useState(listOfCategories);
   const [rowModesModel, setRowModesModel] = useState({});
+
+  useEffect(()=>{
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/categories`);
+        dispatch(getCategory({...data}));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setCategory(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })()
+  },[rows])
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {

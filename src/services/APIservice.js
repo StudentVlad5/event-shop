@@ -261,10 +261,8 @@ async function createEventsData(pathParams, body, file) {
 
 // ==== CATEGORIES ==== //
 
-async function createCategoryData(pathParams, body) {
-  const formData = new FormData();
-
-  return await axios.post(`${BASE_URL}${pathParams}`, formData, {
+async function updateCategoryData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -274,19 +272,6 @@ async function createCategoryData(pathParams, body) {
   });
 }
 
-async function updatePackageData(pathParams, body) {
-  // console.log(body);
-  const formData = new FormData();
-
-  return await axios.patch(`${BASE_URL}${pathParams}`, formData, {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-      "Access-Control-Expose-Headers": "Content-Range",
-    },
-  });
-}
 
 fetchData.propTypes = {
   pathParams: PropTypes.string.isRequired,
@@ -319,17 +304,12 @@ updateEventsData.propTypes = {
   formData: PropTypes.string.isRequired,
 };
 
-updatePackageData.propTypes = {
-  pathParams: PropTypes.string.isRequired,
-  formData: PropTypes.string.isRequired,
-};
-
 createEventsData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
 
-createCategoryData.propTypes = {
+updateCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
@@ -349,6 +329,5 @@ export {
   updateEventsData,
   deleteData,
   changePassword,
-  createCategoryData,
-  updatePackageData,
+  updateCategoryData,
 };
