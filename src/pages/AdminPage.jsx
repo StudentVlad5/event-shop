@@ -21,7 +21,6 @@ const AdminPage = () => {
       setIsLoading(true);
       try {
         const { data } = await fetchData(`/categories`);
-        console.log("data", data);
         dispatch(getCategory({...data}));
         if (!data) {
           return onFetchError('Whoops, something went wrong');
@@ -38,7 +37,6 @@ const AdminPage = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
-  console.log("category", category);
 
   return (
     <>

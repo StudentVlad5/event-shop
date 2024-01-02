@@ -11,17 +11,10 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import {
-  GridRowsProp,
-  GridRowModesModel,
   GridRowModes,
-  GridToolbar,
   DataGrid,
-  GridColDef,
   GridToolbarContainer,
   GridActionsCellItem,
-  GridEventListener,
-  GridRowId,
-  GridRowModel,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
 import uuid4 from "uuid4";
@@ -67,7 +60,6 @@ const Categories = () => {
     data.nameUa = categories[it].ua.title;
     data.nameRu = categories[it].ru.title;
     listOfCategories.push(data)};
-  console.log(listOfCategories)
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5, editable: false },
@@ -87,7 +79,7 @@ const Categories = () => {
     },
     {
       field: "nameRu",
-      headerName: "name RU",
+      headerName: "Name RU",
       flex: 1,
       cellClassName: "name-column--cell",
       editable: true
@@ -156,6 +148,7 @@ const Categories = () => {
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    rows.map(it=>{console.log(id); console.log(it)})
   };
 
   const handleDeleteClick = (id) => () => {
@@ -181,6 +174,9 @@ const Categories = () => {
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {
+    console.log("GridRowModes", GridRowModes)
+    console.log("rows", rows)
+    console.log("newRowModesModel", newRowModesModel)
     setRowModesModel(newRowModesModel);
   };
 

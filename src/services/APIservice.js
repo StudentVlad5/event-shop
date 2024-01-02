@@ -259,22 +259,10 @@ async function createEventsData(pathParams, body, file) {
   });
 }
 
-// ==== PACKAGES ==== //
+// ==== CATEGORIES ==== //
 
-async function createPackagesData(pathParams, body) {
+async function createCategoryData(pathParams, body) {
   const formData = new FormData();
-  formData.append("titleEn", body.titleEn);
-  formData.append("priceEn", body.priceEn);
-  formData.append("contentEn", body.contentEn);
-  formData.append("featuresEn", body.featuresEn);
-  formData.append("titleUa", body.titleUa);
-  formData.append("priceUa", body.priceUa);
-  formData.append("contentUa", body.contentUa);
-  formData.append("featuresUa", body.featuresUa);
-  formData.append("titleDe", body.titleDe);
-  formData.append("priceDe", body.priceDe);
-  formData.append("contentDe", body.contentDe);
-  formData.append("featuresDe", body.featuresDe);
 
   return await axios.post(`${BASE_URL}${pathParams}`, formData, {
     headers: {
@@ -289,18 +277,6 @@ async function createPackagesData(pathParams, body) {
 async function updatePackageData(pathParams, body) {
   // console.log(body);
   const formData = new FormData();
-  formData.append("titleEn", body.titleEn);
-  formData.append("priceEn", body.priceEn);
-  formData.append("contentEn", body.contentEn);
-  formData.append("featuresEn", body.featuresEn);
-  formData.append("titleUa", body.titleUa);
-  formData.append("priceUa", body.priceUa);
-  formData.append("contentUa", body.contentUa);
-  formData.append("featuresUa", body.featuresUa);
-  formData.append("titleDe", body.titleDe);
-  formData.append("priceDe", body.priceDe);
-  formData.append("contentDe", body.contentDe);
-  formData.append("featuresDe", body.featuresDe);
 
   return await axios.patch(`${BASE_URL}${pathParams}`, formData, {
     headers: {
@@ -353,7 +329,7 @@ createEventsData.propTypes = {
   formData: PropTypes.string.isRequired,
 };
 
-createPackagesData.propTypes = {
+createCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
@@ -373,6 +349,6 @@ export {
   updateEventsData,
   deleteData,
   changePassword,
-  createPackagesData,
+  createCategoryData,
   updatePackageData,
 };
