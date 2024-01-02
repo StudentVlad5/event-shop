@@ -4,6 +4,13 @@
   "private": true,
   "homepage": "https://studentvlad5.github.io/event-shop/",
   "dependencies": {
+    "@babel/eslint-parser": "^7.23.3",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.2",
+    "@mui/material": "^5.15.2",
+    "@mui/x-data-grid": "^6.18.6",
+    "@mui/x-data-grid-generator": "^6.18.6",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
@@ -11,6 +18,7 @@
     "aos": "^2.3.4",
     "axios": "^1.6.3",
     "caniuse-lite": "^1.0.30001572",
+    "eslint": "^8.47.0",
     "formik": "^2.4.5",
     "i18next": "^23.7.12",
     "i18next-browser-languagedetector": "^7.2.0",
@@ -21,13 +29,16 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-i18next": "^14.0.0",
+    "react-icon": "^1.0.0",
     "react-icons": "^4.12.0",
+    "react-pro-sidebar": "^0.7.1",
     "react-redux": "^9.0.4",
-    "react-router-dom": "^6.14.1",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "styled-components": "^6.0.2",
+    "uuid4": "^2.0.3",
     "web-vitals": "^2.1.3",
     "yup": "^1.3.3"
   },
@@ -69,5 +80,10 @@
   },
   "keywords": [
     "event-shop"
-  ]
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "typescript": "^4.6.3"
+  }
 }

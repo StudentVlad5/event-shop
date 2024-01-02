@@ -7,6 +7,12 @@ import { PrivateRoute } from 'routes/PrivateRoute';
 import { refreshUser } from '../redux/auth/operations';
 import { selectIsRefreshing, getPermission } from '../redux/auth/selectors';
 import { SharedLayout } from 'components/SharedLayout/SharedLayout';
+import Specialists from './Admin/scenes/Specialists/spesialists';
+import Categories from './Admin/scenes/Categories/categories';
+import Events from './Admin/scenes/Events/events';
+import Activate_events from './Admin/scenes/Activate_events/activate_events';
+import Orders from './Admin/scenes/Orders/orders';
+import Dashboard from './Admin/scenes/Dashboard/dashboard';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -43,7 +49,44 @@ export const App = () => {
                   <PrivateRoute redirectTo="/login" component={<AdminPage />} />
                 }
               >
-                <Route
+              <Route
+                path="categories"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Categories />} />
+                }
+              />
+              <Route
+                path="specialists"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Specialists />} />
+                }
+              />
+              <Route
+                path="events"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Events />} />
+                }
+              />
+              <Route
+                path="activate_events"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Activate_events />} />
+                }
+              />
+              <Route
+                path="orders"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Orders />} />
+                }
+              />
+              <Route
+                path="dashboard"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Dashboard />} />
+                }
+              />
+                
+                {/* <Route
                   path="profile"
                   element={
                     <PrivateRoute
@@ -51,7 +94,7 @@ export const App = () => {
                       component={<UserPage />}
                     />
                   }
-                />
+                /> */}
               </Route>
             ) : (
               <Route
@@ -60,7 +103,7 @@ export const App = () => {
                   <PrivateRoute redirectTo="/login" component={<UserPage />} />
                 }
               >
-                <Route
+                {/* <Route
                   path="profile"
                   element={
                     <PrivateRoute
@@ -68,40 +111,13 @@ export const App = () => {
                       component={<UserPage />}
                     />
                   }
-                />
+                /> */}
               </Route>
             )}
-            {/* <Route
-              path="admin/users"
-              element={
-                <PrivateRoute
-                  redirectTo="/admin"
-                  component={<AdminUsersPage />}
-                />
-              }
-            />
-            <Route
-              path="admin/events"
-              element={
-                <PrivateRoute
-                  redirectTo="/admin"
-                  component={<AdminEventsPage />}
-                />
-              }
-            />
-            <Route
-              path="admin/team"
-              element={
-                <PrivateRoute
-                  redirectTo="/admin"
-                  component={<AdminTeamPage />}
-                />
-              }
-            /> */}
 
             <Route
               path="login"
-              element={
+              element= {
                 <RestrictedRoute
                   redirectTo={permission === 'admin' ? '/admin' : '/user'}
                   component={<LoginPage />}

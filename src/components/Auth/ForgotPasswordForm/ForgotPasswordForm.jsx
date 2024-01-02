@@ -46,7 +46,7 @@ const ForgotPasswordForm = () => {
     initialValues: {
       email: '',
     },
-    validationSchema: schemas.changePasswordSchema,
+    // validationSchema: schemas.changePasswordSchema,
     onSubmit: (values, action) => {
       onSubmit({ values, action });
     },

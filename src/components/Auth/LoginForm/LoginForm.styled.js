@@ -51,7 +51,7 @@ export const ShowPassword = styled.span`
   right: 6%;
   top: 80%;
   transform: translateY(-80%);
-  color: grey;
+  color: ${theme.colors.grey};
   cursor: pointer;
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 50px;
@@ -78,12 +78,12 @@ export const Btn = styled(BtnLight)`
   }
 `;
 export const StyledLink = styled(Link)`
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.white};
   transition: ${theme.transition[0]};
   text-decoration: none;
   &:hover,
   &:focus {
-    color: ${props => props.theme.grey};
+    color: ${theme.colors.grey};
   }
 `;
 export const BoxText = styled.div`
@@ -99,7 +99,7 @@ export const BoxText = styled.div`
   font-weight: 400;
   font-size: 14px;
   letter-spacing: 0.04em;
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.white};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 16px;
