@@ -8,9 +8,15 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import BallotOutlined from "@mui/icons-material/BallotOutlined";
+import PlaylistAddOutlined from "@mui/icons-material/PlaylistAddOutlined";
 import { tokens } from "theme";
-import user_img from "../../../images/olga.jpg";
+import default_user_img from "../../../images/defaultUserPhoto.jpg";
+import { useSelector } from "react-redux";
 import PropTypes from 'prop-types';
+import { getUser, getUserAvatar } from "../../../redux/auth/selectors";
+import { BASE_URL_IMG } from "helpers/constants";
+
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -35,7 +41,15 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-
+  const user = useSelector(getUser);
+  const userAvatar = useSelector(getUserAvatar);
+  let avatar;
+  if (userAvatar !== '' && userAvatar !== undefined) {
+  avatar =
+      BASE_URL_IMG +
+      'avatars/' +
+      userAvatar.split('/')[userAvatar.split('/').length - 1];
+  }
   return (
     <Box
       sx={{
@@ -74,8 +88,8 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                <Typography variant="h3" color={colors.grey[100]} textTransform={"capitalize"}>
+                  {user.role}
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -91,7 +105,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={user_img}
+                  src={avatar ? avatar : default_user_img}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -101,11 +115,15 @@ const Sidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
+                  textTransform={"uppercase"}
                 >
-                  OLGA
+                  {user.name}
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Admin
+                <Typography 
+                  variant="h5" 
+                  color={colors.greenAccent[500]} 
+                  textTransform={"uppercase"}>
+                  {user.role}
                 </Typography>
               </Box>
             </Box>
@@ -114,7 +132,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="dashboard"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -129,21 +147,35 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Manage Team"
-              to="/team"
+              to="/admin/specialists"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
+              title="Manage Category"
+              to="/admin/categories"
+              icon={<BallotOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Events Information"
+              to="/admin/events"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
-              to="/invoices"
+              title="Activate event"
+              to="/admin/activate_events"
+              icon={<PlaylistAddOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Orders"
+              to="/admin/orders"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -158,9 +190,9 @@ const Sidebar = () => {
 export default Sidebar;
 
 Item.propTypes = {
-  title: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
+  title: PropTypes.any.isRequired,
+  to: PropTypes.any.isRequired,
   icon: PropTypes.any.isRequired,
-  selected: PropTypes.string.isRequired,
-  setSelected: PropTypes.func.isRequired,
+  selected: PropTypes.any.isRequired,
+  setSelected: PropTypes.any.isRequired,
 };
