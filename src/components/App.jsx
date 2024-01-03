@@ -31,7 +31,7 @@ export const App = () => {
   const EventsPage = lazy(() => import('pages/EventsPage'));
   const EventDetailsPage = lazy(() => import('pages/EventDetailsPage'));
   const AboutUsPage = lazy(() => import('pages/AboutUsPage'));
-  const UserPage = lazy(() => import('pages/UserPage'));
+  // const UserPage = lazy(() => import('pages/UserPage'));
   const AdminPage = lazy(() => import('pages/AdminPage'));
 
   return isRefreshing ? (
@@ -42,90 +42,65 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<HomePage />} />
-            {permission === 'admin' ? (
+            <Route
+              path="admin"
+              element={
+                <PrivateRoute redirectTo="/login" component={<AdminPage />} />
+              }
+            >
               <Route
-                path="admin"
+                path="categories"
                 element={
-                  <PrivateRoute redirectTo="/login" component={<AdminPage />} />
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Categories />}
+                  />
                 }
-              >
-                <Route
-                  path="categories"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/login"
-                      component={<Categories />}
-                    />
-                  }
-                />
-                <Route
-                  path="specialists"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/login"
-                      component={<Specialists />}
-                    />
-                  }
-                />
-                <Route
-                  path="events"
-                  element={
-                    <PrivateRoute redirectTo="/login" component={<Events />} />
-                  }
-                />
-                <Route
-                  path="activate_events"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/login"
-                      component={<Activate_events />}
-                    />
-                  }
-                />
-                <Route
-                  path="orders"
-                  element={
-                    <PrivateRoute redirectTo="/login" component={<Orders />} />
-                  }
-                />
-                <Route
-                  path="dashboard"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/login"
-                      component={<Dashboard />}
-                    />
-                  }
-                />
-
-                {/* <Route
-                  path="profile"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/signin"
-                      component={<UserPage />}
-                    />
-                  }
-                /> */}
-              </Route>
-            ) : (
+              />
               <Route
+                path="specialists"
+                element={
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Specialists />}
+                  />
+                }
+              />
+              <Route
+                path="events"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Events />} />
+                }
+              />
+              <Route
+                path="activate_events"
+                element={
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Activate_events />}
+                  />
+                }
+              />
+              <Route
+                path="orders"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Orders />} />
+                }
+              />
+              <Route
+                path="dashboard"
+                element={
+                  <PrivateRoute redirectTo="/login" component={<Dashboard />} />
+                }
+              />
+            </Route>
+            {/* <Route
                 path="user"
                 element={
                   <PrivateRoute redirectTo="/login" component={<UserPage />} />
                 }
               >
-                {/* <Route
-                  path="profile"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/signin"
-                      component={<UserPage />}
-                    />
-                  }
-                /> */}
-              </Route>
-            )}
+              </Route> */}
 
             <Route
               path="login"

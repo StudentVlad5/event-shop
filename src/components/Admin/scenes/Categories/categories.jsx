@@ -1,7 +1,7 @@
 
 import { tokens } from "theme";
 import { useTheme } from "@mui/material";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import { categoryComponent } from "../../../../redux/category/selectors";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -20,9 +20,10 @@ import {
 import uuid4 from "uuid4";
 import PropTypes from 'prop-types';
 import { useState } from "react";
-import { updateCategoryData } from 'services/APIservice';
+import { createCategoryData, updateCategoryData, deleteCategoryData } from 'services/APIservice';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
+import { getCategory, addCategory, deleteCategory } from '../../../../redux/category/operation';
 
 function EditToolbar({ setRows, setRowModesModel }) {
 
@@ -53,6 +54,10 @@ EditToolbar.propTypes = {
 const Categories = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [category, setCategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   const categories = useSelector(categoryComponent);
   const listOfCategories = [];
@@ -138,11 +143,10 @@ const Categories = () => {
   const [rows, setRows] = useState(listOfCategories);
   const [rowModesModel, setRowModesModel] = useState({});
 
-  useEffect(()=>{
-    (async function getData() {
+    async function updateData(list) {
       setIsLoading(true);
       try {
-        const { data } = await fetchData(`/categories`);
+        const { data } = await updateCategoryData(`/categories/${list.id}`, list);
         dispatch(getCategory({...data}));
         if (!data) {
           return onFetchError('Whoops, something went wrong');
@@ -153,8 +157,39 @@ const Categories = () => {
       } finally {
         setIsLoading(false);
       }
-    })()
-  },[rows])
+    }
+
+    async function deleteData(id) {
+      setIsLoading(true);
+      try {
+        const { data } = await deleteCategoryData(`/categories/${id}`);
+        dispatch(deleteCategory(data));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        // setCategory(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    async function createData(list) {
+      setIsLoading(true);
+      try {
+        const { data } = await createCategoryData(`/categories`, list);
+        dispatch(addCategory({...data}));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        // setCategory(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -168,11 +203,11 @@ const Categories = () => {
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    rows.map(it=>{console.log(id); console.log(it)})
-  };
+   };
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
+    deleteData(id);
   };
 
   const handleCancelClick = (id) => () => {
@@ -180,7 +215,6 @@ const Categories = () => {
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
-
     const editedRow = rows.find((row) => row.id === id);
     if (editedRow.isNew) {
       setRows(rows.filter((row) => row.id !== id));
@@ -188,20 +222,21 @@ const Categories = () => {
   };
 
   const processRowUpdate = (newRow) => {
+    console.log("newRow",newRow);
+    if(newRow.isNew){createData(newRow)} else {updateData(newRow)};
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {
-    console.log("GridRowModes", GridRowModes)
-    console.log("rows", rows)
-    console.log("newRowModesModel", newRowModesModel)
     setRowModesModel(newRowModesModel);
   };
 
   return (
     <Box m="20px" width="100%">
+      {isLoading ? onLoading() : onLoaded()}
+      {error && onFetchError('Whoops, something went wrong')}
       <Box
         m="40px 0 0 0"
         height="75vh"
