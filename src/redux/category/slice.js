@@ -8,7 +8,13 @@ export const categorySlice = createSlice({
       ...state,
       ...payload,
     }),
+    addCategory: (state, { payload }) => ({
+      ...payload,
+    }),
+    deleteCategory: (state, { payload }) => ({
+      ...payload,
+    }),
   },
 });
-export const { getCategory } = categorySlice.actions;
+export const { getCategory, addCategory, deleteCategory } = categorySlice.actions;
 export const categoryReducer = categorySlice.reducer;

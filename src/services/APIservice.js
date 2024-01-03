@@ -271,6 +271,26 @@ async function updateCategoryData(pathParams, body) {
     },
   });
 }
+async function createCategoryData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function deleteCategoryData(pathParams, body) {
+  return await axios.delete(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
 
 
 fetchData.propTypes = {
@@ -313,8 +333,16 @@ updateCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
+createCategoryData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
 
 createFormRegistration.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+deleteCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
@@ -330,4 +358,6 @@ export {
   deleteData,
   changePassword,
   updateCategoryData,
+  createCategoryData,
+  deleteCategoryData
 };

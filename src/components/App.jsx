@@ -31,7 +31,7 @@ export const App = () => {
   const EventsPage = lazy(() => import('pages/EventsPage'));
   const EventDetailsPage = lazy(() => import('pages/EventDetailsPage'));
   const AboutUsPage = lazy(() => import('pages/AboutUsPage'));
-  const UserPage = lazy(() => import('pages/UserPage'));
+  // const UserPage = lazy(() => import('pages/UserPage'));
   const AdminPage = lazy(() => import('pages/AdminPage'));
 
   return isRefreshing ? (
@@ -42,7 +42,6 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<HomePage />} />
-            {permission === 'admin' ? (
               <Route
                 path="admin"
                 element={
@@ -85,35 +84,15 @@ export const App = () => {
                   <PrivateRoute redirectTo="/login" component={<Dashboard />} />
                 }
               />
-                
-                {/* <Route
-                  path="profile"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/signin"
-                      component={<UserPage />}
-                    />
-                  }
-                /> */}
               </Route>
-            ) : (
-              <Route
+              {/* <Route
                 path="user"
                 element={
                   <PrivateRoute redirectTo="/login" component={<UserPage />} />
                 }
               >
-                {/* <Route
-                  path="profile"
-                  element={
-                    <PrivateRoute
-                      redirectTo="/signin"
-                      component={<UserPage />}
-                    />
-                  }
-                /> */}
-              </Route>
-            )}
+              </Route> */}
+
 
             <Route
               path="login"
