@@ -9,6 +9,7 @@ export const SFooter = styled.footer`
   z-index: 10;
 
   background-color: ${theme.colors.white};
+  border-top: 1px solid rgba(0, 0, 0, 0.17);
 `;
 
 export const FooterContainer = styled(Container)`
@@ -60,7 +61,7 @@ export const ContactsBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: 30px 0;
+  padding-bottom: 30px;
 `;
 
 export const CopyrightBox = styled.div`
@@ -68,27 +69,35 @@ export const CopyrightBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: 30px 0;
+  padding-top: 30px;
 
   border-top: 1px solid #d9d9d9;
 `;
 
 export const Copyright = styled.p`
   font-family: ${theme.fonts[0]};
-  font-size: 16px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: ${theme.colors.black};
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 16px;
+  }
 `;
 
 export const Developers = styled.div`
   font-family: ${theme.fonts[0]};
-  font-size: 16px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: ${theme.colors.black};
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 16px;
+  }
 
   & > a {
     font-weight: 500;

@@ -3,11 +3,11 @@ import { Admin } from 'components/Admin';
 import React, { useEffect, useState } from 'react';
 import { SEO } from 'utils/SEO';
 import { fetchData } from 'services/APIservice';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import { AdminContainer } from './Pages.styled';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { getCategory } from '../redux/category/operation';
+import { getCategory } from '../../redux/category/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
@@ -15,13 +15,12 @@ const AdminPage = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
-
-  useEffect(()=>{
+  useEffect(() => {
     (async function getData() {
       setIsLoading(true);
       try {
         const { data } = await fetchData(`/categories`);
-        dispatch(getCategory({...data}));
+        dispatch(getCategory({ ...data }));
         if (!data) {
           return onFetchError('Whoops, something went wrong');
         }
@@ -31,8 +30,8 @@ const AdminPage = () => {
       } finally {
         setIsLoading(false);
       }
-    })()
-  },[])
+    })();
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -44,8 +43,8 @@ const AdminPage = () => {
       {isLoading ? onLoading() : onLoaded()}
       {error && onFetchError('Whoops, something went wrong')}
       <AdminContainer>
-      <Admin/>
-      <Outlet/>
+        <Admin />
+        <Outlet />
       </AdminContainer>
     </>
   );
