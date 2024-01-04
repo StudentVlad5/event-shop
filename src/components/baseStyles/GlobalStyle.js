@@ -71,4 +71,13 @@ img {
       height: 0;
   }
 }
+.specialistAvatar,
+.img-app-theme--cell > img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+}
+.inputSpecialistAvatar {
+  display: none;
+}
 `;
