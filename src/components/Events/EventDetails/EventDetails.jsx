@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-// import { addModal } from '../redux/modal/operation';
+import { addModal } from '../../../redux/modal/operation';
 import { openModalWindow } from 'hooks/ModalWindow';
 import { BackButton } from 'helpers/BackLink/BackLink';
 import { BASE_URL_IMG } from 'helpers/constants';

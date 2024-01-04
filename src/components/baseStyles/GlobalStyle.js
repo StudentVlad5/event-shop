@@ -5,13 +5,12 @@ import { theme } from './Variables.styled';
 export const GlobalStyle = createGlobalStyle`
   body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', 'Poppins',
-    'Manrope', 'Oswald', 'Montserrat', 'Bungee', 'Open Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Playfair Display', 'Miama Nueva', sans-serif, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
  
-  background-color: ${theme.black};
-  color:${theme.white};
+  background-color: ${theme.colors.fon};
+  color:${theme.colors.grey};
 
   &.scroll {
       max-height: 100vh;
