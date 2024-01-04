@@ -8,9 +8,11 @@ import { AdminContainer } from './Pages.styled';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getCategory } from '../redux/category/operation';
+import { getSpecialists } from '../redux/specialists/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
+  const [specialists, setSpecialists] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -26,6 +28,24 @@ const AdminPage = () => {
           return onFetchError('Whoops, something went wrong');
         }
         setCategory(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })()
+  },[])
+
+  useEffect(()=>{
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/specialists`);
+        dispatch(getSpecialists({...data}));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setSpecialists(data);
       } catch (error) {
         setError(error);
       } finally {
