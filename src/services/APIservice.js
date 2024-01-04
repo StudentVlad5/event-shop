@@ -262,7 +262,7 @@ async function createEventsData(pathParams, body, file) {
 // ==== CATEGORIES ==== //
 
 async function updateCategoryData(pathParams, body) {
-  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+  return await axios.patch(`${BASE_URL}${pathParams}`, body, {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -292,6 +292,55 @@ async function deleteCategoryData(pathParams, body) {
   });
 }
 
+// ==== SPECIALISTS ==== //
+
+async function updateSpecialistData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function createSpecialistData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function deleteSpecialistData(pathParams, body) {
+  return await axios.delete(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+
+// IMAGES
+
+async function createImg(pathParams, body, file) {
+  console.log("file", file);
+  console.log("body", body);
+  const formData = new FormData();
+  file && formData.set("avatar", file);
+  return await axios.patch(`${BASE_URL}${pathParams}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
 
 fetchData.propTypes = {
   pathParams: PropTypes.string.isRequired,
@@ -346,7 +395,26 @@ deleteCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
+updateSpecialistData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
 
+createSpecialistData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+deleteSpecialistData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+createImg.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+  file: PropTypes.string,
+};
 export {
   fetchData,
   createFormRegistration,
@@ -359,5 +427,9 @@ export {
   changePassword,
   updateCategoryData,
   createCategoryData,
-  deleteCategoryData
+  deleteCategoryData,
+  updateSpecialistData,
+  createSpecialistData,
+  deleteSpecialistData,
+  createImg,
 };
