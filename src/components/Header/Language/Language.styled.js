@@ -22,7 +22,7 @@ export const SelectLanguage = styled.select`
   line-height: normal;
   text-decoration: none;
   transition: ${theme.transition[0]};
-  color: ${theme.colors.greyHeader};
+  color: ${theme.colors.grey2};
 
   background: transparent;
   border-radius: 5px;

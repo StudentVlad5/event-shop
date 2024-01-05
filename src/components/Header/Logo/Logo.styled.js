@@ -13,7 +13,7 @@ export const SLink = styled(Link)`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  color: ${theme.colors.greyHeader};
+  color: ${theme.colors.grey2};
 
   transition: ${theme.transition};
   text-decoration: none;

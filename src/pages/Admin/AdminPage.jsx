@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AdminContainer } from './Pages.styled';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { getCategory } from '../redux/category/operation';
-import { getSpecialists } from '../redux/specialists/operation';
+import { getCategory } from '../../redux/category/operation';
+import { getSpecialists } from '../../redux/specialists/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);

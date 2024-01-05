@@ -3,10 +3,10 @@ import { theme } from 'components/baseStyles/Variables.styled';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
 
 export const SFooter = styled.footer`
-  position: fixed;
+  /* position: fixed;
   bottom: 0;
   width: 100vw;
-  z-index: 10;
+  z-index: 10; */
 
   background-color: ${theme.colors.white};
   border-top: 1px solid rgba(0, 0, 0, 0.17);
@@ -50,7 +50,7 @@ export const Contacts = styled.div`
     }
 
     & a {
-      color: ${theme.colors.greyHeader};
+      color: ${theme.colors.grey2};
       text-decoration: none;
     }
   }

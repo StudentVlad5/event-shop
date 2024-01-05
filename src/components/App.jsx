@@ -31,7 +31,6 @@ export const App = () => {
   const EventsPage = lazy(() => import('pages/EventsPage'));
   const EventDetailsPage = lazy(() => import('pages/EventDetailsPage'));
   const AboutUsPage = lazy(() => import('pages/AboutUsPage'));
-  // const UserPage = lazy(() => import('pages/UserPage'));
   const AdminPage = lazy(() => import('pages/Admin/AdminPage'));
 
   return isRefreshing ? (

@@ -33,7 +33,7 @@ export const MobileNavigation = styled.nav`
     gap: 24px;
 
     & > li > a {
-      color: ${theme.colors.greyHeader};
+      color: ${theme.colors.grey2};
 
       font-family: ${theme.fonts[0]};
       font-size: 20px;
@@ -47,7 +47,7 @@ export const MobileNavigation = styled.nav`
       &:hover,
       &:focus {
         padding-bottom: 1px;
-        border-bottom: 1px solid ${theme.colors.greyHeader};
+        border-bottom: 1px solid ${theme.colors.grey2};
       }
     }
   }

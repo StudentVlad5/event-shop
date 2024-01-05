@@ -39,7 +39,7 @@ export const Navigation = styled.nav`
     }
 
     & > li > a {
-      color: ${theme.colors.greyHeader};
+      color: ${theme.colors.grey2};
 
       font-family: ${theme.fonts[0]};
       font-size: 16px;
@@ -53,7 +53,7 @@ export const Navigation = styled.nav`
       &:hover,
       &:focus {
         padding-bottom: 1px;
-        border-bottom: 1px solid ${theme.colors.greyHeader};
+        border-bottom: 1px solid ${theme.colors.grey2};
       }
     }
   }
@@ -79,7 +79,7 @@ export const MenuBtn = styled.button`
 
   padding: 0;
 
-  color: ${theme.colors.greyHeader};
+  color: ${theme.colors.grey2};
   background: transparent;
   border: none;
 
