@@ -9,9 +9,9 @@ export const Menu = ({ onClose }) => {
   const { t } = useTranslation();
 
   return (
-    <MobileMenu id="mobile-menu" onClick={() => onClose()}>
+    <MobileMenu id="mobile-menu">
       {/* <Logo /> */}
-      <MobileNavigation>
+      <MobileNavigation onClick={() => onClose()}>
         <ul>
           <li>
             <NavLink to="/" aria-label="Home" data-info="Home">

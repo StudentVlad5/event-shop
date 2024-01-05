@@ -9,7 +9,7 @@ export const SLink = styled(Link)`
   text-align: left;
 
   font-family: ${theme.fonts[1]};
-  font-size: 24px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -17,6 +17,10 @@ export const SLink = styled(Link)`
 
   transition: ${theme.transition};
   text-decoration: none;
+
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    font-size: 24px;
+  }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 34px;

@@ -3,11 +3,6 @@ import { theme } from 'components/baseStyles/Variables.styled';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
 
 export const SFooter = styled.footer`
-  /* position: fixed;
-  bottom: 0;
-  width: 100vw;
-  z-index: 10; */
-
   background-color: ${theme.colors.white};
   border-top: 1px solid rgba(0, 0, 0, 0.17);
 `;
@@ -15,7 +10,7 @@ export const SFooter = styled.footer`
 export const FooterContainer = styled(Container)`
   display: flex;
   flex-direction: column;
-  padding: 20px 50px;
+  padding: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: ${theme.breakpoints.desktop};
@@ -24,9 +19,20 @@ export const FooterContainer = styled(Container)`
   }
 `;
 
+export const ContactsBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  padding-bottom: 30px;
+`;
+
 export const Contacts = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 12px;
 
@@ -42,6 +48,7 @@ export const Contacts = styled.div`
   & ul {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 30px;
 
     & li:last-of-type {
@@ -54,14 +61,6 @@ export const Contacts = styled.div`
       text-decoration: none;
     }
   }
-`;
-
-export const ContactsBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding-bottom: 30px;
 `;
 
 export const CopyrightBox = styled.div`

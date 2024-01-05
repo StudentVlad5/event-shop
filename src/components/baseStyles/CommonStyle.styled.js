@@ -35,7 +35,7 @@ const Container = styled.div`
   padding: 0 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    padding: 0 50px;
+    padding: 0 30px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
@@ -53,8 +53,8 @@ const Title = styled.h1`
   text-align: center;
   color: ${props => (props.$white ? theme.colors.fon : theme.colors.grey1)};
 
-  animation: ${puffInCenterAnimation} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
-    both;
+  /* animation: ${puffInCenterAnimation} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
+    both; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 36px;

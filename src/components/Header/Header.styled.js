@@ -12,6 +12,8 @@ export const SHeader = styled.header`
   width: 100vw;
   padding: 20px 50px;
 
+  background-color: ${theme.colors.fon};
+
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: ${theme.breakpoints.desktop};
     margin: 0 auto;
@@ -69,7 +71,7 @@ export const WrapText = styled.div`
 
 export const MenuBtn = styled.button`
   position: fixed;
-  top: 20px;
+  top: 15px;
   right: 50px;
   z-index: 15;
 

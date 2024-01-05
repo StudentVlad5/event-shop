@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { HeroSection, HeroContainer, TextWrapper } from './Hero.styled';
 
 import hero_mob_png from 'images/hero/hero_mob.png';
@@ -17,6 +18,8 @@ import hero_desk_webp_2x from 'images/hero/hero_desk@2x.webp';
 import { Subtitle, Title } from 'components/baseStyles/CommonStyle.styled';
 
 export const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <HeroSection>
       <HeroContainer>
@@ -47,15 +50,11 @@ export const Hero = () => {
           />
         </picture>
         <TextWrapper>
-          <Title $white>Ласкаво просимо до BloomSkill</Title>
+          <Title $white>{t('Ласкаво просимо до BloomSkill')}</Title>
           <Subtitle $white>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odio
-            voluptatibus aspernatur magni optio nobis nisi quibusdam reiciendis
-            explicabo voluptatum molestias eveniet fuga, in unde cupiditate
-            laboriosam quaerat, velit accusamus. Qui alias blanditiis accusamus
-            adipisci? Nobis porro ducimus laboriosam quam alias odit ut a sequi
-            aliquid aut error, aliquam, dicta enim quos tempora illum doloremque
-            eaque minus quas culpa soluta.
+            {t(
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odiovoluptatibus aspernatur magni optio nobis nisi quibusdam reiciendis explicabo voluptatum molestias eveniet fuga, in unde cupiditate laboriosam quaerat, velit accusamus. Qui alias blanditiis accusamus adipisci? Nobis porro ducimus laboriosam quam alias odit ut a sequi aliquid aut error, aliquam, dicta enim quos tempora illum doloremque eaque minus quas culpa soluta.'
+            )}
           </Subtitle>
         </TextWrapper>
       </HeroContainer>
