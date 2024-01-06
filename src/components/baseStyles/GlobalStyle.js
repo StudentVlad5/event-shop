@@ -78,7 +78,25 @@ width: 40px;
 height: 40px;
 border-radius: 50%;
 }
-.inputSpecialistAvatar {
+.inputSpecialistAvatar,
+.inputEventAvatar {
   display: none;
+}
+
+.eventAvatar,
+.img-app-theme--cell > img {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+&:hover{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+}
+.img-app-theme--cell{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 `;

@@ -325,12 +325,44 @@ async function deleteSpecialistData(pathParams, body) {
   });
 }
 
+// ==== EVENTS ==== //
+
+async function updateEventData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function createEventData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function deleteEventData(pathParams, body) {
+  return await axios.delete(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+
 // IMAGES
 
 async function createImg(pathParams, body, file) {
-  console.log("file", file);
-  console.log("body", body);
   const formData = new FormData();
+  formData.append("name", body.name);
   file && formData.set("avatar", file);
   return await axios.patch(`${BASE_URL}${pathParams}`, formData, {
     headers: {
@@ -410,6 +442,21 @@ deleteSpecialistData.propTypes = {
   formData: PropTypes.string.isRequired,
 };
 
+updateEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+createEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+deleteEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
 createImg.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
@@ -431,5 +478,8 @@ export {
   updateSpecialistData,
   createSpecialistData,
   deleteSpecialistData,
+  updateEventData,
+  createEventData,
+  deleteEventData,
   createImg,
 };

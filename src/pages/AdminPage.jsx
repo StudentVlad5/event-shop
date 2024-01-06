@@ -3,16 +3,18 @@ import { Admin } from 'components/Admin';
 import React, { useEffect, useState } from 'react';
 import { SEO } from 'utils/SEO';
 import { fetchData } from 'services/APIservice';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import { AdminContainer } from './Pages.styled';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getCategory } from '../redux/category/operation';
 import { getSpecialists } from '../redux/specialists/operation';
+import { getEvents } from '../redux/events/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
   const [specialists, setSpecialists] = useState([]);
+  const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -46,6 +48,24 @@ const AdminPage = () => {
           return onFetchError('Whoops, something went wrong');
         }
         setSpecialists(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })()
+  },[])
+
+  useEffect(()=>{
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/events`);
+        dispatch(getEvents({...data}));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setEvents(data);
       } catch (error) {
         setError(error);
       } finally {
