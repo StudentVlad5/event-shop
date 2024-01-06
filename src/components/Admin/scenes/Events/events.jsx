@@ -84,23 +84,23 @@ const Events = () => {
   const listOfEvents = [];
   for (const it in events) {
     let data = {};
-    data.id = events[it].article_event;
-    data.specialistName = specialistsIdForNames[events[it].specialistId];
-    data.categoryName = categoriesIdForNames[events[it].category];
-    data.categoryName_second = categoriesIdForNames[events[it].category_second];
-    data.categoryName_third = categoriesIdForNames[events[it].category_third];
-    data.language = events[it].language;
-    data.duration = events[it].duration;
-    data.image = events[it].image;
-    data.image_1 = events[it].image_1;
-    data.image_2 = events[it].image_2;
-    data.rating = events[it].rating;
-    data.nameFr = events[it].fr.name;
-    data.nameUa = events[it].ua.name;
-    data.nameRu = events[it].ru.name;
-    data.descriptionFr = events[it].fr.description;
-    data.descriptionUa = events[it].ua.description;
-    data.descriptionRu = events[it].ru.description;
+    events[it].article_event ? data.id = events[it].article_event : data.id = "";
+    specialistsIdForNames[events[it].specialistId] ? data.specialistName = specialistsIdForNames[events[it].specialistId] : data.specialistName = "";
+    categoriesIdForNames[events[it].category] ? data.categoryName = categoriesIdForNames[events[it].category] : data.categoryName = "";
+    categoriesIdForNames[events[it].category_second] ? data.categoryName_second = categoriesIdForNames[events[it].category_second] : data.categoryName_second = "";
+    categoriesIdForNames[events[it].category_third] ? data.categoryName_third = categoriesIdForNames[events[it].category_third] : data.categoryName_third = "";
+    events[it].language ? data.language = events[it].language : data.language = "";
+    events[it].duration ? data.duration = events[it].duration : data.duration = "";
+    events[it].image ? data.image = events[it].image : data.image= "";
+    events[it].image_1 ? data.image_1 = events[it].image_1 : data.image_1= "";
+    events[it].image_2 ? data.image_2 = events[it].image_2 : data.image_2 = "";
+    events[it].rating ? data.rating = events[it].rating : data.rating = "";
+    events[it].fr.name ? data.nameFr = events[it].fr.name : data.nameFr = "";
+    events[it].ua.name ? data.nameUa = events[it].ua.name : data.nameUa = "";
+    events[it].ru.name ? data.nameRu = events[it].ru.name : data.nameRu = "";
+    events[it].fr.description ? data.descriptionFr = events[it].fr.description : data.descriptionFr = "";
+    events[it].ua.description ? data.descriptionUa = events[it].ua.description : data.descriptionUa = "";
+    events[it].ru.description ? data.descriptionRu = events[it].ru.description : data.descriptionRu = "";
     listOfEvents.push(data)};
 
     async function sendImg(e) {
@@ -113,21 +113,21 @@ const Events = () => {
         const listOfEvents = [];
         for (const it in events) {
           let perem = {};
-          perem.id = data[it].article_event;
-          perem.specialistName = specialistsIdForNames[data[it].specialistId];
-          perem.categoryName = categoriesIdForNames[data[it].category];
-          perem.language = data[it].language;
-          perem.duration = data[it].duration;
-          perem.image = data[it].image;
-          perem.image_1 = data[it].image_1;
-          perem.image_2 = data[it].image_2;
-          perem.rating = data[it].rating;
-          perem.nameFr = data[it].fr.name;
-          perem.nameUa = data[it].ua.name;
-          perem.nameRu = data[it].ru.name;
-          perem.descriptionFr = data[it].fr.description;
-          perem.descriptionUa = data[it].ua.description;
-          perem.descriptionRu = data[it].ru.description;
+          data[it].article_event ? perem.id = data[it].article_event : perem.id= "";
+          specialistsIdForNames[data[it].specialistId] ? perem.specialistName = specialistsIdForNames[data[it].specialistId] : perem.specialistName = "";
+          categoriesIdForNames[data[it].category] ? perem.categoryName = categoriesIdForNames[data[it].category] : perem.categoryName = "";
+          data[it].language ? perem.language = data[it].language : perem.language = "";
+          data[it].duration ? perem.duration = data[it].duration : perem.duration = "";
+          data[it].image ? perem.image = data[it].image : perem.image ="";
+          data[it].image_1 ? perem.image_1 = data[it].image_1 : perem.image_1 = "";
+          data[it].image_2 ? perem.image_2 = data[it].image_2 : perem.image_2 = "";
+          data[it].rating ? perem.rating = data[it].rating : perem.rating = "";
+          data[it].fr.name ? perem.nameFr = data[it].fr.name : perem.nameFr = "";
+          data[it].ua.name ? perem.nameUa = data[it].ua.name : perem.nameUa = "";
+          data[it].ru.name ? perem.nameRu = data[it].ru.name : perem.nameRu = "";
+          data[it].fr.description ? perem.descriptionFr = data[it].fr.description : perem.descriptionFr = "";
+          data[it].ua.description ? perem.descriptionUa = data[it].ua.description : perem.descriptionUa = "";
+          data[it].ru.description ? perem.descriptionRu = data[it].ru.description : perem.descriptionRu = "";
           listOfEvents.push(perem)};
           setRows(listOfEvents);
         if (!data) {

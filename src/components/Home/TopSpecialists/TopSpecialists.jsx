@@ -35,7 +35,7 @@ export const TopSpecialists = () => {
           keyboard={true}
           loop={true}
           loopPreventsSliding={true}
-          loopedSlides={1}
+          loopedslides={1}
         >
           <SwiperSlide></SwiperSlide>
         </Swiper>
