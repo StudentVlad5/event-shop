@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { SEO } from 'utils/SEO';
+import { Home } from 'components/Home/Home';
 
 const HomePage = () => {
   useEffect(() => {
@@ -9,6 +10,7 @@ const HomePage = () => {
   return (
     <>
       <SEO title="Home" description="" />
+      <Home />
     </>
   );
 };

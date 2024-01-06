@@ -17,22 +17,22 @@ const puffInCenterAnimation = keyframes`
 const Section = styled.section`
   position: relative;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 30px 0;
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    padding: 80px 0;
+    padding: 50px 0;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    padding: 100px 0;
+    padding: 70px 0;
   }
 `;
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     padding: 0 30px;
@@ -40,46 +40,48 @@ const Container = styled.div`
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     max-width: ${theme.breakpoints.desktop};
-    padding: 0 45px;
+    padding: 0 80px;
   }
 `;
 
 const Title = styled.h1`
-  font-family: ${theme.fonts[2]};
-  font-size: 36px;
+  font-family: ${theme.fonts[1]};
+  font-size: 28px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 79.992px; /* 121.2% */
-  letter-spacing: -1px;
-  color: ${theme.white};
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  color: ${props => (props.$white ? theme.colors.fon : theme.colors.grey1)};
 
-  animation: ${puffInCenterAnimation} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
-    both;
+  /* animation: ${puffInCenterAnimation} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
+    both; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 42px;
+    font-size: 36px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 56px;
+    font-size: 40px;
   }
 `;
 
 const Headline = styled.h2`
   font-family: ${theme.fonts[0]};
-  font-size: 22px;
+  font-size: 36px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 55.02px; /* 114.625% */
+  font-weight: 500;
+  line-height: 35px;
+  text-transform: capitalize;
 
-  color: ${theme.colors.white};
+  color: ${theme.colors.grey1};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 24px;
+    font-size: 48px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 48px;
+    font-size: 52px;
+    line-height: 65px; /* 125% */
   }
 `;
 
@@ -88,17 +90,18 @@ const Subtitle = styled.p`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 32.004px; /* 177.8% */
+  line-height: 20px;
   text-align: center;
 
-  color: ${theme.colors.white};
-
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 16px;
-  }
+  color: ${props => (props.$white ? theme.colors.white : theme.colors.grey2)};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 18px;
+  }
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 24px;
+    line-height: 39px; /* 162.5% */
   }
 `;
 
