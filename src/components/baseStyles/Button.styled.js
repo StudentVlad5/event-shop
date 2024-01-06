@@ -15,11 +15,11 @@ export const BtnLight = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  color: ${props => props.theme.black_text};
+  color: ${props => props.theme.black};
   text-transform: uppercase;
 
-  background-color: ${props => props.theme.white_fon};
-  border: 1px solid ${props => props.theme.white_fon};
+  background-color: ${props => props.theme.fon};
+  border: 1px solid ${props => props.theme.fon};
   border-radius: 80px;
   cursor: pointer;
 
@@ -54,7 +54,7 @@ export const BtnGrey = styled.button`
   font-weight: 700;
   line-height: normal;
   letter-spacing: 1.6px;
-  color: ${props => props.theme.white_text};
+  color: ${props => props.theme.white};
   text-transform: uppercase;
   letter-spacing: 1.6px;
 
@@ -73,7 +73,7 @@ export const BtnGrey = styled.button`
 
   &:hover,
   &:focus {
-    color: ${props => props.theme.white_text};
+    color: ${props => props.theme.white};
     background-color: ${props => props.theme.black};
   }
 `;
@@ -84,7 +84,7 @@ export const AnimationBtn = styled.button`
   margin: 0 auto;
   padding: 2px;
 
-  color: ${props => props.theme.white_text};
+  color: ${props => props.theme.white};
   font-family: ${theme.fonts[0]};
   font-size: 16px;
   font-style: normal;
@@ -94,7 +94,7 @@ export const AnimationBtn = styled.button`
 
   background-color: transparent;
   border: none;
-  /* border-bottom: 1px solid ${props => props.theme.white_text}; */
+  /* border-bottom: 1px solid ${props => props.theme.white}; */
   transition: ${theme.transition};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
@@ -117,7 +117,7 @@ export const AnimationBtn = styled.button`
     bottom: 0;
     left: -16px;
     width: 1px;
-    background: ${props => props.theme.white_text};
+    background: ${props => props.theme.white};
     transition: ${theme.transition};
   }
 
@@ -126,8 +126,8 @@ export const AnimationBtn = styled.button`
     left: -16px;
     width: auto;
     background: 0;
-    border-right: 1px solid ${props => props.theme.white_text};
-    border-left: 1px solid ${props => props.theme.white_text};
+    border-right: 1px solid ${props => props.theme.white};
+    border-left: 1px solid ${props => props.theme.white};
   }
 
   &::after {

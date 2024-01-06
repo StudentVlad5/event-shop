@@ -1,29 +1,31 @@
-import "modern-normalize";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { BrowserRouter } from "react-router-dom";
-import { persistor, store } from "./redux/store";
-import { App } from "./components/App";
-import { GlobalStyle } from "components/baseStyles/GlobalStyle";
+import 'modern-normalize';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter } from 'react-router-dom';
+import { persistor, store } from './redux/store';
+import { App } from './components/App';
+import { GlobalStyle } from 'components/baseStyles/GlobalStyle';
 
-import AOS from "aos";
-import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n";
-
+import AOS from 'aos';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
+import { StatusProvider } from 'components/ContextStatus/ContextStatus';
 
 AOS.init();
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={"Loading"} persistor={persistor}>
+      <PersistGate loading={'Loading'} persistor={persistor}>
         <BrowserRouter basename="event-shop">
+          <StatusProvider>
             <I18nextProvider i18n={i18n}>
-                <GlobalStyle />
-                <App />
+              <GlobalStyle />
+              <App />
             </I18nextProvider>
+          </StatusProvider>
         </BrowserRouter>
       </PersistGate>
     </Provider>

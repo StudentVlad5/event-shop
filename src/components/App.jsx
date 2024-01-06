@@ -31,8 +31,7 @@ export const App = () => {
   const EventsPage = lazy(() => import('pages/EventsPage'));
   const EventDetailsPage = lazy(() => import('pages/EventDetailsPage'));
   const AboutUsPage = lazy(() => import('pages/AboutUsPage'));
-  // const UserPage = lazy(() => import('pages/UserPage'));
-  const AdminPage = lazy(() => import('pages/AdminPage'));
+  const AdminPage = lazy(() => import('pages/Admin/AdminPage'));
 
   return isRefreshing ? (
     <></>
@@ -42,22 +41,28 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<HomePage />} />
-              <Route
-                path="admin"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<AdminPage />} />
-                }
-              >
+            <Route
+              path="admin"
+              element={
+                <PrivateRoute redirectTo="/login" component={<AdminPage />} />
+              }
+            >
               <Route
                 path="categories"
                 element={
-                  <PrivateRoute redirectTo="/login" component={<Categories />} />
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Categories />}
+                  />
                 }
               />
               <Route
                 path="specialists"
                 element={
-                  <PrivateRoute redirectTo="/login" component={<Specialists />} />
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Specialists />}
+                  />
                 }
               />
               <Route
@@ -69,7 +74,10 @@ export const App = () => {
               <Route
                 path="activate_events"
                 element={
-                  <PrivateRoute redirectTo="/login" component={<Activate_events />} />
+                  <PrivateRoute
+                    redirectTo="/login"
+                    component={<Activate_events />}
+                  />
                 }
               />
               <Route
@@ -84,8 +92,8 @@ export const App = () => {
                   <PrivateRoute redirectTo="/login" component={<Dashboard />} />
                 }
               />
-              </Route>
-              {/* <Route
+            </Route>
+            {/* <Route
                 path="user"
                 element={
                   <PrivateRoute redirectTo="/login" component={<UserPage />} />
@@ -93,10 +101,9 @@ export const App = () => {
               >
               </Route> */}
 
-
             <Route
               path="login"
-              element= {
+              element={
                 <RestrictedRoute
                   redirectTo={permission === 'admin' ? '/admin' : '/user'}
                   component={<LoginPage />}
