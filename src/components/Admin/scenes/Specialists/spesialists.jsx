@@ -55,7 +55,7 @@ EditToolbar.propTypes = {
 const Specialists = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-//   const [specialists, setSpecialists] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -83,8 +83,6 @@ const Specialists = () => {
 
 
     async function sendImg(e) {
-      console.log('image', e.target.files[0]);
-      console.log('image', e.target.dataset.info);
       const file = e.target.files[0];
       const body = {id : e.target.dataset.info};
       setIsLoading(true);

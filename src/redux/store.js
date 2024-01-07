@@ -5,6 +5,7 @@ import { authReducer } from "./auth/slice";
 import { reloadSlice } from "./reload/slice";
 import { modalReducer } from "./modal/slice";
 import { categoryReducer } from "./category/slice";
+import { eventsReducer } from "./events/slice";
 import { specialistsReducer } from "./specialists/slice";
 
 // Persisting token and role fields from auth slice to localstorage
@@ -20,6 +21,7 @@ export const store = configureStore({
     modal: modalReducer,
     category: categoryReducer,
     specialists: specialistsReducer,
+    events: eventsReducer,
     reload: reloadSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
