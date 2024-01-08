@@ -309,6 +309,7 @@ const Events = () => {
         };
         list.specialistId =  updateIdSpecialist;
 
+
         let updateIdCategory = '';
         for (const key in categoriesIdForNames){
           if(list.categoryName === categoriesIdForNames[key]){updateIdCategory = key}

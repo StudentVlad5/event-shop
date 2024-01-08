@@ -10,11 +10,13 @@ import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getCategory } from '../../redux/category/operation';
 import { getSpecialists } from '../../redux/specialists/operation';
 import { getEvents } from '../../redux/events/operation';
+import { getActiveEvents } from '../../redux/activate_events/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
   const [specialists, setSpecialists] = useState([]);
   const [events, setEvents] = useState([]);
+  const [active_events, setActive_events] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -65,6 +67,24 @@ const AdminPage = () => {
           return onFetchError('Whoops, something went wrong');
         }
         setEvents(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/active_events`);
+        dispatch(getActiveEvents({ ...data }));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setActive_events(data);
       } catch (error) {
         setError(error);
       } finally {

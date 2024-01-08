@@ -139,126 +139,6 @@ async function changePassword(pathParams, body) {
   });
 }
 
-// ==== EVENTS ==== //
-
-async function updateEventsData(pathParams, body, file) {
-  const formData = new FormData();
-  file && formData.set("image", file);
-  formData.append("date", body.date);
-  formData.append("time", body.time);
-
-  formData.append("durationEn", body.durationEn);
-  formData.append("locationEn", body.locationEn);
-  formData.append("titleEn", body.titleEn);
-  formData.append("descriptionEn", body.descriptionEn);
-  body.planEn.forEach((value) => {
-    formData.append("planEn[]", value);
-  });
-  body.speakersEn.forEach((value) => {
-    formData.append("speakersEn[]", value);
-  });
-  formData.append("moderatorEn", body.moderatorEn);
-  body.packagesEn.forEach((value) => {
-    formData.append("packagesEn[]", value);
-  });
-
-  formData.append("durationUa", body.durationUa);
-  formData.append("locationUa", body.locationUa);
-  formData.append("titleUa", body.titleUa);
-  formData.append("descriptionUa", body.descriptionUa);
-  body.planUa.forEach((value) => {
-    formData.append("planUa[]", value);
-  });
-  body.speakersUa.forEach((value) => {
-    formData.append("speakersUa[]", value);
-  });
-  formData.append("moderatorUa", body.moderatorUa);
-  body.packagesUa.forEach((value) => {
-    formData.append("packagesUa[]", value);
-  });
-  formData.append("durationDe", body.durationDe);
-  formData.append("locationDe", body.locationDe);
-  formData.append("titleDe", body.titleDe);
-  formData.append("descriptionDe", body.descriptionDe);
-  body.planDe.forEach((value) => {
-    formData.append("planDe[]", value);
-  });
-  body.speakersDe.forEach((value) => {
-    formData.append("speakersDe[]", value);
-  });
-  formData.append("moderatorDe", body.moderatorDe);
-  body.packagesDe.forEach((value) => {
-    formData.append("packagesDe[]", value);
-  });
-
-  return await axios.patch(`${BASE_URL}${pathParams}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-      "Access-Control-Expose-Headers": "Content-Range",
-    },
-  });
-}
-
-async function createEventsData(pathParams, body, file) {
-  const formData = new FormData();
-  file && formData.set("image", file);
-  formData.append("date", body.date);
-  formData.append("time", body.time);
-  formData.append("durationEn", body.durationEn);
-  formData.append("locationEn", body.locationEn);
-  formData.append("titleEn", body.titleEn);
-  formData.append("descriptionEn", body.descriptionEn);
-  body.planEn.forEach((value) => {
-    formData.append("planEn[]", value);
-  });
-  body.speakersEn.forEach((value) => {
-    formData.append("speakersEn[]", value);
-  });
-  formData.append("moderatorEn", body.moderatorEn);
-  body.packagesEn.forEach((value) => {
-    formData.append("packagesEn[]", value);
-  });
-  formData.append("durationUa", body.durationUa);
-  formData.append("locationUa", body.locationUa);
-  formData.append("titleUa", body.titleUa);
-  formData.append("descriptionUa", body.descriptionUa);
-  body.planUa.forEach((value) => {
-    formData.append("planUa[]", value);
-  });
-  body.speakersUa.forEach((value) => {
-    formData.append("speakersUa[]", value);
-  });
-  formData.append("moderatorUa", body.moderatorUa);
-  body.packagesUa.forEach((value) => {
-    formData.append("packagesUa[]", value);
-  });
-  formData.append("durationDe", body.durationDe);
-  formData.append("locationDe", body.locationDe);
-  formData.append("titleDe", body.titleDe);
-  formData.append("descriptionDe", body.descriptionDe);
-  body.planDe.forEach((value) => {
-    formData.append("planDe[]", value);
-  });
-  body.speakersDe.forEach((value) => {
-    formData.append("speakersDe[]", value);
-  });
-  formData.append("moderatorDe", body.moderatorDe);
-  body.packagesDe.forEach((value) => {
-    formData.append("packagesDe[]", value);
-  });
-
-  return await axios.post(`${BASE_URL}${pathParams}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-      "Access-Control-Expose-Headers": "Content-Range",
-    },
-  });
-}
-
 // ==== CATEGORIES ==== //
 
 async function updateCategoryData(pathParams, body) {
@@ -358,6 +238,40 @@ async function deleteEventData(pathParams, body) {
   });
 }
 
+
+// ==== ACTIVATE EVENTS ==== //
+
+async function updateActiveEventData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function createActiveEventData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function deleteActiveEventData(pathParams, body) {
+  return await axios.delete(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+
 // IMAGES
 
 async function createImg(pathParams, body, file) {
@@ -400,12 +314,7 @@ createUserData.propTypes = {
   file: PropTypes.string,
 };
 
-updateEventsData.propTypes = {
-  pathParams: PropTypes.string.isRequired,
-  formData: PropTypes.string.isRequired,
-};
-
-createEventsData.propTypes = {
+deleteCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
@@ -414,6 +323,7 @@ updateCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
+
 createCategoryData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
@@ -423,10 +333,7 @@ createFormRegistration.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
-deleteCategoryData.propTypes = {
-  pathParams: PropTypes.string.isRequired,
-  formData: PropTypes.string.isRequired,
-};
+
 updateSpecialistData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
@@ -457,6 +364,21 @@ deleteEventData.propTypes = {
   formData: PropTypes.string.isRequired,
 };
 
+updateActiveEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+createActiveEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+deleteActiveEventData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
 createImg.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
@@ -468,8 +390,6 @@ export {
   updateUserData,
   createUserData,
   editUserData,
-  createEventsData,
-  updateEventsData,
   deleteData,
   changePassword,
   updateCategoryData,
@@ -481,5 +401,8 @@ export {
   updateEventData,
   createEventData,
   deleteEventData,
+  updateActiveEventData,
+  deleteActiveEventData,
+  createActiveEventData,
   createImg,
 };
