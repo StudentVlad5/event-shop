@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
+import { ReactComponent as Logo } from 'images/logo.svg';
 
 export const SLink = styled(Link)`
   display: flex;
@@ -24,5 +25,15 @@ export const SLink = styled(Link)`
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 34px;
+  }
+`;
+
+export const LogoIcon = styled(Logo)`
+  width: 36px;
+  height: 30px;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    width: 74px;
+    height: 59px;
   }
 `;

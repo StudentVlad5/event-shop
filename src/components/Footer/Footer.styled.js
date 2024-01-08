@@ -4,7 +4,7 @@ import { Container } from 'components/baseStyles/CommonStyle.styled';
 
 export const SFooter = styled.footer`
   background-color: ${theme.colors.white};
-  border-top: 1px solid rgba(0, 0, 0, 0.17);
+  /* border-top: 1px solid rgba(0, 0, 0, 0.17); */
 `;
 
 export const FooterContainer = styled(Container)`
@@ -36,20 +36,29 @@ export const Contacts = styled.div`
   align-items: flex-start;
   gap: 12px;
 
+  @media screen and (max-width: ${theme.breakpoints.tablet_only}) {
+    width: 100%;
+  }
+
   & > p {
     font-family: ${theme.fonts[0]};
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    color: #9f9f9f;
+    color: ${theme.colors.grey1};
   }
 
   & ul {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: 30px;
+
+    @media screen and (max-width: ${theme.breakpoints.tablet_only}) {
+      width: 100%;
+    }
 
     & li:last-of-type {
       display: flex;
@@ -59,48 +68,62 @@ export const Contacts = styled.div`
     & a {
       color: ${theme.colors.grey2};
       text-decoration: none;
+
+      &:hover,
+      &:focus {
+        color: ${theme.colors.accent};
+      }
+
+      & > svg {
+        fill: currentColor;
+      }
     }
   }
 `;
 
 export const CopyrightBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
 
   padding-top: 30px;
+  border-top: 1px solid ${theme.colors.grey2};
 
-  border-top: 1px solid #d9d9d9;
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    justify-content: space-between;
+  }
 `;
 
 export const Copyright = styled.p`
   font-family: ${theme.fonts[0]};
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: ${theme.colors.black};
-
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 16px;
-  }
 `;
 
 export const Developers = styled.div`
   font-family: ${theme.fonts[0]};
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: ${theme.colors.black};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 16px;
   }
 
   & > a {
     font-weight: 500;
     color: ${theme.colors.black};
     text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: ${theme.colors.primary};
+    }
   }
 `;

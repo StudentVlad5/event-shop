@@ -1,11 +1,10 @@
-import { SLink } from './Logo.styled';
-// import { ReactComponent as Logo } from 'images/logo.svg';
+import { SLink, LogoIcon } from './Logo.styled';
 
 export const Logo = () => {
   return (
     <SLink to="/" aria-label="logo company">
-      {/* <Logo /> */}
-      BloomSkill
+      <LogoIcon />
+      <span>BloomSkill</span>
     </SLink>
   );
 };
