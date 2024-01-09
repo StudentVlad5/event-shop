@@ -19,6 +19,7 @@ const AdminPage = () => {
   const [specialists, setSpecialists] = useState([]);
   const [events, setEvents] = useState([]);
   const [active_events, setActive_events] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const AdminPage = () => {
         if (!data) {
           return onFetchError('Whoops, something went wrong');
         }
-        setActive_events(data);
+        setOrders(data);
       } catch (error) {
         setError(error);
       } finally {
@@ -122,7 +123,7 @@ const AdminPage = () => {
       <SEO title="Administration" description="Page Administration" />
       {isLoading ? onLoading() : onLoaded()}
       {error && onFetchError('Whoops, something went wrong')}
-      <Topbar/>
+      <Topbar orders={orders} active_events={active_events}/>
       <AdminContainer>
         <Sidebar />
         <Outlet />
