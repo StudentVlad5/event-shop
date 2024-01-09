@@ -272,6 +272,29 @@ async function deleteActiveEventData(pathParams, body) {
   });
 }
 
+// ==== ORDERS ==== //
+
+async function updateOrderData(pathParams, body) {
+  return await axios.post(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+async function deleteOrderData(pathParams, body) {
+  return await axios.delete(`${BASE_URL}${pathParams}`, body, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+      "Access-Control-Expose-Headers": "Content-Range",
+    },
+  });
+}
+
 // IMAGES
 
 async function createImg(pathParams, body, file) {
@@ -378,6 +401,15 @@ deleteActiveEventData.propTypes = {
   pathParams: PropTypes.string.isRequired,
   formData: PropTypes.string.isRequired,
 };
+updateOrderData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
+
+deleteOrderData.propTypes = {
+  pathParams: PropTypes.string.isRequired,
+  formData: PropTypes.string.isRequired,
+};
 
 createImg.propTypes = {
   pathParams: PropTypes.string.isRequired,
@@ -404,5 +436,7 @@ export {
   updateActiveEventData,
   deleteActiveEventData,
   createActiveEventData,
+  updateOrderData,
+  deleteOrderData,
   createImg,
 };

@@ -1,9 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { Admin } from 'components/Admin';
 import React, { useEffect, useState } from 'react';
 import { SEO } from 'utils/SEO';
 import { fetchData } from 'services/APIservice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AdminContainer } from './Pages.styled';
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
@@ -11,12 +10,16 @@ import { getCategory } from '../../redux/category/operation';
 import { getSpecialists } from '../../redux/specialists/operation';
 import { getEvents } from '../../redux/events/operation';
 import { getActiveEvents } from '../../redux/activate_events/operation';
+import Topbar from 'components/Admin/global/Topbar';
+import Sidebar from 'components/Admin/global/Sidebar';
+import { getOrders } from '../../redux/orders/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
   const [specialists, setSpecialists] = useState([]);
   const [events, setEvents] = useState([]);
   const [active_events, setActive_events] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -94,6 +97,24 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/orders`);
+        dispatch(getOrders({ ...data }));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setOrders(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -102,8 +123,9 @@ const AdminPage = () => {
       <SEO title="Administration" description="Page Administration" />
       {isLoading ? onLoading() : onLoaded()}
       {error && onFetchError('Whoops, something went wrong')}
+      <Topbar orders={orders} active_events={active_events}/>
       <AdminContainer>
-        <Admin />
+        <Sidebar />
         <Outlet />
       </AdminContainer>
     </>
