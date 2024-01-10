@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   -moz-osx-font-smoothing: grayscale;
  
   background-color: ${theme.colors.fon};
-  color:${theme.colors.grey};
+  color:${theme.colors.grey2};
 
   &.scroll {
       max-height: 100vh;
@@ -26,7 +26,7 @@ export const GlobalStyle = createGlobalStyle`
 
 @font-face {
   font-family: 'Miama Nueva';
-  src: url('../../../../public/fonts/ofont.ru_Miama Nueva.ttf') format('truetype');
+  src: url('../../../../public/fonts/ofont.ru_Miama Nueva.ttf') format('ttf');
 }
   
 //-----reset-----//
@@ -76,12 +76,53 @@ img {
       height: 0;
   }
 }
+
+//-----Swiper-----//
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  height:auto !important;
+  text-align: center;
+  font-size: 18px;
+  background: ${theme.colors.fon};
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+}
+
+.swiper-button-next::after {
+color:${theme.colors.primary} !important;
+}
+
+.swiper-button-prev::after {
+color:${theme.colors.primary} !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-pagination-bullet {
+  top: var(--swiper-navigation-sides-offset,10px) !important;
+  bottom:var(--swiper-navigation-sides-offset,10px) !important;
+  /* transform: scale(1.1); */
+}
+
+//-----Admin-----//
+
 .specialistAvatar,
 .img-app-theme--cell > img {
 width: 40px;
 height: 40px;
 border-radius: 50%;
 }
+
 .inputSpecialistAvatar,
 .inputEventAvatar {
   display: none;
@@ -98,9 +139,13 @@ border-radius: 50%;
   border-radius: 50%;
 }
 }
+
 .img-app-theme--cell{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.pro-sidebar {
+  z-index: 100 !important;
 }
 `;

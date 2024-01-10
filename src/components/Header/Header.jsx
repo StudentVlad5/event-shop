@@ -9,7 +9,7 @@ import {
   SHeader,
   HeaderContainer,
   Navigation,
-  WrapText,
+  Wrap,
   MenuBtn,
 } from './Header.styled';
 
@@ -77,24 +77,24 @@ export const Header = () => {
               </li>
             </ul>
           </Navigation>
-          <WrapText>
+          <Wrap>
             <Language />
-          </WrapText>
-          <MenuBtn
-            type="button"
-            aria-label="Switch mobile menu"
-            aria-expanded="false"
-            aria-controls="mobile-menu"
-            onClick={toggleModal}
-          >
-            <svg width="30" height="30">
-              {!showMenu ? (
-                <use href={sprite + '#menu_40px'}></use>
-              ) : (
-                <use href={sprite + '#close_40px'}></use>
-              )}
-            </svg>
-          </MenuBtn>
+            <MenuBtn
+              type="button"
+              aria-label="Switch mobile menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              onClick={toggleModal}
+            >
+              <svg width="30" height="30">
+                {!showMenu ? (
+                  <use href={sprite + '#menu_40px'}></use>
+                ) : (
+                  <use href={sprite + '#close_40px'}></use>
+                )}
+              </svg>
+            </MenuBtn>
+          </Wrap>
         </HeaderContainer>
       </SHeader>
       {showMenu && <Menu onClose={toggleModal} />}

@@ -29,11 +29,11 @@ export const TextWrapper = styled.div`
   align-items: center;
   gap: 16px;
 
-  width: calc(100% - 120px);
+  width: calc(100% - 60px);
   height: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    width: calc(100% - 200px);
+    width: calc(100% - 80px);
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {

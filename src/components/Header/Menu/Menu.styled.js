@@ -5,7 +5,7 @@ export const MobileMenu = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 11;
+  z-index: 14;
 
   display: flex;
   flex-direction: column;
@@ -45,7 +45,8 @@ export const MobileNavigation = styled.nav`
       text-decoration: none;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &.active {
         padding-bottom: 1px;
         border-bottom: 1px solid ${theme.colors.grey2};
       }

@@ -11,11 +11,12 @@ import {
   Section,
   Title,
 } from 'components/baseStyles/CommonStyle.styled';
+import { BtnLink } from 'components/baseStyles/Button.styled';
 import {
-  BtnLink,
   BtnMore,
   Describe,
   DetailsWrapper,
+  ImgBox,
   ItemImg,
   Name,
   TeamList,
@@ -79,20 +80,22 @@ export const Team = () => {
             {specialists.slice(0, limit).map(specialist => {
               return (
                 <TeamListItem key={specialist.specialistId}>
-                  <ItemImg
-                    src={
-                      specialist.image
-                        ? BASE_URL_IMG +
-                          specialist.image.split('/')[
-                            specialist.image.split('/').length - 1
-                          ]
-                        : defaultImg
-                    }
-                    alt={specialist.name}
-                    width="221"
-                    height="221"
-                    loading="lazy"
-                  ></ItemImg>
+                  <ImgBox>
+                    <ItemImg
+                      src={
+                        specialist.image
+                          ? BASE_URL_IMG +
+                            specialist.image.split('/')[
+                              specialist.image.split('/').length - 1
+                            ]
+                          : defaultImg
+                      }
+                      alt={specialist.name}
+                      width="221"
+                      height="221"
+                      loading="lazy"
+                    ></ItemImg>
+                  </ImgBox>
                   <DetailsWrapper>
                     <Name>{specialist.name}</Name>
                     <Describe>
@@ -100,7 +103,7 @@ export const Team = () => {
                         ? specialist.description.slice(0, 100) + ' ...'
                         : specialist.description}
                     </Describe>
-                    <BtnLink to={`/specialists/${specialist._id}`}>
+                    <BtnLink to={`/specialists/${specialist.specialistId}`}>
                       <span>{t('Детальніше')}</span>
                     </BtnLink>
                   </DetailsWrapper>

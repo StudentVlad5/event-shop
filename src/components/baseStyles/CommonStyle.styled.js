@@ -45,6 +45,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
+  margin-bottom: 30px;
+
   font-family: ${theme.fonts[1]};
   font-size: 28px;
   font-style: normal;
@@ -61,6 +63,7 @@ const Title = styled.h1`
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    margin-bottom: 45px;
     font-size: 40px;
   }
 `;
