@@ -3,6 +3,9 @@ export const theme = {
     mobile: '375px',
     tablet: '768px',
     desktop: '1440px',
+    mobile_only: '374.98px',
+    tablet_only: '767.98px',
+    desktop_only: '1439.98px',
   },
   fonts: ['Playfair Display, serif', 'Miama Nueva, sans-serif'],
   fontSizes: {

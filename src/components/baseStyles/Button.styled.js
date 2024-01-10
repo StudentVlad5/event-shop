@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
 
@@ -10,18 +11,19 @@ export const BtnLight = styled.button`
   padding: 13px 23px;
   margin: 0 auto;
 
-  font-family: ${theme.fonts[1]};
+  font-family: ${theme.fonts[0]};
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  color: ${props => props.theme.black};
+  color: ${theme.colors.black};
   text-transform: uppercase;
 
-  background-color: ${props => props.theme.fon};
-  border: 1px solid ${props => props.theme.fon};
+  background-color: ${theme.colors.fon};
+  border: 1px solid ${theme.colors.fon};
   border-radius: 80px;
   cursor: pointer;
+  transition: ${theme.transition};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 14px;
@@ -34,78 +36,30 @@ export const BtnLight = styled.button`
 
   &:hover,
   &:focus {
-    background-color: ${props => props.theme.grey};
-    border: 1px solid ${props => props.theme.grey};
+    background-color: ${theme.colors.grey1};
+    border: 1px solid ${theme.colors.grey1};
   }
 `;
 
-export const BtnGrey = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const BtnLink = styled(NavLink)`
+  position: relative;
+  padding: 2px;
 
-  padding: 17px 27px;
-  margin: 0 auto;
-  width: 100%;
-
+  color: ${theme.colors.grey1};
   font-family: ${theme.fonts[0]};
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 1.6px;
-  color: ${props => props.theme.white};
-  text-transform: uppercase;
-  letter-spacing: 1.6px;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
 
-  background-color: ${props => props.theme.grey};
-  border-radius: 80px;
-  cursor: pointer;
+  transition: ${theme.transition};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 14px;
-    padding: 27px 32px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 16px;
   }
-
-  &:hover,
-  &:focus {
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.black};
-  }
-`;
-
-export const AnimationBtn = styled.button`
-  position: relative;
-  display: block;
-  margin: 0 auto;
-  padding: 2px;
-
-  color: ${props => props.theme.white};
-  font-family: ${theme.fonts[0]};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32.004px; /* 160.02% */
-  text-transform: uppercase;
-
-  background-color: transparent;
-  border: none;
-  /* border-bottom: 1px solid ${props => props.theme.white}; */
-  transition: ${theme.transition};
-
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 20px;
-  }
-  /* 
-  &:hover,
-  &:focus {
-    color: ${props => props.theme.grey};
-    border-bottom: 1px solid ${props => props.theme.grey};
-  } */
 
   &::before,
   &::after,
@@ -117,7 +71,7 @@ export const AnimationBtn = styled.button`
     bottom: 0;
     left: -16px;
     width: 1px;
-    background: ${props => props.theme.white};
+    background: ${theme.colors.accent};
     transition: ${theme.transition};
   }
 
@@ -126,8 +80,8 @@ export const AnimationBtn = styled.button`
     left: -16px;
     width: auto;
     background: 0;
-    border-right: 1px solid ${props => props.theme.white};
-    border-left: 1px solid ${props => props.theme.white};
+    border-right: 1px solid ${theme.colors.accent};
+    border-left: 1px solid ${theme.colors.accent};
   }
 
   &::after {
@@ -140,11 +94,10 @@ export const AnimationBtn = styled.button`
   & span {
     position: relative;
     display: inline-block;
-    padding: 2px;
 
     &::before,
     &::after {
-      top: 0;
+      top: -2px;
       left: auto;
       right: auto;
       width: 0;
@@ -164,7 +117,7 @@ export const AnimationBtn = styled.button`
   &:hover,
   &:focus {
     &::before {
-      top: 2px;
+      top: 0;
     }
     &::after {
       right: -16px;
@@ -173,7 +126,7 @@ export const AnimationBtn = styled.button`
 
     & span::before,
     & span::after {
-      width: 50%;
+      width: 60%;
     }
   }
 `;

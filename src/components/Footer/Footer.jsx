@@ -56,7 +56,7 @@ export const Footer = () => {
           </Contacts>
         </ContactsBox>
         <CopyrightBox>
-          <Copyright> &#169; 2023 BloomSkill</Copyright>
+          <Copyright> &#169; 2023 | All Rights Reserved |</Copyright>
           <Developers>
             <span>Designed and Developed by </span>
             <a

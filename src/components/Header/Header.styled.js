@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { theme } from "components/baseStyles/Variables.styled";
-import { Container } from "components/baseStyles/CommonStyle.styled";
+import styled from 'styled-components';
+import { theme } from 'components/baseStyles/Variables.styled';
+import { Container } from 'components/baseStyles/CommonStyle.styled';
 
 export const SHeader = styled.header`
   position: fixed;
@@ -9,15 +9,15 @@ export const SHeader = styled.header`
   right: 0;
   z-index: 215;
 
-  width: 100vw;
-  padding: 20px 50px;
+  /* width: 100vw; */
+  padding: 20px;
 
   background-color: ${theme.colors.fon};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: ${theme.breakpoints.desktop};
     margin: 0 auto;
-    padding: 30px 50px;
+    padding: 20px 50px;
   }
 `;
 
@@ -27,6 +27,7 @@ export const HeaderContainer = styled(Container)`
   justify-content: space-between;
   align-content: center;
   text-align: left;
+  padding: 0;
 `;
 
 export const Navigation = styled.nav`
@@ -53,7 +54,8 @@ export const Navigation = styled.nav`
       text-decoration: none;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &.active {
         padding-bottom: 1px;
         border-bottom: 1px solid ${theme.colors.grey2};
       }
@@ -61,19 +63,25 @@ export const Navigation = styled.nav`
   }
 `;
 
-export const WrapText = styled.div`
-  display: none;
+export const Wrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    display: block;
   }
 `;
 
 export const MenuBtn = styled.button`
-  position: fixed;
+  /* position: fixed;
+  top: 20px;
+  right: 20px; */
+  z-index: 15;
+
+  /* position: fixed;
   top: 15px;
   right: 50px;
-  z-index: 215;
+  z-index: 215; */
 
   display: flex;
   justify-content: center;

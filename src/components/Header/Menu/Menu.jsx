@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { Logo } from '../Logo/Logo';
-import Language from '../Language/Language';
+// import { Logo } from '../Logo/Logo';
+// import Language from '../Language/Language';
 import { MobileMenu, MobileNavigation } from './Menu.styled';
 
 export const Menu = ({ onClose }) => {
@@ -47,7 +47,7 @@ export const Menu = ({ onClose }) => {
           </li>
         </ul>
       </MobileNavigation>
-      <Language />
+      {/* <Language /> */}
     </MobileMenu>
   );
 };
