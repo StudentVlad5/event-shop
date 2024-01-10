@@ -145,4 +145,7 @@ border-radius: 50%;
   justify-content: center;
   align-items: center;
 }
+.pro-sidebar {
+  z-index: 100 !important;
+}
 `;

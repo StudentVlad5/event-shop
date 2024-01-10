@@ -6,7 +6,7 @@ import { openModalWindow } from 'hooks/ModalWindow';
 import { BackButton } from 'helpers/BackLink/BackLink';
 import { BASE_URL_IMG } from 'helpers/constants';
 import { EventsSection } from '../Events.styled';
-// import { RegisterModal } from '../RegisterModal/RegisterModal';
+import { RegisterModal } from '../RegisterModal/RegisterModal';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
 import { BtnLight } from 'components/baseStyles/Button.styled';
 import {
@@ -32,11 +32,11 @@ export const EventDetails = ({ event }) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.currentTarget.dataset.modal === 'event') {
-      // dispatch(
-      //   addModal({
-      //     modal: e.currentTarget.dataset.modal,
-      //   })
-      // );
+      dispatch(
+        addModal({
+          modal: e.currentTarget.dataset.modal,
+        })
+      );
       setTimeout(() => openModalWindow(e, null), 200);
     }
   };
@@ -98,7 +98,7 @@ export const EventDetails = ({ event }) => {
           </BtnLight>
         </Container>
       </EventsSection>
-      {/* <RegisterModal event={event} /> */}
+      <RegisterModal event={event} />
     </>
   );
 };

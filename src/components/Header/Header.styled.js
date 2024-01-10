@@ -7,7 +7,7 @@ export const SHeader = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 15;
+  z-index: 215;
 
   /* width: 100vw; */
   padding: 20px;
@@ -77,6 +77,11 @@ export const MenuBtn = styled.button`
   top: 20px;
   right: 20px; */
   z-index: 15;
+
+  /* position: fixed;
+  top: 15px;
+  right: 50px;
+  z-index: 215; */
 
   display: flex;
   justify-content: center;
