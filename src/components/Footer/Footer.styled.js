@@ -68,6 +68,7 @@ export const Contacts = styled.div`
     & a {
       color: ${theme.colors.grey2};
       text-decoration: none;
+      transition: ${theme.transition};
 
       &:hover,
       &:focus {
@@ -120,6 +121,7 @@ export const Developers = styled.div`
     font-weight: 500;
     color: ${theme.colors.black};
     text-decoration: none;
+    transition: ${theme.transition};
 
     &:hover,
     &:focus {

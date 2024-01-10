@@ -45,7 +45,8 @@ export const MobileNavigation = styled.nav`
       text-decoration: none;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &.active {
         padding-bottom: 1px;
         border-bottom: 1px solid ${theme.colors.grey2};
       }
