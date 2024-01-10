@@ -70,7 +70,7 @@ const Title = styled.h1`
 
 const Headline = styled.h2`
   font-family: ${theme.fonts[0]};
-  font-size: 36px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: 35px;
@@ -79,7 +79,7 @@ const Headline = styled.h2`
   color: ${theme.colors.grey1};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 48px;
+    font-size: 36px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
@@ -90,10 +90,10 @@ const Headline = styled.h2`
 
 const Subtitle = styled.p`
   font-family: ${theme.fonts[0]};
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 24px; /* 150% */
   text-align: center;
 
   color: ${props => (props.$white ? theme.colors.white : theme.colors.grey2)};

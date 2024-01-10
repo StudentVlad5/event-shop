@@ -25,14 +25,6 @@ export const StyledForm = styled(Form)`
   align-items: center;
   gap: 20px;
   margin: 0 auto;
-
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    gap: 30px;
-  }
-
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    gap: 40px;
-  }
 `;
 
 export const FormList = styled.div`
@@ -67,7 +59,7 @@ export const FormLabel = styled.label`
   line-height: 16px; /* 80% */
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.grey1};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 16px;
@@ -136,9 +128,9 @@ export const FormInput = styled(Field)`
   line-height: 16px; /* 100% */
   letter-spacing: 1.6px;
   /* text-transform: capitalize; */
-  color: ${props => props.theme.black_text};
+  color: ${theme.colors.grey2};
 
-  background: ${props => props.theme.white_fon};
+  background: ${theme.colors.white};
   border: none;
   border-radius: 14px;
   transition: ${theme.transition};
@@ -160,7 +152,7 @@ export const FormInput = styled(Field)`
   }
 
   &::placeholder {
-    color: ${props => props.theme.grey};
+    color: ${theme.colors.grey2};
   }
 
   &:hover,
@@ -200,7 +192,7 @@ export const Span = styled.span`
   text-transform: uppercase;
   pointer-events: none;
 
-  transition: ${theme.transition[0]};
+  transition: ${theme.transition};
 `;
 
 export const IconValid = styled(FaCheck)`
@@ -255,5 +247,5 @@ export const Error = styled.span`
   font-weight: 400;
   font-size: 8px;
   text-align: right;
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.red};
 `;

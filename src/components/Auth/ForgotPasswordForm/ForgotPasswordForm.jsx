@@ -22,6 +22,7 @@ import {
   Error,
   FormField,
 } from 'components/baseStyles/Form.styled.js';
+import { BtnLight } from 'components/baseStyles/Button.styled.js';
 
 const ForgotPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -99,16 +100,16 @@ const ForgotPasswordForm = () => {
               ) : null}
             </FormField>
 
-            <Btn
+            <BtnLight
               style={{ height: 'auto' }}
               type="submit"
               disabled={isValid}
               aria-label="submit to change password"
             >
               {isLoading ? 'Loading' : 'Change'}{' '}
-            </Btn>
+            </BtnLight>
             <BoxText>
-              <span>{'Already have an account?'}</span>{' '}
+              <span>{'Already have an account?'}</span>
               <StyledLink to="/login">{'Log In'}</StyledLink>
             </BoxText>
           </FormStyled>

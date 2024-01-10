@@ -45,21 +45,23 @@ export const Team = () => {
           return onFetchError('Whoops, something went wrong');
         }
         let langData = [];
-        data.map(it => {
-          let item = [
-            {
-              _id: it._id,
-              specialistId: it.specialistId,
-              status: it.status,
-              phone: it.phone,
-              email: it.email,
-              ...it[selectedLanguage],
-              rating: it.rating,
-              image: it.image,
-            },
-          ];
-          langData.push(item[0]);
-        });
+        data
+          .filter(item => item.status === 'active')
+          .map(it => {
+            let item = [
+              {
+                _id: it._id,
+                specialistId: it.specialistId,
+                status: it.status,
+                phone: it.phone,
+                email: it.email,
+                ...it[selectedLanguage],
+                rating: it.rating,
+                image: it.image,
+              },
+            ];
+            langData.push(item[0]);
+          });
         setSpecialists(langData);
       } catch (error) {
         setError(error);
