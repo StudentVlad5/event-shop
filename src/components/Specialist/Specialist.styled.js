@@ -54,15 +54,18 @@ export const FormList = styled(Form)`
 `;
 
 export const FieldsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: 20px;
   width: 100%;
 
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    flex-direction: row;
-    justify-content: space-between;
     gap: 70px;
   }
 
@@ -78,7 +81,9 @@ export const FormLabel = styled.label`
   position: relative;
   display: flex;
   flex-direction: column;
+
   width: 100%;
+  height: 100%;
 `;
 
 export const FormName = styled.span`
@@ -186,6 +191,7 @@ export const FormBtn = styled.button`
 `;
 
 export const FormInputMessage = styled.textarea`
+  height: 100%;
   padding: 8px 30px 8px 20px;
 
   font-family: ${theme.fonts[0]};
