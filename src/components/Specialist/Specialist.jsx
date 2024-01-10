@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { useEffect, useState, useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import { fetchData } from 'services/APIservice';
+import { fetchData, createData } from 'services/APIservice';
+import { addMessages } from '../../redux/messages/operation';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
@@ -50,23 +52,14 @@ import {
 } from 'components/Home/TopSpecialists/TopSpecialists.styled';
 
 export const Specialist = ({ specialist }) => {
-  const {
-    _id,
-    specialistId,
-    rating,
-    email,
-    phone,
-    status,
-    image,
-    description,
-    name,
-  } = specialist;
+  const { specialistId, image, description, name } = specialist;
   const [events, setEvents] = useState([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async function getData() {
@@ -105,6 +98,21 @@ export const Specialist = ({ specialist }) => {
       }
     })();
   }, [selectedLanguage]);
+
+  async function createMessage(values) {
+    setIsLoading(true);
+    try {
+      const { data } = await createData(`/messages`, values);
+      dispatch(addMessages({ ...data }));
+      if (!data) {
+        return onFetchError('Whoops, something went wrong');
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const widthWindow = window.innerWidth;
 
@@ -301,8 +309,8 @@ export const Specialist = ({ specialist }) => {
             message: '',
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            createMessage(values);
             setSubmitting(false);
-            onSuccess('Your message sent');
             resetForm();
           }}
           enableReinitialize={true}
