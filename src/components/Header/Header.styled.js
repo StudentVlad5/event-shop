@@ -1,13 +1,13 @@
-import styled from 'styled-components';
-import { theme } from 'components/baseStyles/Variables.styled';
-import { Container } from 'components/baseStyles/CommonStyle.styled';
+import styled from "styled-components";
+import { theme } from "components/baseStyles/Variables.styled";
+import { Container } from "components/baseStyles/CommonStyle.styled";
 
 export const SHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 15;
+  z-index: 215;
 
   width: 100vw;
   padding: 20px 50px;
@@ -73,7 +73,7 @@ export const MenuBtn = styled.button`
   position: fixed;
   top: 15px;
   right: 50px;
-  z-index: 15;
+  z-index: 215;
 
   display: flex;
   justify-content: center;
