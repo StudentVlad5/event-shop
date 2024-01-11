@@ -83,6 +83,12 @@ img {
   height: 100%;
 }
 
+.swiper-wrapper {
+ @media screen and (min-width: ${theme.breakpoints.desktop}) { 
+  justify-content: center !important;
+}
+}
+
 .swiper-slide {
   height:auto !important;
   text-align: center;

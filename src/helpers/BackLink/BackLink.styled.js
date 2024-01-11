@@ -9,21 +9,26 @@ const GoBack = styled(Link)`
   align-items: center;
   gap: 5px;
 
-  font-family: inherit;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 1.33;
-  color: ${props => props.theme.white_text};
-  text-decoration: none;
-  text-transform: uppercase;
+  margin-right: auto;
+
+  font-family: ${theme.fonts[0]};
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  color: ${theme.colors.grey2};
 
   background-color: transparent;
   cursor: pointer;
 
   &:hover,
   &:focus {
-    color: ${props => props.theme.grey};
+    color: ${theme.colors.accent};
+  }
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 24px;
   }
 `;
 

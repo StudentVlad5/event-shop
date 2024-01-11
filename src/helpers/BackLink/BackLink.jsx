@@ -6,7 +6,7 @@ import { GoBack } from './BackLink.styled';
 export const BackButton = ({ to, children }) => {
   return (
     <GoBack to={to}>
-      <HiArrowLeft size="10" />
+      <HiArrowLeft size={16} />
       {children}
     </GoBack>
   );

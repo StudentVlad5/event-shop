@@ -5,7 +5,7 @@ import { SEO } from 'utils/SEO';
 import { fetchData } from 'services/APIservice';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { Specialist } from 'components/Team/Specialist/Specialist';
+import { Specialist } from 'components/Specialist/Specialist';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 
 const SpecialistPage = () => {
@@ -36,7 +36,7 @@ const SpecialistPage = () => {
             image: data.image,
           },
         ];
-        setSpecialist(langData);
+        setSpecialist(langData[0]);
         if (!data) {
           return onFetchError(t('Whoops, something went wrong'));
         }

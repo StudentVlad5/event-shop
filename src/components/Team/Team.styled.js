@@ -72,6 +72,7 @@ export const Name = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 28.8px */
+  text-transform: capitalize;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 24px;
@@ -84,7 +85,7 @@ export const Describe = styled.p`
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 24px */
+  line-height: 24px; /* 150% */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 16px;
