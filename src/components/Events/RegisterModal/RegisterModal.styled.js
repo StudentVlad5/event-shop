@@ -56,9 +56,11 @@ export const FormLabel = styled.label`
   height: 100%;
 `;
 
+// export const SEventDate = styled.span`
+//   line-height: normal;
+//   color: ${theme.colors.grey1};
 export const FormName = styled.span`
   margin-bottom: 15px;
-
   font-family: ${theme.fonts[0]};
   font-size: 20px;
   font-style: normal;
