@@ -8,6 +8,9 @@ import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { EventsSection, Heading } from './Events.styled';
 import { Container, Title } from 'components/baseStyles/CommonStyle.styled';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
+import Calendar from "./Calendar/calendar";
+import Details from "./Calendar/details";
+
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
@@ -58,11 +61,21 @@ export const Events = () => {
     })();
   }, [selectedLanguage]);
 
+  const [showDetails, setShowDetails] = useState(false);
+  const [data, setData] = useState(null);
+
+  const showDetailsHandle = (dayStr) => {
+    setData(dayStr);
+    setShowDetails(true);
+  };
+
   return (
     <EventsSection>
       <Container>
         <Title>{t('Events calendar')}</Title>
-
+        <Calendar showDetailsHandle={showDetailsHandle} />
+        <br />
+        {showDetails && <Details data={data} />}
         <Heading>{t('Upcoming club meetings')}</Heading>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
