@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/event-shop/static/css/main.7cda0caf.css",
-    "main.js": "/event-shop/static/js/main.160ce60d.js",
+    "main.js": "/event-shop/static/js/main.95ae14b8.js",
     "static/css/825.cde24586.chunk.css": "/event-shop/static/css/825.cde24586.chunk.css",
     "static/js/825.f3c2ea89.chunk.js": "/event-shop/static/js/825.f3c2ea89.chunk.js",
     "static/js/571.f455160d.chunk.js": "/event-shop/static/js/571.f455160d.chunk.js",
@@ -9,7 +9,7 @@
     "static/js/323.16c59535.chunk.js": "/event-shop/static/js/323.16c59535.chunk.js",
     "static/css/638.cde24586.chunk.css": "/event-shop/static/css/638.cde24586.chunk.css",
     "static/js/638.d0c5ceb1.chunk.js": "/event-shop/static/js/638.d0c5ceb1.chunk.js",
-    "static/js/394.4ac4ef02.chunk.js": "/event-shop/static/js/394.4ac4ef02.chunk.js",
+    "static/js/538.21256c4d.chunk.js": "/event-shop/static/js/538.21256c4d.chunk.js",
     "static/js/150.63d6932c.chunk.js": "/event-shop/static/js/150.63d6932c.chunk.js",
     "static/js/528.ff72ffb3.chunk.js": "/event-shop/static/js/528.ff72ffb3.chunk.js",
     "static/css/66.6f7d8cde.chunk.css": "/event-shop/static/css/66.6f7d8cde.chunk.css",
@@ -19,6 +19,7 @@
     "static/js/41.f8d06d71.chunk.js": "/event-shop/static/js/41.f8d06d71.chunk.js",
     "static/js/75.272f81ed.chunk.js": "/event-shop/static/js/75.272f81ed.chunk.js",
     "static/js/617.f33788bd.chunk.js": "/event-shop/static/js/617.f33788bd.chunk.js",
+    "static/js/56.d510e855.chunk.js": "/event-shop/static/js/56.d510e855.chunk.js",
     "static/js/110.c4f30a11.chunk.js": "/event-shop/static/js/110.c4f30a11.chunk.js",
     "static/js/828.4f0f3f0e.chunk.js": "/event-shop/static/js/828.4f0f3f0e.chunk.js",
     "static/media/hero_desk@2x.png": "/event-shop/static/media/hero_desk@2x.7f7cb33ee0296aeaea61.png",
@@ -38,7 +39,7 @@
     "static/media/No-image-available.webp": "/event-shop/static/media/No-image-available.12543cbbce5122e5ed0d.webp",
     "index.html": "/event-shop/index.html",
     "main.7cda0caf.css.map": "/event-shop/static/css/main.7cda0caf.css.map",
-    "main.160ce60d.js.map": "/event-shop/static/js/main.160ce60d.js.map",
+    "main.95ae14b8.js.map": "/event-shop/static/js/main.95ae14b8.js.map",
     "825.cde24586.chunk.css.map": "/event-shop/static/css/825.cde24586.chunk.css.map",
     "825.f3c2ea89.chunk.js.map": "/event-shop/static/js/825.f3c2ea89.chunk.js.map",
     "571.f455160d.chunk.js.map": "/event-shop/static/js/571.f455160d.chunk.js.map",
@@ -46,7 +47,7 @@
     "323.16c59535.chunk.js.map": "/event-shop/static/js/323.16c59535.chunk.js.map",
     "638.cde24586.chunk.css.map": "/event-shop/static/css/638.cde24586.chunk.css.map",
     "638.d0c5ceb1.chunk.js.map": "/event-shop/static/js/638.d0c5ceb1.chunk.js.map",
-    "394.4ac4ef02.chunk.js.map": "/event-shop/static/js/394.4ac4ef02.chunk.js.map",
+    "538.21256c4d.chunk.js.map": "/event-shop/static/js/538.21256c4d.chunk.js.map",
     "150.63d6932c.chunk.js.map": "/event-shop/static/js/150.63d6932c.chunk.js.map",
     "528.ff72ffb3.chunk.js.map": "/event-shop/static/js/528.ff72ffb3.chunk.js.map",
     "66.6f7d8cde.chunk.css.map": "/event-shop/static/css/66.6f7d8cde.chunk.css.map",
@@ -56,11 +57,12 @@
     "41.f8d06d71.chunk.js.map": "/event-shop/static/js/41.f8d06d71.chunk.js.map",
     "75.272f81ed.chunk.js.map": "/event-shop/static/js/75.272f81ed.chunk.js.map",
     "617.f33788bd.chunk.js.map": "/event-shop/static/js/617.f33788bd.chunk.js.map",
+    "56.d510e855.chunk.js.map": "/event-shop/static/js/56.d510e855.chunk.js.map",
     "110.c4f30a11.chunk.js.map": "/event-shop/static/js/110.c4f30a11.chunk.js.map",
     "828.4f0f3f0e.chunk.js.map": "/event-shop/static/js/828.4f0f3f0e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7cda0caf.css",
-    "static/js/main.160ce60d.js"
+    "static/js/main.95ae14b8.js"
   ]
 }
