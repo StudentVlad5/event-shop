@@ -52,7 +52,7 @@ export const SDetailsWrapper = styled.div`
 
 export const SEventDate = styled.span`
   line-height: normal;
-  color: ${theme.colord.grey};
+  color: ${theme.colors.grey2};
   font-family: ${theme.fonts[0]};
   font-size: 14px;
   font-style: normal;

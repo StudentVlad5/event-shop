@@ -12,7 +12,7 @@ import Categories from './Admin/scenes/Categories/categories';
 import Events from './Admin/scenes/Events/events';
 import Activate_events from './Admin/scenes/Activate_events/activate_events';
 import Orders from './Admin/scenes/Orders/orders';
-import Dashboard from './Admin/scenes/Dashboard/dashboard';
+import Messages from './Admin/scenes/Message/message';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -87,9 +87,9 @@ export const App = () => {
                 }
               />
               <Route
-                path="dashboard"
+                path="messages"
                 element={
-                  <PrivateRoute redirectTo="/login" component={<Dashboard />} />
+                  <PrivateRoute redirectTo="/login" component={<Messages />} />
                 }
               />
             </Route>

@@ -13,6 +13,7 @@ import { getActiveEvents } from '../../redux/activate_events/operation';
 import Topbar from 'components/Admin/global/Topbar';
 import Sidebar from 'components/Admin/global/Sidebar';
 import { getOrders } from '../../redux/orders/operation';
+import { getMessages } from '../../redux/messages/operation';
 
 const AdminPage = () => {
   const [category, setCategory] = useState([]);
@@ -20,6 +21,7 @@ const AdminPage = () => {
   const [events, setEvents] = useState([]);
   const [active_events, setActive_events] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -115,6 +117,24 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/messages`);
+        dispatch(getMessages({ ...data }));
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        setMessages(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -123,7 +143,7 @@ const AdminPage = () => {
       <SEO title="Administration" description="Page Administration" />
       {isLoading ? onLoading() : onLoaded()}
       {error && onFetchError('Whoops, something went wrong')}
-      <Topbar orders={orders} active_events={active_events}/>
+      <Topbar orders={orders} active_events={active_events} messages={messages}/>
       <AdminContainer>
         <Sidebar />
         <Outlet />
