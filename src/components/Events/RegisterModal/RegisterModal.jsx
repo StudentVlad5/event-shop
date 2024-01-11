@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 import { MdClose } from 'react-icons/md';
@@ -7,50 +6,46 @@ import { Formik } from 'formik';
 import { closeModalWindow } from '../../../hooks/ModalWindow';
 import { cleanModal } from '../../../redux/modal/operation';
 import { modalComponent } from '../../../redux/modal/selectors';
-// import { register } from 'redux/auth/operations';
-import schemas from 'utils/schemas';
-import { BASE_URL_IMG } from 'helpers/constants';
 import {
-  SBtnLight,
-  SDataPlaceWrapper,
-  SDetailsWrapper,
-  SEventDate,
-  SEventImages,
-  SEventTitle,
-  SelectedEvent,
+  MessageSection,
+  FormInputMessage,
+  FormList,
+  FormLabel,
+  FormName,
+  FormInput,
+  Error,
+  FieldsWrapper,
 } from './RegisterModal.styled';
 import {
-  Error,
-  FormField,
-  FormLabel,
-  FormList,
-  FormTitle,
-  FormInput,
-  StyledForm,
-} from 'components/baseStyles/Form.styled';
+  Title,
+} from 'components/baseStyles/CommonStyle.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';
+import { BtnAccent } from 'components/baseStyles/Button.styled';
+import { createData } from 'services/APIservice';
+import { onLoading, onLoaded } from 'helpers/Loader/Loader';
+import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
 
 export const RegisterModal = ({ event }) => {
   const { t } = useTranslation();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const modal = useSelector(modalComponent);
 
-  const createService = values => {
-    const { name, surname, email, phone, company, position, event } = values;
-    // dispatch(
-    //   register({
-    //     name,
-    //     surname,
-    //     email,
-    //     phone,
-    //     company,
-    //     position,
-    //     event,
-    //   }),
-    // );
-    setIsLoading(false);
-  };
+  async function createOrder(values) {
+    setIsLoading(true);
+    try {
+      const { data } = await createData(`/order`, values);
+      if (!data) {
+        return onFetchError('Whoops, something went wrong');
+      } else { onSuccess('Thank you for your order');}
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const closeDataModal = e => {
     e.preventDefault();
@@ -73,161 +68,98 @@ export const RegisterModal = ({ event }) => {
           >
             <MdClose />
           </CloseBtn>
-          <Formik
-            initialValues={{
-              name: '',
-              surname: '',
-              email: '',
-              phone: '',
-              company: '',
-              position: '',
-              event: event._id,
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              createService(values);
-              dispatch(addReload(false));
-              setSubmitting(false);
-              dispatch(cleanModal());
-              closeDataModal(e);
-            }}
-            enableReinitialize={true}
-            validationSchema={schemas.registerSchema}
-          >
-            {({
-              handleChange,
-              handleSubmit,
-              setFieldValue,
-              isSubmitting,
-              values,
-              errors,
-              touched,
-            }) => (
-              <StyledForm
-                autoComplete="off"
-                onSubmit={handleSubmit}
-                onChange={handleChange}
-              >
-                <FormTitle>{t("Register for the event")}</FormTitle>
-                <FormList>
-                  <FormField>
-                    <FormLabel htmlFor="name">
-                      <span>{t("Name")}</span>
-                      {errors.name && touched.name ? (
-                        <Error>{errors.name}</Error>
-                      ) : null}
-                    </FormLabel>
+          <MessageSection>
+          {isLoading ? onLoading() : onLoaded()}
+        <Title>
+          {t('Реєстрація на подію')} {firstName(name)}?
+        </Title>
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            seats: '',
+          }}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            createOrder(values);
+            setSubmitting(false);
+            resetForm();
+          }}
+          enableReinitialize={true}
+        >
+          {({
+            handleChange,
+            handleSubmit,
+            // setFieldValue,
+            // resetForm,
+            isSubmitting,
+            values,
+            errors,
+            touched,
+          }) => (
+            <FormList
+              autoComplete="off"
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+            >
+              <FieldsWrapper>
+              <FormLabel htmlFor="seats">
+                  <FormName>{t('Місць')}</FormName>
+                  <FormInputMessage
+                    type="text"
+                    name="seats"
+                    id="seats"
+                    placeholder={t('3')}
+                    value={values.seats}
+                    required
+                    // onChange={e => {
+                    //   setFieldValue('message', e.target.value);
+                    // }}
+                  />
+                  {errors.state && touched.state ? (
+                    <Error>{errors.state}</Error>
+                  ) : null}
+                </FormLabel>
+                  <FormLabel htmlFor="name">
+                    <FormName>{t('Ім’я')}</FormName>
                     <FormInput
-                      id="name"
                       type="text"
                       name="name"
-                      placeholder={t("James")}
+                      id="name"
+                      placeholder={name}
                       value={values.name}
+                      required
                     />
-                  </FormField>
-                  <FormField>
-                    <FormLabel htmlFor="surname">
-                      <span>{t("Surname")}</span>
-                      {errors.surname && touched.surname ? (
-                        <Error>{errors.surname}</Error>
-                      ) : null}
-                    </FormLabel>
+                    {errors.name && touched.name ? (
+                      <Error>{errors.name}</Error>
+                    ) : null}
+                  </FormLabel>
+                  <FormLabel htmlFor="email">
+                    <FormName>{t('E-mail')}</FormName>
                     <FormInput
-                      id="surname"
-                      type="text"
-                      name="surname"
-                      placeholder={t("Bond")}
-                      value={values.surname}
-                    />
-                  </FormField>
-                  <FormField>
-                    <FormLabel htmlFor="email">
-                      <span>{t("Email")}</span>
-                      {errors.email && touched.email ? (
-                        <Error>{errors.email}</Error>
-                      ) : null}
-                    </FormLabel>
-                    <FormInput
-                      id="email"
                       type="email"
                       name="email"
-                      placeholder="email@gmail.com"
+                      id="email"
+                      placeholder="test@gmail.com"
                       value={values.email}
+                      required
                     />
-                  </FormField>
-                  <FormField>
-                    <FormLabel htmlFor="phone">
-                      <span>{t("Phone")}</span>
-                      {errors.phone && touched.phone ? (
-                        <Error>{errors.phone}</Error>
-                      ) : null}
-                    </FormLabel>
-                    <FormInput
-                      id="phone"
-                      type="phone"
-                      name="phone"
-                      placeholder="+1234567890"
-                      value={values.phone}
-                    />
-                  </FormField>
-                  <FormField>
-                    <FormLabel htmlFor="company">
-                      <span>{t("Company")}</span>
-                      {errors.company && touched.company ? (
-                        <Error>{errors.company}</Error>
-                      ) : null}
-                    </FormLabel>
-                    <FormInput
-                      id="company"
-                      type="text"
-                      name="company"
-                      placeholder="Brand Maze"
-                      value={values.company}
-                    />
-                  </FormField>
-                  <FormField>
-                    <FormLabel htmlFor="position">
-                      <span>{t("Position")}</span>
-                      {errors.position && touched.position ? (
-                        <Error>{errors.position}</Error>
-                      ) : null}
-                    </FormLabel>
-                    <FormInput
-                      id="position"
-                      type="text"
-                      name="position"
-                      placeholder="CEO"
-                      value={values.position}
-                    />
-                  </FormField>
-                </FormList>
-                <SelectedEvent>
-                  <SEventImages
-                    src={event.image ? BASE_URL_IMG + event.image : defaultImg}
-                    alt={event.title}
-                    width="325"
-                    height="322"
-                    loading="lazy"
-                  />
-                  <SDetailsWrapper>
-                    <SDataPlaceWrapper>
-                      <SEventDate>
-                        {new Date(event.date).toLocaleDateString()}
-                      </SEventDate>
-                      <SEventDate>{event.location}</SEventDate>
-                    </SDataPlaceWrapper>
-                    <SEventTitle>{event.title}</SEventTitle>
-                  </SDetailsWrapper>
-                </SelectedEvent>
-                <SBtnLight
-                  type="submit"
-                  disabled={isSubmitting}
-                  aria-label="Submit"
-                >
-                  {t("Send")}
-                </SBtnLight>
-              </StyledForm>
-            )}
-          </Formik>
+                    {errors.email && touched.email ? (
+                      <Error>{errors.email}</Error>
+                    ) : null}
+                  </FormLabel>
+ 
+              </FieldsWrapper>
+              <BtnAccent
+                type="submit"
+                disabled={isSubmitting}
+                aria-label="Submit"
+              >
+                {t('Надіслати')}
+              </BtnAccent>
+            </FormList>
+          )}
+        </Formik>
+      </MessageSection>
         </Modal>
       </Backdrop>
     ),
@@ -238,16 +170,5 @@ export const RegisterModal = ({ event }) => {
 RegisterModal.propTypes = {
   event: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    duration: PropTypes.string,
-    location: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    plan: PropTypes.any,
-    speakers: PropTypes.any.isRequired,
-    moderator: PropTypes.string,
-    packages: PropTypes.array.isRequired,
-    image: PropTypes.string,
   }),
 };

@@ -3,12 +3,13 @@ import { Box, IconButton} from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import EmailIcon from '@mui/icons-material/Email';
 import { useDispatch } from 'react-redux';
 import { logOut } from "../../../redux/auth/operations";
 import PropTypes from 'prop-types';
 
 
-const Topbar = ({orders, active_events}) => {
+const Topbar = ({orders, active_events, messages}) => {
     const dispatch = useDispatch();
 
         // робимо ряд з новими замовленнями
@@ -16,10 +17,19 @@ const Topbar = ({orders, active_events}) => {
         for(const it in orders){
         if(orders[it].status === "new") {ordersNewList.push(orders[it])}
         }
+        // робимо ряд з новими листами
+        let messagesNewList = [];
+        for(const it in messages){
+        if(messages[it].status === "new") {messagesNewList.push(messages[it])}
+        }
 
     return <Box display="flex" justifyContent="end" p={2}>
         {/* ICONS */}
         <Box display="flex">
+        <IconButton>
+            <EmailIcon/>
+            <p>{messagesNewList.length}</p>
+        </IconButton>
         <IconButton>
             <NotificationsOutlinedIcon/>
             <p>{ordersNewList.length}</p>
@@ -40,4 +50,5 @@ export default Topbar
 Topbar.propTypes = {
     orders: PropTypes.any.isRequired,
     active_events: PropTypes.any.isRequired,
+    messages: PropTypes.any.isRequired,
 };
