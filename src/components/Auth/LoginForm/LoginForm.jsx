@@ -8,6 +8,7 @@ import schemas from 'utils/schemas';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
 import { Error, FormField, FormLabel } from 'components/baseStyles/Form.styled';
+import { BtnLight } from 'components/baseStyles/Button.styled';
 import {
   TitleLogin,
   ErrorBox,
@@ -69,11 +70,9 @@ export const LoginForm = () => {
   return (
     <Section>
       <Container>
-        <Formik 
-        validationSchema={schemas.schemasLogin}
-          >
+        <Formik validationSchema={schemas.schemasLogin}>
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
-            <TitleLogin>{t('Log In')}</TitleLogin>
+            <TitleLogin hidden>{t('Log In')}</TitleLogin>
             <FormField>
               <FormLabel htmlFor="email">
                 <span>{t('Email')}</span>
@@ -129,9 +128,13 @@ export const LoginForm = () => {
                   {t('Forgot password?')}
                 </StyledLink>
               </BoxText>
-              <Btn type="submit" disabled={isValid} aria-label="submit log in">
+              <BtnLight
+                type="submit"
+                disabled={isValid}
+                aria-label="submit log in"
+              >
                 {isLoading ? 'Loading' : t('Log In')}
-              </Btn>
+              </BtnLight>
             </FormContainer>
           </FormStyled>
         </Formik>

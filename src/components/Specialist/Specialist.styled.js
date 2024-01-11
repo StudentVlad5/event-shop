@@ -3,6 +3,36 @@ import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section } from 'components/baseStyles/CommonStyle.styled';
 
+export const DescriptionSection = styled(Section)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    gap: 20px;
+  }
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    gap: 35px;
+  }
+`;
+
+export const Image = styled.img`
+  width: 182px;
+  height: 216px;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    width: 350px;
+    height: 403px;
+  }
+`;
+
+export const EventsSection = styled(Section)`
+  padding-top: 0;
+`;
+
 export const MessageSection = styled(Section)`
   padding-top: 0;
   padding-bottom: 75px;
@@ -56,11 +86,9 @@ export const FormLabel = styled.label`
   height: 100%;
 `;
 
-// export const SEventDate = styled.span`
-//   line-height: normal;
-//   color: ${theme.colors.grey1};
 export const FormName = styled.span`
   margin-bottom: 15px;
+
   font-family: ${theme.fonts[0]};
   font-size: 20px;
   font-style: normal;

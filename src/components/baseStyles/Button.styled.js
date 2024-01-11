@@ -16,11 +16,11 @@ export const BtnLight = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  color: ${theme.colors.black};
+  color: ${theme.colors.grey1};
   text-transform: uppercase;
 
   background-color: ${theme.colors.fon};
-  border: 1px solid ${theme.colors.fon};
+  border: 1px solid ${theme.colors.grey1};
   border-radius: 80px;
   cursor: pointer;
   transition: ${theme.transition};
@@ -36,8 +36,40 @@ export const BtnLight = styled.button`
 
   &:hover,
   &:focus {
-    background-color: ${theme.colors.grey1};
-    border: 1px solid ${theme.colors.grey1};
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.accent};
+    border: 1px solid ${theme.colors.accent};
+  }
+`;
+
+export const BtnAccent = styled.button`
+  min-width: 220px;
+  padding: 13px 23px;
+  margin: 0 auto;
+
+  font-family: ${theme.fonts[0]};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: ${theme.colors.white};
+
+  border-radius: 7px;
+  background: ${theme.colors.accent};
+  border: 1px solid ${theme.colors.accent};
+
+  cursor: pointer;
+  transition: ${theme.transition};
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 20px;
+  }
+
+  &:hover,
+  &:focus {
+    color: ${theme.colors.grey2};
+    background-color: transparent;
+    border: 1px solid ${theme.colors.grey2};
   }
 `;
 

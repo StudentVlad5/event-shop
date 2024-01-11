@@ -51,7 +51,7 @@ export const ShowPassword = styled.span`
   right: 6%;
   top: 80%;
   transform: translateY(-80%);
-  color: ${theme.colors.grey};
+  color: ${theme.colors.grey2};
   cursor: pointer;
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 50px;
@@ -78,12 +78,13 @@ export const Btn = styled(BtnLight)`
   }
 `;
 export const StyledLink = styled(Link)`
-  color: ${theme.colors.white};
+  color: ${theme.colors.grey2};
   transition: ${theme.transition[0]};
   text-decoration: none;
+
   &:hover,
   &:focus {
-    color: ${theme.colors.grey};
+    color: ${theme.colors.accent};
   }
 `;
 export const BoxText = styled.div`
@@ -94,19 +95,21 @@ export const BoxText = styled.div`
   gap: 5px;
   margin-bottom: 16px;
 
-  font-family: ${theme.fonts[0]};
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  color: ${theme.colors.white};
+  & span {
+    font-family: ${theme.fonts[0]};
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: ${theme.colors.grey1};
 
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    font-size: 16px;
-  }
+    @media screen and (min-width: ${theme.breakpoints.tablet}) {
+      font-size: 16px;
+    }
 
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    font-size: 18px;
+    @media screen and (min-width: ${theme.breakpoints.desktop}) {
+      font-size: 18px;
+    }
   }
 `;
 
