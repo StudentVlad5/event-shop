@@ -9,7 +9,7 @@ export const EventTitle = styled.h1`
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
-  line-height: 25.992px; /* 127.756% */
+  line-height: 25.992px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 30px;
@@ -19,7 +19,7 @@ export const EventTitle = styled.h1`
     margin-bottom: 30px;
 
     font-size: 36px;
-    line-height: 45.992px; /* 127.756% */
+    line-height: 45.992px;
     letter-spacing: -1px;
   }
 `;
@@ -51,7 +51,7 @@ export const HeadingItem = styled.li`
 `;
 
 export const HeadingItemTitle = styled.span`
-  color: ${props => props.theme.grey};
+  color: ${theme.colors.grey2};
   font-family: ${theme.fonts[0]};
   font-size: 11px;
   font-style: normal;
@@ -69,7 +69,7 @@ export const HeadingItemTitle = styled.span`
 `;
 
 export const HeadingItemData = styled.span`
-  color: ${props => props.theme.white_text};
+  color: ${theme.colors.grey1};
   font-family: ${theme.fonts[0]};
   font-size: 14px;
   font-style: normal;
@@ -92,12 +92,9 @@ export const EventImage = styled.img`
   margin: 0 auto;
   border-radius: 40px;
 
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    width: 80%;
-  }
-
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    width: 805px;
+    width: 1056px;
+    height: 588px;
   }
 `;
 

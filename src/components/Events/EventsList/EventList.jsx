@@ -15,11 +15,11 @@ import {
   EventNavLink,
   List,
 } from './EventList.styled';
-import { BtnLink } from 'components/Team/Team.styled';
 import defaultImg from 'images/No-image-available.webp';
 import { useState } from 'react';
+import { BtnLink } from 'components/baseStyles/Button.styled';
 
-export const EventsList = ({ events }) => {
+export const EventsList = ({ events, activeEvents }) => {
   const { t } = useTranslation();
 
   const [isHovered, setHovered] = useState(null);
@@ -37,9 +37,9 @@ export const EventsList = ({ events }) => {
 
   return (
     <>
-    <div>Calendar</div>
+      <div>Calendar</div>
 
-    <div>Filtr</div>
+      <div>Filtr</div>
       <List>
         {events.map(event => {
           return (
@@ -64,7 +64,7 @@ export const EventsList = ({ events }) => {
 
                 {isHovered === event._id && (
                   <EventDetailBox>
-                    <EventDetailTitle>Title</EventDetailTitle>
+                    <EventDetailTitle>{event.name}</EventDetailTitle>
 
                     <DetailsBox>
                       <EventDetailDate>
@@ -73,7 +73,7 @@ export const EventsList = ({ events }) => {
                         </EventDetailDateLi>
                         <EventDetailDateLi>
                           <EventDetailDateText2>
-                            16.01.2024
+                            {event.date}
                           </EventDetailDateText2>
                         </EventDetailDateLi>
                       </EventDetailDate>
@@ -83,18 +83,23 @@ export const EventsList = ({ events }) => {
                           <EventDetailDateText>Час</EventDetailDateText>
                         </li>
                         <li>
-                          <EventDetailDateText2>19:00</EventDetailDateText2>
+                          <EventDetailDateText2>
+                            {event.time}
+                          </EventDetailDateText2>
                         </li>
                       </ul>
                     </DetailsBox>
 
                     <DetailsBoxDiscr>
-                      {event.fr.description.length > 50
-                        ? event.fr.description.slice(0, 50) + ' ...'
-                        : event.fr.description}
+                      {event.description.length > 50
+                        ? event.description.slice(0, 50) + ' ...'
+                        : event.description}
                     </DetailsBoxDiscr>
 
-                    <BtnLink to={`/events/${event._id}`}>
+                    <BtnLink
+                      to={`/events/${event.article_event}`}
+                      activeEvents={activeEvents}
+                    >
                       <span>{t('Детальніше')}</span>
                     </BtnLink>
                   </EventDetailBox>
@@ -122,6 +127,7 @@ EventsList.propTypes = {
       image: PropTypes.string,
     })
   ),
+  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 {
