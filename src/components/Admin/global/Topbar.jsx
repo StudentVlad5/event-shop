@@ -1,8 +1,8 @@
 
 import { Box, IconButton} from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EmailIcon from '@mui/icons-material/Email';
 import { useDispatch } from 'react-redux';
 import { logOut } from "../../../redux/auth/operations";
@@ -35,7 +35,7 @@ const Topbar = ({orders, active_events, messages}) => {
             <p>{ordersNewList.length}</p>
         </IconButton>
         <IconButton>
-            <SettingsOutlinedIcon/>
+            <EventAvailableIcon/>
             <p>{active_events.length}</p>
         </IconButton>
         <IconButton onClick={()=>{ dispatch(logOut());}}>
