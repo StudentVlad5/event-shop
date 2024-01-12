@@ -85,6 +85,14 @@ const Specialists = () => {
     async function sendImg(e) {
       const file = e.target.files[0];
       const body = {id : e.target.dataset.info};
+    if (file.type !== "image/png" && file.type !=="image/jpeg" && file.type !=="image/jpg" && file.type !=="image/webp" && file.type !=="image/.gif") {
+      onFetchError("File does not support. You must use .png, .jpeg .webp .gif  or .jpg ");
+        return false;
+     }
+     if (file.size > 500000) {
+      onFetchError("Please upload a file smaller than 5 MB");
+       return false;
+     }
       setIsLoading(true);
       try {
         const { data } = await createImg(`/specialists/${e.target.dataset.info}`, body, file);
