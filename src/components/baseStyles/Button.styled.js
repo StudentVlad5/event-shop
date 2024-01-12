@@ -21,7 +21,8 @@ export const BtnLight = styled.button`
 
   background-color: ${theme.colors.fon};
   border: 1px solid ${theme.colors.grey1};
-  border-radius: 80px;
+  border-radius: 7px;
+
   cursor: pointer;
   transition: ${theme.transition};
 

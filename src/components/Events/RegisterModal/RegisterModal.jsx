@@ -25,6 +25,7 @@ import { BtnAccent } from 'components/baseStyles/Button.styled';
 import { createData } from 'services/APIservice';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
+import { useState } from 'react';
 
 export const RegisterModal = ({ event }) => {
   const { t } = useTranslation();

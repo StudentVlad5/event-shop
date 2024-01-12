@@ -16,16 +16,24 @@ import {
   List,
 } from './EventList.styled';
 import defaultImg from 'images/No-image-available.webp';
-import { useState } from 'react';
-import { BtnLink } from 'components/baseStyles/Button.styled';
+import { useContext, useEffect, useState } from 'react';
+import { BtnLight, BtnLink } from 'components/baseStyles/Button.styled';
+import { fetchData } from 'services/APIservice';
+import { onFetchError } from 'helpers/Messages/NotifyMessages';
+import { StatusContext } from 'components/ContextStatus/ContextStatus';
 
-export const EventsList = ({ events, activeEvents }) => {
+export const EventsList = ({ events }) => {
   const { t } = useTranslation();
-
+  const [activeEvents, setActiveEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [isHovered, setHovered] = useState(null);
   // const today = new Date();
   // const activeEvents = events.filter(({ date }) => new Date(date) >= today);
-  const widthWindow = window.innerWidth;
+  // const widthWindow = window.innerWidth;
+  const { selectedLanguage } = useContext(StatusContext);
+  const initialEvents = 6;
+  const [eventsNumber, setEventsNumber] = useState(initialEvents);
 
   const handleMouseEnter = eventId => {
     setHovered(eventId);
@@ -35,81 +43,119 @@ export const EventsList = ({ events, activeEvents }) => {
     setHovered(null);
   };
 
+  useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/active_events`);
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+
+        let langData = [];
+        data.map(it => {
+          let item = [
+            {
+              _id: it._id,
+              article_eventID: it.article_eventID,
+              eventId: it.eventId,
+              date: it.date,
+              time: it.time,
+              ...it[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
+        setActiveEvents(langData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [selectedLanguage]);
+
+  const handleEventsNumber = () => {
+    setEventsNumber(eventsNumber + 6);
+  };
+
   return (
-    <>
-      <div>Calendar</div>
+    <List>
+      {events.map(event => {
+        const matchingActiveEvents = activeEvents.filter(
+          activeEvent => activeEvent.eventId === event.article_event
+        );
+        return (
+          // data-aos="zoom-in-up" data-aos-delay="200"
+          <Event key={event._id}>
+            <EventNavLink
+              onMouseEnter={() => handleMouseEnter(event._id)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <EventImages
+                src={
+                  event.image
+                    ? BASE_URL_IMG +
+                      event.image.split('/')[event.image.split('/').length - 1]
+                    : defaultImg
+                }
+                alt={event.title}
+                loading="lazy"
+              />
 
-      <div>Filtr</div>
-      <List>
-        {events.map(event => {
-          return (
-            // data-aos="zoom-in-up" data-aos-delay="200"
-            <Event key={event._id}>
-              <EventNavLink
-                onMouseEnter={() => handleMouseEnter(event._id)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <EventImages
-                  src={
-                    event.image
-                      ? BASE_URL_IMG +
-                        event.image.split('/')[
-                          event.image.split('/').length - 1
-                        ]
-                      : defaultImg
-                  }
-                  alt={event.title}
-                  loading="lazy"
-                />
+              {isHovered === event._id && (
+                <EventDetailBox>
+                  <EventDetailTitle>{event.name}</EventDetailTitle>
 
-                {isHovered === event._id && (
-                  <EventDetailBox>
-                    <EventDetailTitle>{event.name}</EventDetailTitle>
-
-                    <DetailsBox>
-                      <EventDetailDate>
-                        <EventDetailDateLi>
-                          <EventDetailDateText>Дата</EventDetailDateText>
-                        </EventDetailDateLi>
-                        <EventDetailDateLi>
-                          <EventDetailDateText2>
-                            {event.date}
+                  <DetailsBox>
+                    <EventDetailDate>
+                      <EventDetailDateLi>
+                        <EventDetailDateText>Дата</EventDetailDateText>
+                      </EventDetailDateLi>
+                      <EventDetailDateLi>
+                        {matchingActiveEvents.map((ev, idx) => (
+                          <EventDetailDateText2 key={idx}>
+                            {new Date(ev.date).toLocaleDateString()}
                           </EventDetailDateText2>
-                        </EventDetailDateLi>
-                      </EventDetailDate>
+                        ))}
+                      </EventDetailDateLi>
+                    </EventDetailDate>
 
-                      <ul>
-                        <li>
-                          <EventDetailDateText>Час</EventDetailDateText>
-                        </li>
-                        <li>
-                          <EventDetailDateText2>
-                            {event.time}
+                    <ul>
+                      <li>
+                        <EventDetailDateText>Час</EventDetailDateText>
+                      </li>
+                      <li>
+                        {matchingActiveEvents.map((ev, idx) => (
+                          <EventDetailDateText2 key={idx}>
+                            {ev.time}
                           </EventDetailDateText2>
-                        </li>
-                      </ul>
-                    </DetailsBox>
+                        ))}
+                      </li>
+                    </ul>
+                  </DetailsBox>
 
-                    <DetailsBoxDiscr>
-                      {event.description.length > 50
-                        ? event.description.slice(0, 50) + ' ...'
-                        : event.description}
-                    </DetailsBoxDiscr>
+                  <DetailsBoxDiscr>
+                    {event.description.length > 50
+                      ? event.description.slice(0, 50) + ' ...'
+                      : event.description}
+                  </DetailsBoxDiscr>
 
-                    <BtnLink
-                      to={`/events/${event.article_event}`}
-                      activeEvents={activeEvents}
-                    >
-                      <span>{t('Детальніше')}</span>
-                    </BtnLink>
-                  </EventDetailBox>
-                )}
-              </EventNavLink>
-            </Event>
-          );
-        })}
-      </List>
-    </>
+                  <BtnLink to={`/events/${event.article_event}`}>
+                    <span>{t('Детальніше')}</span>
+                  </BtnLink>
+                </EventDetailBox>
+              )}
+            </EventNavLink>
+          </Event>
+        );
+      })}
+      {eventsNumber < events.length && (
+        <BtnLight onClick={handleEventsNumber}>
+          <span> {t('Показати більше')} </span>
+        </BtnLight>
+      )}
+    </List>
   );
 };
 
@@ -127,30 +173,4 @@ EventsList.propTypes = {
       image: PropTypes.string,
     })
   ),
-  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
 };
-
-{
-  /* <DetailsWrapper>
-<DataPlaceWrapper>
-  <EventDate>
-    {new Date(event.date).toLocaleDateString()} | {event.time}
-  </EventDate>
-  <EventDate>{event.location}</EventDate>
-</DataPlaceWrapper>
-<EventTitle>{event.title}</EventTitle>
-{widthWindow && (
-  <EventDesc>
-    {/* {event.description.length > 300
-      ? event.description.slice(0, 300) + ' ...'
-      : event.description} */
-}
-// {event.fr.description}
-// </EventDesc>
-// )}
-{
-  /* <BtnLink to={`/events/${event._id}`}> */
-}
-// <span>{t('More')}</span>
-// </BtnLink>
-// </DetailsWrapper> */}
