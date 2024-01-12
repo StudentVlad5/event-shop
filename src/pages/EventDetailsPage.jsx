@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchData } from 'services/APIservice';
-import { getFromStorage } from 'services/localStorService';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { SEO } from 'utils/SEO';
@@ -13,8 +12,6 @@ const EventDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const routeParams = useParams();
-  const [activeEvents, setActiveEvents] = useState([]);
-
   const { selectedLanguage } = useContext(StatusContext);
 
   useEffect(() => {
@@ -55,7 +52,6 @@ const EventDetailsPage = () => {
       getData();
     }
   }, [routeParams.id]);
-  console.log(event);
 
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
