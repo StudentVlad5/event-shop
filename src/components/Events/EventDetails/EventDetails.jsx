@@ -3,29 +3,38 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { addModal } from '../../../redux/modal/operation';
 import { openModalWindow } from 'hooks/ModalWindow';
-import { BackButton } from 'helpers/BackLink/BackLink';
-import { BASE_URL, BASE_URL_IMG } from 'helpers/constants';
+import { BASE_URL_IMG } from 'helpers/constants';
 import { EventsSection } from '../Events.styled';
 import { RegisterModal } from '../RegisterModal/RegisterModal';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
 import { BtnLight } from 'components/baseStyles/Button.styled';
 import {
+  BtnBack,
   EventDescr,
   EventDescrBox,
+  EventDescrBoxTitle,
   EventHeading,
+  EventHeading2,
   EventImage,
   EventTextWrapper,
   EventTitle,
   HeadingItem,
   HeadingItemData,
+  HeadingItemDataBox,
   HeadingItemTitle,
+  ImgBthBox,
+  InfoBox,
+  NavLinkSpecialist,
 } from './EventDetails.styled';
 import defaultImg from 'images/No-image-available.webp';
 import { useContext, useEffect, useState } from 'react';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { getFromStorage } from 'services/localStorService';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
+import { BtnPagination } from 'components/Home/TopSpecialists/TopSpecialists.styled';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import 'swiper/css';
+import { HiArrowLeft } from 'react-icons/hi';
 
 export const EventDetails = ({ event }) => {
   const {
@@ -118,7 +127,12 @@ export const EventDetails = ({ event }) => {
 
         let langData = [];
         data
-          .filter(item => item.categoryId === category)
+          .filter(
+            item =>
+              item.categoryId === category ||
+              item.categoryId === category_second ||
+              item.categoryId === category_third
+          )
           .map(it => {
             let item = [
               {
@@ -171,89 +185,142 @@ export const EventDetails = ({ event }) => {
     })();
   }, [selectedLanguage]);
 
+  const goBack = () => {
+    window.history.back();
+  };
+
+  const images = [image, image_1, image_2].filter(Boolean);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const handlePrev = () => {
+    setCurrentImage(prevEL => (prevEL === 0 ? images.length - 1 : prevEL - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentImage(prevEL => (prevEL === images.length - 1 ? 0 : prevEL + 1));
+  };
+
   return (
     <>
       <EventsSection>
         <Container>
           <EventTitle>{name}</EventTitle>
-          <BackButton to="/events">{t('Back')}</BackButton>
-          <EventHeading>
-            <HeadingItem>
-              <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>
-                  {new Date(ev.date).toLocaleDateString()}
-                </HeadingItemData>
-              ))}
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>{t('час')}</HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>{ev.time}</HeadingItemData>
-              ))}
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>{t('тривалість')}</HeadingItemTitle>
-              <HeadingItemData>{duration}</HeadingItemData>
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>{t('місце')}</HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>
-                  {ev.location} <br /> <br /> {ev.address}
-                </HeadingItemData>
-              ))}
-            </HeadingItem>
-          </EventHeading>
-          <EventImage
-            src={
-              image
-                ? BASE_URL_IMG + image.split('/')[image.split('/').length - 1]
-                : defaultImg
-            }
-            alt={name}
-            loading="lazy"
-          />
-          <EventHeading>
-            <HeadingItem>
-              <HeadingItemTitle>{t('категорія')}</HeadingItemTitle>
-              <HeadingItemData>
-                {categories.map((ct, idx) => (
-                  <HeadingItemData key={idx}>{ct.title}</HeadingItemData>
+          <BtnBack type="button" onClick={goBack}>
+            <HiArrowLeft size={16} />
+            Назад
+          </BtnBack>
+          <InfoBox>
+            <EventHeading>
+              <HeadingItem>
+                <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemData key={idx}>
+                    {new Date(ev.date).toLocaleDateString()}
+                  </HeadingItemData>
                 ))}
-              </HeadingItemData>
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>{t('Мова')}</HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>{ev.language}</HeadingItemData>
-              ))}
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>
-                {t('кількість вільних місць')}
-              </HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>
-                  {ev.vacancies}/{ev.seats}
-                </HeadingItemData>
-              ))}
-            </HeadingItem>
-            <HeadingItem>
-              <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
-              {activeEvents.map((ev, idx) => (
-                <HeadingItemData key={idx}>{ev.price}</HeadingItemData>
-              ))}
-            </HeadingItem>
-          </EventHeading>
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>{t('час')}</HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemData key={idx}>{ev.time}</HeadingItemData>
+                ))}
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>{t('тривалість')}</HeadingItemTitle>
+                <HeadingItemData>{duration}</HeadingItemData>
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>{t('місце')}</HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemData key={idx}>
+                    {ev.location} <br /> <br /> {ev.address}
+                  </HeadingItemData>
+                ))}
+              </HeadingItem>
+            </EventHeading>
+
+            {images.map((image, idx) => (
+              <EventImage
+                key={idx}
+                src={
+                  image
+                    ? BASE_URL_IMG +
+                      image.split('/')[image.split('/').length - 1]
+                    : defaultImg
+                }
+                alt={event.name}
+                loading="lazy"
+                style={{
+                  display: idx === currentImage ? 'block' : 'none',
+                }}
+              />
+            ))}
+
+            <EventHeading2>
+              <HeadingItem>
+                <HeadingItemTitle>{t('категорія')}</HeadingItemTitle>
+                {categories.map((ct, idx) => (
+                  <>
+                    <HeadingItemData key={idx}>{ct.title}</HeadingItemData>
+                  </>
+                ))}
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>{t('Мова')}</HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemDataBox key={idx}>
+                    <HeadingItemData style={{ marginRight: 5 }}>
+                      {ev.language}
+                    </HeadingItemData>
+                    <HeadingItemData>{ev.language_secondary}</HeadingItemData>
+                  </HeadingItemDataBox>
+                ))}
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>
+                  {t('кількість вільних місць')}
+                </HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemData key={idx}>
+                    {ev.vacancies}/{ev.seats}
+                  </HeadingItemData>
+                ))}
+              </HeadingItem>
+              <HeadingItem>
+                <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
+                {activeEvents.map((ev, idx) => (
+                  <HeadingItemData key={idx}>{ev.price}</HeadingItemData>
+                ))}
+              </HeadingItem>
+            </EventHeading2>
+          </InfoBox>
+
+          {images.length > 1 && (
+            <ImgBthBox>
+              <BtnPagination onClick={handlePrev}>
+                <MdKeyboardArrowLeft size={30} />
+              </BtnPagination>
+
+              <BtnPagination onClick={handleNext}>
+                <MdKeyboardArrowRight size={30} />
+              </BtnPagination>
+            </ImgBthBox>
+          )}
+
           <EventTextWrapper>
             <EventDescrBox>
               <EventDescr>{description}</EventDescr>
             </EventDescrBox>
 
             <EventDescrBox>
+              <EventDescrBoxTitle>Спеціаліст</EventDescrBoxTitle>
               {specialist.map((sp, idx) => (
-                <EventDescr key={idx}>{sp.name}</EventDescr>
+                <NavLinkSpecialist
+                  to={`/specialists/${sp.specialistId}`}
+                  key={idx}
+                >
+                  <span>{sp.name}</span>
+                </NavLinkSpecialist>
               ))}
             </EventDescrBox>
           </EventTextWrapper>
