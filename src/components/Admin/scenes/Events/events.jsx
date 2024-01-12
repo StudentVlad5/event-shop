@@ -32,7 +32,7 @@ function EditToolbar({ setRows, setRowModesModel }) {
 
   const handleClick = () => {
     const id = uuid4();
-    setRows((oldRows) => [...oldRows, { id, nameFr: '', nameUa: '',nameRu: '',  specialistName: '', categoryName: '', categoryName_second: '', categoryName_third: '', language: '', duration: '', rating: '', descriptionFr: '', descriptionUa: '', descriptionRu: '', image:'', image_1:'', image_2:'', isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, nameFr: '', nameUa: '',nameRu: '',  specialistName: '', categoryName: '', categoryName_second: '', categoryName_third: '', duration: '', rating: '', descriptionFr: '', descriptionUa: '', descriptionRu: '', image:'', image_1:'', image_2:'', isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'nameFr' },
@@ -89,7 +89,6 @@ const Events = () => {
     categoriesIdForNames[events[it].category] ? data.categoryName = categoriesIdForNames[events[it].category] : data.categoryName = "";
     categoriesIdForNames[events[it].category_second] ? data.categoryName_second = categoriesIdForNames[events[it].category_second] : data.categoryName_second = "";
     categoriesIdForNames[events[it].category_third] ? data.categoryName_third = categoriesIdForNames[events[it].category_third] : data.categoryName_third = "";
-    events[it].language ? data.language = events[it].language : data.language = "";
     events[it].duration ? data.duration = events[it].duration : data.duration = "";
     events[it].image ? data.image = events[it].image : data.image= "";
     events[it].image_1 ? data.image_1 = events[it].image_1 : data.image_1= "";
@@ -116,7 +115,6 @@ const Events = () => {
           data[it].article_event ? perem.id = data[it].article_event : perem.id= "";
           specialistsIdForNames[data[it].specialistId] ? perem.specialistName = specialistsIdForNames[data[it].specialistId] : perem.specialistName = "";
           categoriesIdForNames[data[it].category] ? perem.categoryName = categoriesIdForNames[data[it].category] : perem.categoryName = "";
-          data[it].language ? perem.language = data[it].language : perem.language = "";
           data[it].duration ? perem.duration = data[it].duration : perem.duration = "";
           data[it].image ? perem.image = data[it].image : perem.image ="";
           data[it].image_1 ? perem.image_1 = data[it].image_1 : perem.image_1 = "";
@@ -167,7 +165,6 @@ const Events = () => {
     { field: "categoryName", headerName: "Category", flex: 0.5, editable: true,type: "singleSelect", valueOptions: categoriesNames },
     { field: "categoryName_second", headerName: "Category 2", flex: 0.5, editable: true,type: "singleSelect", valueOptions: categoriesNames },
     { field: "categoryName_third", headerName: "Category 3", flex: 0.5, editable: true,type: "singleSelect", valueOptions: categoriesNames },
-    { field: "language", headerName: "Language", flex: 0.5, editable: true, type: "singleSelect", valueOptions: ["Ru", "En", "Fr", "Uk"],},
     { field: "duration", headerName: "Duration", flex: 0.5, editable: true },
     { field: "rating", headerName: "Rating", flex: 0.5, editable: true, type: "singleSelect", valueOptions: ["1", "2", "3", "4", "5","6", "7", "8", "9", "10"], },
     {

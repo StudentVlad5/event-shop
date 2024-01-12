@@ -30,7 +30,7 @@ function EditToolbar({ setRows, setRowModesModel }) {
 
   const handleClick = () => {
     const id = uuid4();
-    setRows((oldRows) => [...oldRows, { id, date:'', name:'', time:'', language: '', language_secondary: '', seats:'', booking:'', price: '', locationFr: '', locationUa: '', locationRu: '', addressFr: '', addressUa: '',addressRu: '', isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, date:'', name:'', time:'', language: '', language_secondary: '', language_third: '',seats:'', booking:'', price: '', location: '', address: '', status: '',isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -108,15 +108,13 @@ const Activate_events = () => {
     data.price = activeEvents[it].price;
     data.language = activeEvents[it].language;
     data.language_secondary = activeEvents[it].language_secondary;
+    data.language_third = activeEvents[it].language_third;
     data.seats = activeEvents[it].seats;
     data.booking = activeEvents[it].booking;
     // data.vacancies = activeEvents[it].vacancies;
-    data.locationFr = activeEvents[it].fr.location;
-    data.locationUa = activeEvents[it].ua.location;
-    data.locationRu = activeEvents[it].ru.location;
-    data.addressFr = activeEvents[it].fr.address;
-    data.addressUa = activeEvents[it].ua.address;
-    data.addressRu = activeEvents[it].ru.address;
+    data.location = activeEvents[it].location;
+    data.address = activeEvents[it].address;
+    data.status = activeEvents[it].status;
     listOfActiveEvents.push(data)
 };
 
@@ -158,7 +156,15 @@ const Activate_events = () => {
     },
     {
       field: "language_secondary",
-      headerName: "language secondary",
+      headerName: "Language secondary",
+      flex: 1,
+      cellClassName: "name-column--cell",
+      editable: true,
+      type: "singleSelect", valueOptions: ["Ru", "En", "Fr", "Uk"],
+    },
+    {
+      field: "language_third",
+      headerName: "Language third",
       flex: 1,
       cellClassName: "name-column--cell",
       editable: true,
@@ -216,46 +222,26 @@ const Activate_events = () => {
       ),
     },
     {
-      field: "locationFr",
-      headerName: "Location Fr",
+      field: "location",
+      headerName: "Location",
       flex: 1,
       cellClassName: "name-column--cell",
       editable: true
     },
     {
-      field: "locationUa",
-      headerName: "Location Ua",
+      field: "address",
+      headerName: "Address",
       flex: 1,
       cellClassName: "name-column--cell",
       editable: true
     },
     {
-      field: "locationRu",
-      headerName: "Location Ru",
+      field: "status",
+      headerName: "Status",
       flex: 1,
       cellClassName: "name-column--cell",
-      editable: true
-    },
-    {
-      field: "addressFr",
-      headerName: "Address Fr",
-      flex: 1,
-      cellClassName: "name-column--cell",
-      editable: true
-    },
-    {
-      field: "addressUa",
-      headerName: "Address Ua",
-      flex: 1,
-      cellClassName: "name-column--cell",
-      editable: true
-    },
-    {
-      field: "addressRu",
-      headerName: "Address Ru",
-      flex: 1,
-      cellClassName: "name-column--cell",
-      editable: true
+      editable: true,
+      type: "singleSelect", valueOptions: ["active", "blocked"],
     },
     {
       field: 'actions',
