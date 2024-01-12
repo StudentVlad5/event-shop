@@ -1,7 +1,7 @@
-import { Form, Field } from 'formik';
 import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section } from 'components/baseStyles/CommonStyle.styled';
+import { ViewportBox } from 'components/Home/TopEvents/TopEvents.styled';
 
 export const DescriptionSection = styled(Section)`
   display: flex;
@@ -31,6 +31,14 @@ export const Image = styled.img`
 
 export const EventsSection = styled(Section)`
   padding-top: 0;
+`;
+
+export const SViewportBox = styled(ViewportBox)`
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    & .swiper-wrapper {
+      justify-content: center !important;
+    }
+  }
 `;
 
 export const MessageSection = styled(Section)`

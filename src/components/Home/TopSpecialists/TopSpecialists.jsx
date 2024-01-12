@@ -157,29 +157,6 @@ export const TopSpecialists = () => {
             <ViewportBox $mobile>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
-                // breakpoints={{
-                //   375: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 1,
-                //     mousewheel: true,
-                //     autoplay: {
-                //       delay: 5000,
-                //     },
-                //     effect: 'creative',
-                //   },
-                //   768: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 2,
-                //     autoplay: {
-                //       delay: 5000,
-                //     },
-                //     effect: 'creative',
-                //   },
-                //   1440: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 4,
-                //   },
-                // }}
                 spaceBetween={50}
                 slidesPerView={1}
                 mousewheel={true}

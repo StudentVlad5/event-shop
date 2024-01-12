@@ -25,6 +25,7 @@ import {
   EventsSection,
   Image,
   MessageSection,
+  SViewportBox,
 } from './Specialist.styled';
 import {
   DateTime,
@@ -49,10 +50,6 @@ export const Specialist = ({ specialist }) => {
   const [specialistEvents, setSpecialistEvents] = useState([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log('events:', events);
-  console.log('activeEvents:', activeEvents);
-  console.log('specialistEvents:', specialistEvents);
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -103,27 +100,7 @@ export const Specialist = ({ specialist }) => {
         if (!data) {
           return onFetchError('Whoops, something went wrong');
         }
-        let langData = [];
-        data.map(activeEvent => {
-          let item = [
-            {
-              _id: activeEvent._id,
-              article_eventID: activeEvent.article_eventID,
-              seats: activeEvent.seats,
-              vacancies: activeEvent.vacancies,
-              booking: activeEvent.booking,
-              date: activeEvent.date,
-              time: activeEvent.time,
-              language: activeEvent.language,
-              language_secondary: activeEvent.language_secondary,
-              price: activeEvent.price,
-              eventId: activeEvent.eventId,
-              ...activeEvent[selectedLanguage],
-            },
-          ];
-          langData.push(item[0]);
-        });
-        setActiveEvents(langData);
+        setActiveEvents(data);
       } catch (error) {
         setError(error);
       } finally {
@@ -132,11 +109,46 @@ export const Specialist = ({ specialist }) => {
     })();
   }, [selectedLanguage]);
 
+  // useEffect(() => {
+  //   let specialistActiveEvents = activeEvents.filter(event =>
+  //     events.every(item => item.article_event === event.eventId)
+  //   );
+  //   setSpecialistEvents(specialistActiveEvents);
+  // }, [activeEvents, events]);
+
   useEffect(() => {
-    let specialistActiveEvents = activeEvents.filter(event =>
-      events.every(item => item.article_event === event.article_eventID)
-    );
-    setSpecialistEvents(specialistActiveEvents);
+    let array = [];
+    activeEvents.map(it => {
+      events.map(item => {
+        if (it.eventId === item.article_event) {
+          let data = {};
+          (data._id = it._id),
+            (data.article_event = item.article_event),
+            (data.language = it.language),
+            (data.language_secondary = it.language_secondary),
+            (data.language_third = it.language_third),
+            (data.price = it.price),
+            (data.date = it.date),
+            (data.time = it.time),
+            (data.location = it.location),
+            (data.address = it.address),
+            (data.seats = it.seats),
+            (data.booking = it.booking),
+            (data.vacancies = it.vacancies),
+            (data.image = item.image),
+            (data.image_1 = item.image_1),
+            (data.image_2 = item.image_2),
+            (data.rating = item.rating),
+            (data.duration = item.duration),
+            (data.category = item.category),
+            (data.specialistId = item.specialistId),
+            (data.description = item.description),
+            (data.name = item.name),
+            array.push(data);
+        }
+      });
+    });
+    setSpecialistEvents(array);
   }, [activeEvents, events]);
 
   const firstName = name => {
@@ -145,6 +157,16 @@ export const Specialist = ({ specialist }) => {
       return name;
     }
     return name.slice(0, firstWord);
+  };
+
+  const [isHovered, setHovered] = useState(null);
+
+  const handleMouseEnter = eventId => {
+    setHovered(eventId);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(null);
   };
 
   return (
@@ -188,9 +210,9 @@ export const Specialist = ({ specialist }) => {
         </Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
-        {events.length > 0 && !error ? (
+        {specialistEvents.length > 0 && !error ? (
           <>
-            <ViewportBox>
+            <SViewportBox>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
                 // breakpoints={{
@@ -229,73 +251,54 @@ export const Specialist = ({ specialist }) => {
               >
                 {specialistEvents.slice(0, 5).map(event => {
                   return (
-                    <SwiperSlide key={event.article_eventID}>
-                      <EventListItem>
-                        {events
-                          .filter(
-                            it => it.article_event === event.article_eventID
-                          )
-                          .map(item => {
-                            return (
-                              <ItemImg
-                                key={item.article_event}
-                                src={
-                                  item.image
-                                    ? BASE_URL_IMG +
-                                      'events/' +
-                                      item.image.split('/')[
-                                        item.image.split('/').length - 1
-                                      ]
-                                    : defaultImg
-                                }
-                                alt={item.name}
-                                width="402"
-                                height="366"
-                                loading="lazy"
-                              ></ItemImg>
-                            );
-                          })}
-                        <DetailsWrapper>
-                          {events
-                            .filter(
-                              it => it.article_event === event.article_eventID
-                            )
-                            .map(item => {
-                              return (
-                                <Name key={item.article_event}>
-                                  {item.name}
-                                </Name>
-                              );
-                            })}
-                          <DateTimeWrapper>
-                            <li>
-                              <Head>{t('дата')}</Head>
-                              <DateTime>
-                                {new Date(event.date).toLocaleDateString()}
-                              </DateTime>
-                            </li>
-                            <li>
-                              <Head>{t('час')}</Head>
-                              <DateTime>{event.time}</DateTime>
-                            </li>
-                          </DateTimeWrapper>
-                          {events
-                            .filter(
-                              it => it.article_event === event.article_eventID
-                            )
-                            .map(item => {
-                              return (
-                                <Describe key={item.article_event}>
-                                  {item.description.length > 100
-                                    ? item.description.slice(0, 100) + ' ...'
-                                    : item.description}
-                                </Describe>
-                              );
-                            })}
-                          <BtnLink to={`/events/${event.article_event}`}>
-                            <span>{t('Детальніше')}</span>
-                          </BtnLink>
-                        </DetailsWrapper>
+                    <SwiperSlide key={event.article_event}>
+                      <EventListItem
+                        onMouseEnter={() =>
+                          handleMouseEnter(event.article_event)
+                        }
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <ItemImg
+                          key={event.article_event}
+                          src={
+                            event.image
+                              ? BASE_URL_IMG +
+                                'events/' +
+                                event.image.split('/')[
+                                  event.image.split('/').length - 1
+                                ]
+                              : defaultImg
+                          }
+                          alt={event.name}
+                          width="402"
+                          height="366"
+                          loading="lazy"
+                        />
+                        {isHovered === event.article_event && (
+                          <DetailsWrapper>
+                            <Name>{event.name}</Name>
+                            <DateTimeWrapper>
+                              <li>
+                                <Head>{t('дата')}</Head>
+                                <DateTime>
+                                  {new Date(event.date).toLocaleDateString()}
+                                </DateTime>
+                              </li>
+                              <li>
+                                <Head>{t('час')}</Head>
+                                <DateTime>{event.time}</DateTime>
+                              </li>
+                            </DateTimeWrapper>
+                            <Describe>
+                              {event.description.length > 50
+                                ? event.description.slice(0, 50) + ' ...'
+                                : event.description}
+                            </Describe>
+                            <BtnLink to={`/events/${event.article_event}`}>
+                              <span>{t('Детальніше')}</span>
+                            </BtnLink>
+                          </DetailsWrapper>
+                        )}
                       </EventListItem>
                     </SwiperSlide>
                   );
@@ -311,31 +314,10 @@ export const Specialist = ({ specialist }) => {
                   </BtnPagination>
                 </Pagination>
               )}
-            </ViewportBox>
+            </SViewportBox>
             <ViewportBox $mobile>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
-                // breakpoints={{
-                //   375: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 1,
-                //     mousewheel: true,
-                //     autoplay: {
-                //       delay: 5000,
-                //     },
-                //     effect: 'creative',
-                //   },
-                //   768: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 2,
-                //     autoplay: { delay: 5000 },
-                //     effect: 'creative',
-                //   },
-                //   1440: {
-                //     spaceBetween: 50,
-                //     slidesPerView: 3,
-                //   },
-                // }}
                 spaceBetween={50}
                 slidesPerView={1}
                 mousewheel={true}
@@ -353,79 +335,60 @@ export const Specialist = ({ specialist }) => {
               >
                 {specialistEvents.slice(0, 5).map(event => {
                   return (
-                    <SwiperSlide key={event.article_eventID}>
-                      <EventListItem>
-                        {events
-                          .filter(
-                            it => it.article_event === event.article_eventID
-                          )
-                          .map(item => {
-                            return (
-                              <ItemImg
-                                key={item.article_event}
-                                src={
-                                  item.image
-                                    ? BASE_URL_IMG +
-                                      'events/' +
-                                      item.image.split('/')[
-                                        item.image.split('/').length - 1
-                                      ]
-                                    : defaultImg
-                                }
-                                alt={item.name}
-                                width="402"
-                                height="366"
-                                loading="lazy"
-                              ></ItemImg>
-                            );
-                          })}
-                        <DetailsWrapper>
-                          {events
-                            .filter(
-                              it => it.article_event === event.article_eventID
-                            )
-                            .map(item => {
-                              return (
-                                <Name key={item.article_event}>
-                                  {item.name}
-                                </Name>
-                              );
-                            })}
-                          <DateTimeWrapper>
-                            <li>
-                              <Head>{t('дата')}</Head>
-                              <DateTime>
-                                {new Date(event.date).toLocaleDateString()}
-                              </DateTime>
-                            </li>
-                            <li>
-                              <Head>{t('час')}</Head>
-                              <DateTime>{event.time}</DateTime>
-                            </li>
-                          </DateTimeWrapper>
-                          {events
-                            .filter(
-                              it => it.article_event === event.article_eventID
-                            )
-                            .map(item => {
-                              return (
-                                <Describe key={item.article_event}>
-                                  {item.description.length > 100
-                                    ? item.description.slice(0, 100) + ' ...'
-                                    : item.description}
-                                </Describe>
-                              );
-                            })}
-                          <BtnLink to={`/events/${event.article_event}`}>
-                            <span>{t('Детальніше')}</span>
-                          </BtnLink>
-                        </DetailsWrapper>
+                    <SwiperSlide key={event.article_event}>
+                      <EventListItem
+                        onMouseEnter={() =>
+                          handleMouseEnter(event.article_event)
+                        }
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <ItemImg
+                          key={event.article_event}
+                          src={
+                            event.image
+                              ? BASE_URL_IMG +
+                                'events/' +
+                                event.image.split('/')[
+                                  event.image.split('/').length - 1
+                                ]
+                              : defaultImg
+                          }
+                          alt={event.name}
+                          width="402"
+                          height="366"
+                          loading="lazy"
+                        />
+                        {isHovered === event.article_event && (
+                          <DetailsWrapper>
+                            <Name>{event.name}</Name>
+                            <DateTimeWrapper>
+                              <li>
+                                <Head>{t('дата')}</Head>
+                                <DateTime>
+                                  {new Date(event.date).toLocaleDateString()}
+                                </DateTime>
+                              </li>
+                              <li>
+                                <Head>{t('час')}</Head>
+                                <DateTime>{event.time}</DateTime>
+                              </li>
+                            </DateTimeWrapper>
+                            <Describe>
+                              {event.description.length > 50
+                                ? event.description.slice(0, 50) + ' ...'
+                                : event.description}
+                            </Describe>
+                            <BtnLink to={`/events/${event.article_event}`}>
+                              <span>{t('Детальніше')}</span>
+                            </BtnLink>
+                          </DetailsWrapper>
+                        )}
                       </EventListItem>
                     </SwiperSlide>
                   );
                 })}
               </Swiper>
-              {specialistEvents.length > 0 && (
+              {specialistEvents.length > 1 && (
                 <Pagination>
                   <BtnPagination className="swiper-button-prev">
                     <MdKeyboardArrowLeft size={30} className="buttonSlide" />
@@ -438,7 +401,11 @@ export const Specialist = ({ specialist }) => {
             </ViewportBox>
           </>
         ) : (
-          <Subtitle>{t('Поки відсутні')}</Subtitle>
+          <Subtitle>
+            {t(
+              'Вибачте, найближчим часом спеціаліст не проводить майстер-класи'
+            )}
+          </Subtitle>
         )}
       </EventsSection>
       <MessageSection>

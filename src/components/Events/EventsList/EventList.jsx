@@ -96,6 +96,7 @@ export const EventsList = ({ events }) => {
                 src={
                   event.image
                     ? BASE_URL_IMG +
+                      'events/' +
                       event.image.split('/')[event.image.split('/').length - 1]
                     : defaultImg
                 }
@@ -110,7 +111,7 @@ export const EventsList = ({ events }) => {
                   <DetailsBox>
                     <EventDetailDate>
                       <EventDetailDateLi>
-                        <EventDetailDateText>Дата</EventDetailDateText>
+                        <EventDetailDateText>{t('Дата')}</EventDetailDateText>
                       </EventDetailDateLi>
                       <EventDetailDateLi>
                         {matchingActiveEvents.map((ev, idx) => (
@@ -123,7 +124,7 @@ export const EventsList = ({ events }) => {
 
                     <ul>
                       <li>
-                        <EventDetailDateText>Час</EventDetailDateText>
+                        <EventDetailDateText>{t('Час')}</EventDetailDateText>
                       </li>
                       <li>
                         {matchingActiveEvents.map((ev, idx) => (

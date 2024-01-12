@@ -39,6 +39,8 @@ export const EventListItem = styled.li`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 export const ViewportBox = styled.div`
