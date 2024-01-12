@@ -87,6 +87,7 @@ export const Team = () => {
                       src={
                         specialist.image
                           ? BASE_URL_IMG +
+                            'avatars/' +
                             specialist.image.split('/')[
                               specialist.image.split('/').length - 1
                             ]

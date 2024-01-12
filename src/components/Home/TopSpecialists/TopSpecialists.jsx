@@ -25,6 +25,7 @@ import {
   TeamListItem,
 } from 'components/Team/Team.styled';
 import { Pagination, BtnPagination } from './TopSpecialists.styled';
+import { ViewportBox } from '../TopEvents/TopEvents.styled';
 
 export const TopSpecialists = () => {
   const [specialists, setSpecialists] = useState([]);
@@ -67,8 +68,6 @@ export const TopSpecialists = () => {
     })();
   }, [selectedLanguage]);
 
-  const widthWindow = window.innerWidth;
-
   return (
     <Section>
       <Container>
@@ -77,9 +76,32 @@ export const TopSpecialists = () => {
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (
           <>
-            {widthWindow >= 1440 ? (
+            <ViewportBox>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard]}
+                // breakpoints={{
+                //   375: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 1,
+                //     mousewheel: true,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   768: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 2,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   1440: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 4,
+                //   },
+                // }}
                 spaceBetween={50}
                 slidesPerView={4}
                 navigation={{
@@ -87,7 +109,6 @@ export const TopSpecialists = () => {
                   nextEl: '.swiper-button-next',
                 }}
                 pagination={{ clickable: true }}
-                mousewheel={true}
                 keyboard={true}
                 loop={true}
                 loopPreventsSliding={true}
@@ -102,6 +123,7 @@ export const TopSpecialists = () => {
                             src={
                               specialist.image
                                 ? BASE_URL_IMG +
+                                  'avatars/' +
                                   specialist.image.split('/')[
                                     specialist.image.split('/').length - 1
                                   ]
@@ -131,73 +153,18 @@ export const TopSpecialists = () => {
                   );
                 })}
               </Swiper>
-            ) : (
-              // { widthWindow >= 768 ? (<Swiper
-              //   modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
-              //   spaceBetween={50}
-              //   slidesPerView={3}
-              //   navigation={{
-              //     prevEl: '.swiper-button-prev',
-              //     nextEl: '.swiper-button-next',
-              //   }}
-              //   pagination={{ clickable: true }}
-              //   mousewheel={true}
-              //   keyboard={true}
-              //   loop={true}
-              //   loopPreventsSliding={true}
-              //   loopedslides={1}
-              //   autoplay={{ delay: 5000 }}
-              //   effect={'creative'}
-              // >
-              //   {specialists.slice(0, 5).map(specialist => {
-              //     return (
-              //       <SwiperSlide key={specialist.specialistId}>
-              //         <TeamListItem>
-              //           <ImgBox>
-              //             <ItemImg
-              //               src={
-              //                 specialist.image
-              //                   ? BASE_URL_IMG +
-              //                   specialist.image.split('/')[
-              //                   specialist.image.split('/').length - 1
-              //                   ]
-              //                   : defaultImg
-              //               }
-              //               alt={specialist.name}
-              //               width="221"
-              //               height="221"
-              //               loading="lazy"
-              //             ></ItemImg>
-              //           </ImgBox>
-              //           <DetailsWrapper style={{ paddingBottom: '3px' }}>
-              //             <Name>{specialist.name}</Name>
-              //             <Describe>
-              //               {specialist.description.length > 100
-              //                 ? specialist.description.slice(0, 100) + ' ...'
-              //                 : specialist.description}
-              //             </Describe>
-              //             <BtnLink
-              //               to={`/specialists/${specialist.specialistId}`}
-              //             >
-              //               <span>{t('Детальніше')}</span>
-              //             </BtnLink>
-              //           </DetailsWrapper>
-              //         </TeamListItem>
-              //       </SwiperSlide>
-              //     );
-              //   })}
-              //   </Swiper>) :
-              //   (
+            </ViewportBox>
+            <ViewportBox $mobile>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
                 spaceBetween={50}
                 slidesPerView={1}
+                mousewheel={true}
                 navigation={{
                   prevEl: '.swiper-button-prev',
                   nextEl: '.swiper-button-next',
                 }}
                 pagination={{ clickable: true }}
-                mousewheel={true}
                 keyboard={true}
                 loop={true}
                 loopPreventsSliding={true}
@@ -214,6 +181,7 @@ export const TopSpecialists = () => {
                             src={
                               specialist.image
                                 ? BASE_URL_IMG +
+                                  'avatars/' +
                                   specialist.image.split('/')[
                                     specialist.image.split('/').length - 1
                                   ]
@@ -243,8 +211,7 @@ export const TopSpecialists = () => {
                   );
                 })}
               </Swiper>
-              // )}
-            )}
+            </ViewportBox>
             <Pagination>
               <BtnPagination className="swiper-button-prev">
                 <MdKeyboardArrowLeft size={30} className="buttonSlide" />

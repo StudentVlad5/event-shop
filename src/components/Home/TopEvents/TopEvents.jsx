@@ -26,11 +26,13 @@ import {
   Describe,
   DateTimeWrapper,
   Head,
-  Date,
+  DateTime,
+  ViewportBox,
 } from './TopEvents.styled';
 
 export const TopEvents = () => {
   const [activeEvents, setActiveEvents] = useState([]);
+  const [active_events, setActive_Events] = useState([]);
   const [events, setEvents] = useState([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +68,7 @@ export const TopEvents = () => {
           ];
           langData.push(item[0]);
         });
-        setActiveEvents(langData);
+        setActive_Events(langData);
       } catch (error) {
         setError(error);
       } finally {
@@ -111,7 +113,40 @@ export const TopEvents = () => {
     })();
   }, [selectedLanguage]);
 
-  const widthWindow = window.innerWidth;
+  useEffect(() => {
+    let array = [];
+    active_events.map(it => {
+      events.map(item => {
+        if (it.eventId === item.article_event) {
+          let data = {};
+          (data._id = it._id),
+            (data.article_event = item.article_event),
+            (data.language = it.language),
+            (data.language_secondary = it.language_secondary),
+            (data.language_third = it.language_third),
+            (data.price = it.price),
+            (data.date = it.date),
+            (data.time = it.time),
+            (data.location = it.location),
+            (data.address = it.address),
+            (data.seats = it.seats),
+            (data.booking = it.booking),
+            (data.vacancies = it.vacancies),
+            (data.image = item.image),
+            (data.image_1 = item.image_1),
+            (data.image_2 = item.image_2),
+            (data.rating = item.rating),
+            (data.duration = item.duration),
+            (data.category = item.category),
+            (data.specialistId = item.specialistId),
+            (data.description = item.description),
+            (data.name = item.name),
+            array.push(data);
+        }
+      });
+    });
+    setActiveEvents(array);
+  }, [active_events, events]);
 
   return (
     <EventsSection>
@@ -122,25 +157,47 @@ export const TopEvents = () => {
         </BtnLinkText>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
-        {events.length > 0 && !error && (
+        {activeEvents.length > 0 && !error && (
           <>
-            {widthWindow >= 1440 ? (
+            <ViewportBox>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard]}
+                // breakpoints={{
+                //   375: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 1,
+                //     mousewheel: true,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   768: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 2,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   1440: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 3,
+                //   },
+                // }}
                 spaceBetween={50}
                 slidesPerView={3}
                 navigation={{
-                  prevEl: '.swiper-button-prev',
-                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-btn-prev',
+                  nextEl: '.swiper-btn-next',
                 }}
                 pagination={{ clickable: true }}
-                mousewheel={true}
                 keyboard={true}
                 loop={true}
                 loopPreventsSliding={true}
                 loopedslides={1}
               >
-                {events.slice(0, 5).map(event => {
+                {activeEvents.slice(0, 5).map(event => {
                   return (
                     <SwiperSlide key={event.article_event}>
                       <EventListItem>
@@ -148,6 +205,7 @@ export const TopEvents = () => {
                           src={
                             event.image
                               ? BASE_URL_IMG +
+                                'events/' +
                                 event.image.split('/')[
                                   event.image.split('/').length - 1
                                 ]
@@ -163,16 +221,18 @@ export const TopEvents = () => {
                           <DateTimeWrapper>
                             <li>
                               <Head>{t('дата')}</Head>
-                              <Date>{event.duration}</Date>
+                              <DateTime>
+                                {new Date(event.date).toLocaleDateString()}
+                              </DateTime>
                             </li>
                             <li>
                               <Head>{t('час')}</Head>
-                              <Date>{event.duration}</Date>
+                              <DateTime>{event.time}</DateTime>
                             </li>
                           </DateTimeWrapper>
                           <Describe>
-                            {event.description.length > 100
-                              ? event.description.slice(0, 100) + ' ...'
+                            {event.description.length > 50
+                              ? event.description.slice(0, 50) + ' ...'
                               : event.description}
                           </Describe>
                           <BtnLink to={`/events/${event.article_event}`}>
@@ -184,17 +244,18 @@ export const TopEvents = () => {
                   );
                 })}
               </Swiper>
-            ) : (
+            </ViewportBox>
+            <ViewportBox $mobile>
               <Swiper
                 modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
                 spaceBetween={50}
                 slidesPerView={1}
+                mousewheel={true}
                 navigation={{
-                  prevEl: '.swiper-button-prev',
-                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-btn-prev',
+                  nextEl: '.swiper-btn-next',
                 }}
                 pagination={{ clickable: true }}
-                mousewheel={true}
                 keyboard={true}
                 loop={true}
                 loopPreventsSliding={true}
@@ -202,7 +263,7 @@ export const TopEvents = () => {
                 autoplay={{ delay: 5000 }}
                 effect={'creative'}
               >
-                {events.slice(0, 5).map(event => {
+                {activeEvents.slice(0, 5).map(event => {
                   return (
                     <SwiperSlide key={event.article_event}>
                       <EventListItem>
@@ -210,14 +271,15 @@ export const TopEvents = () => {
                           src={
                             event.image
                               ? BASE_URL_IMG +
+                                'events/' +
                                 event.image.split('/')[
                                   event.image.split('/').length - 1
                                 ]
                               : defaultImg
                           }
                           alt={event.name}
-                          width="335"
-                          height="300"
+                          width="402"
+                          height="366"
                           loading="lazy"
                         ></ItemImg>
                         <DetailsWrapper>
@@ -225,16 +287,18 @@ export const TopEvents = () => {
                           <DateTimeWrapper>
                             <li>
                               <Head>{t('дата')}</Head>
-                              <Date>{event.duration}</Date>
+                              <DateTime>
+                                {new Date(event.date).toLocaleDateString()}
+                              </DateTime>
                             </li>
                             <li>
                               <Head>{t('час')}</Head>
-                              <Date>{event.duration}</Date>
+                              <DateTime>{event.time}</DateTime>
                             </li>
                           </DateTimeWrapper>
                           <Describe>
-                            {event.description.length > 100
-                              ? event.description.slice(0, 100) + ' ...'
+                            {event.description.length > 50
+                              ? event.description.slice(0, 50) + ' ...'
                               : event.description}
                           </Describe>
                           <BtnLink to={`/events/${event.article_event}`}>
@@ -246,12 +310,12 @@ export const TopEvents = () => {
                   );
                 })}
               </Swiper>
-            )}
+            </ViewportBox>
             <Pagination>
-              <BtnPagination className="swiper-button-prev">
+              <BtnPagination className="swiper-btn-prev">
                 <MdKeyboardArrowLeft size={30} className="buttonSlide" />
               </BtnPagination>
-              <BtnPagination className="swiper-button-next">
+              <BtnPagination className="swiper-btn-next">
                 <MdKeyboardArrowRight size={30} className="buttonSlide" />
               </BtnPagination>
             </Pagination>

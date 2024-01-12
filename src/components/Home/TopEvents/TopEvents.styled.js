@@ -39,6 +39,16 @@ export const EventListItem = styled.li`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
+`;
+
+export const ViewportBox = styled.div`
+  display: ${props => (props.$mobile ? 'block' : 'none')};
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    display: ${props => (props.$mobile ? 'none' : 'block')};
+  }
 `;
 
 export const ItemImg = styled.img`
@@ -109,7 +119,7 @@ export const Head = styled.span`
   color: ${theme.colors.grey2};
 `;
 
-export const Date = styled.span`
+export const DateTime = styled.span`
   font-family: ${theme.fonts[0]};
   font-size: 16px;
   font-style: normal;

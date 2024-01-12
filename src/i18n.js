@@ -11,7 +11,7 @@ i18n
         translation: require('../src/translate/ua.json'),
       },
     },
-    fallbackLng: 'en',
+    fallbackLng: 'fr',
     debug: false,
   });
 
