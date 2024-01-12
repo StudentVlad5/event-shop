@@ -18,7 +18,7 @@ export const Footer = () => {
     <SFooter id="contact">
       <FooterContainer>
         <ContactsBox>
-          <Logo />
+          {/* <Logo /> */}
           <Contacts>
             <p>{t('Контакти')}</p>
             <ul>

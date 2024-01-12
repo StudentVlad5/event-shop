@@ -21,7 +21,7 @@ export const FooterContainer = styled(Container)`
 
 export const ContactsBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;

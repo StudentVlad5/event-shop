@@ -1,17 +1,15 @@
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
 import { useEffect, useState, useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import { fetchData, createData } from 'services/APIservice';
-import { addMessages } from '../../redux/messages/operation';
+import { fetchData } from 'services/APIservice';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
+import { FormMessage } from 'components/FormMessage/FormMessage';
 import { BackButton } from 'helpers/BackLink/BackLink';
 import { BASE_URL_IMG } from 'helpers/constants';
 import defaultImg from 'images/defaultUserPhoto.jpg';
@@ -21,22 +19,15 @@ import {
   Subtitle,
   Title,
 } from 'components/baseStyles/CommonStyle.styled';
-import { BtnAccent, BtnLink } from 'components/baseStyles/Button.styled';
+import { BtnLink } from 'components/baseStyles/Button.styled';
 import {
   DescriptionSection,
   EventsSection,
-  MessageSection,
-  FormInputMessage,
   Image,
-  FormList,
-  FormLabel,
-  FormName,
-  FormInput,
-  Error,
-  FieldsWrapper,
+  MessageSection,
 } from './Specialist.styled';
 import {
-  Date,
+  DateTime,
   DateTimeWrapper,
   Describe,
   DetailsWrapper,
@@ -44,8 +35,8 @@ import {
   Head,
   ItemImg,
   Name,
+  ViewportBox,
 } from 'components/Home/TopEvents/TopEvents.styled';
-
 import {
   BtnPagination,
   Pagination,
@@ -54,12 +45,17 @@ import {
 export const Specialist = ({ specialist }) => {
   const { specialistId, image, description, name } = specialist;
   const [events, setEvents] = useState([]);
+  const [activeEvents, setActiveEvents] = useState([]);
+  const [specialistEvents, setSpecialistEvents] = useState([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log('events:', events);
+  console.log('activeEvents:', activeEvents);
+  console.log('specialistEvents:', specialistEvents);
+
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (async function getData() {
@@ -99,22 +95,49 @@ export const Specialist = ({ specialist }) => {
     })();
   }, [selectedLanguage]);
 
-  async function createMessage(values) {
-    setIsLoading(true);
-    try {
-      const { data } = await createData(`/messages`, values);
-      dispatch(addMessages({ ...data }));
-      if (!data) {
-        return onFetchError('Whoops, something went wrong');
+  useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/active_events`);
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+        let langData = [];
+        data.map(activeEvent => {
+          let item = [
+            {
+              _id: activeEvent._id,
+              article_eventID: activeEvent.article_eventID,
+              seats: activeEvent.seats,
+              vacancies: activeEvent.vacancies,
+              booking: activeEvent.booking,
+              date: activeEvent.date,
+              time: activeEvent.time,
+              language: activeEvent.language,
+              language_secondary: activeEvent.language_secondary,
+              price: activeEvent.price,
+              eventId: activeEvent.eventId,
+              ...activeEvent[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
+        setActiveEvents(langData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+    })();
+  }, [selectedLanguage]);
 
-  const widthWindow = window.innerWidth;
+  useEffect(() => {
+    let specialistActiveEvents = activeEvents.filter(event =>
+      events.every(item => item.article_event === event.article_eventID)
+    );
+    setSpecialistEvents(specialistActiveEvents);
+  }, [activeEvents, events]);
 
   const firstName = name => {
     let firstWord = name.indexOf(' ');
@@ -131,7 +154,9 @@ export const Specialist = ({ specialist }) => {
         <Image
           src={
             image
-              ? BASE_URL_IMG + image.split('/')[image.split('/').length - 1]
+              ? BASE_URL_IMG +
+                'avatars/' +
+                image.split('/')[image.split('/').length - 1]
               : defaultImg
           }
           alt={name}
@@ -139,8 +164,23 @@ export const Specialist = ({ specialist }) => {
           height="216"
           loading="lazy"
         ></Image>
-        <Headline>{name}</Headline>
-        <Subtitle>{description}</Subtitle>
+        <Headline
+          data-aos="fade-right"
+          // data-aos="zoom-in"
+          data-aos-easing="linear"
+          data-aos-duration="1000"
+        >
+          {name}
+        </Headline>
+        <Subtitle
+          style={{ textAlign: 'justify' }}
+          data-aos="fade-left"
+          // data-aos="zoom-in"
+          data-aos-easing="linear"
+          data-aos-duration="1000"
+        >
+          {description}
+        </Subtitle>
       </DescriptionSection>
       <EventsSection>
         <Title>
@@ -148,143 +188,120 @@ export const Specialist = ({ specialist }) => {
         </Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
-        {events.length > 0 && !error && (
+        {events.length > 0 && !error ? (
           <>
-            {widthWindow >= 1440 ? (
-              <>
-                <Swiper
-                  modules={[Navigation, Mousewheel, Keyboard]}
-                  spaceBetween={50}
-                  slidesPerView={3}
-                  navigation={{
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next',
-                  }}
-                  pagination={{ clickable: true }}
-                  mousewheel={true}
-                  keyboard={true}
-                  loop={true}
-                  loopPreventsSliding={true}
-                  loopedslides={1}
-                >
-                  {events.slice(0, 5).map(event => {
-                    return (
-                      <SwiperSlide key={event.article_event}>
-                        <EventListItem>
-                          <ItemImg
-                            src={
-                              event.image
-                                ? BASE_URL_IMG +
-                                  event.image.split('/')[
-                                    event.image.split('/').length - 1
-                                  ]
-                                : defaultImg
-                            }
-                            alt={event.name}
-                            width="402"
-                            height="366"
-                            loading="lazy"
-                          ></ItemImg>
-                          <DetailsWrapper>
-                            <Name>{event.name}</Name>
-                            <DateTimeWrapper>
-                              <li>
-                                <Head>{t('дата')}</Head>
-                                <Date>{event.duration}</Date>
-                              </li>
-                              <li>
-                                <Head>{t('час')}</Head>
-                                <Date>{event.duration}</Date>
-                              </li>
-                            </DateTimeWrapper>
-                            <Describe>
-                              {event.description.length > 100
-                                ? event.description.slice(0, 100) + ' ...'
-                                : event.description}
-                            </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
-                              <span>{t('Детальніше')}</span>
-                            </BtnLink>
-                          </DetailsWrapper>
-                        </EventListItem>
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
-                {events.length > 3 && (
-                  <Pagination>
-                    <BtnPagination className="swiper-button-prev">
-                      <MdKeyboardArrowLeft size={30} className="buttonSlide" />
-                    </BtnPagination>
-                    <BtnPagination className="swiper-button-next">
-                      <MdKeyboardArrowRight size={30} className="buttonSlide" />
-                    </BtnPagination>
-                  </Pagination>
-                )}
-              </>
-            ) : (
-              <>
-                <Swiper
-                  modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
-                  spaceBetween={50}
-                  slidesPerView={1}
-                  navigation={{
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next',
-                  }}
-                  pagination={{ clickable: true }}
-                  mousewheel={true}
-                  keyboard={true}
-                  loop={true}
-                  loopPreventsSliding={true}
-                  loopedslides={1}
-                  autoplay={{ delay: 5000 }}
-                  effect={'creative'}
-                >
-                  {events.slice(0, 5).map(event => {
-                    return (
-                      <SwiperSlide key={event.article_event}>
-                        <EventListItem>
-                          <ItemImg
-                            src={
-                              event.image
-                                ? BASE_URL_IMG +
-                                  event.image.split('/')[
-                                    event.image.split('/').length - 1
-                                  ]
-                                : defaultImg
-                            }
-                            alt={event.name}
-                            width="335"
-                            height="300"
-                            loading="lazy"
-                          ></ItemImg>
-                          <DetailsWrapper>
-                            <Name>{event.name}</Name>
-                            <DateTimeWrapper>
-                              <li>
-                                <Head>{t('дата')}</Head>
-                                <Date>{event.duration}</Date>
-                              </li>
-                              <li>
-                                <Head>{t('час')}</Head>
-                                <Date>{event.duration}</Date>
-                              </li>
-                            </DateTimeWrapper>
-                            <Describe>
-                              {event.description.length > 100
-                                ? event.description.slice(0, 100) + ' ...'
-                                : event.description}
-                            </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
-                              <span>{t('Детальніше')}</span>
-                            </BtnLink>
-                          </DetailsWrapper>
-                        </EventListItem>
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
+            <ViewportBox>
+              <Swiper
+                modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
+                // breakpoints={{
+                //   375: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 1,
+                //     mousewheel: true,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   768: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 2,
+                //     autoplay: { delay: 5000 },
+                //     effect: 'creative',
+                //   },
+                //   1440: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 3,
+                //   },
+                // }}
+                spaceBetween={50}
+                slidesPerView={3}
+                mousewheel={true}
+                navigation={{
+                  prevEl: '.swiper-button-prev',
+                  nextEl: '.swiper-button-next',
+                }}
+                pagination={{ clickable: true }}
+                keyboard={true}
+                loop={true}
+                loopPreventsSliding={true}
+                loopedslides={1}
+              >
+                {specialistEvents.slice(0, 5).map(event => {
+                  return (
+                    <SwiperSlide key={event.article_eventID}>
+                      <EventListItem>
+                        {events
+                          .filter(
+                            it => it.article_event === event.article_eventID
+                          )
+                          .map(item => {
+                            return (
+                              <ItemImg
+                                key={item.article_event}
+                                src={
+                                  item.image
+                                    ? BASE_URL_IMG +
+                                      'events/' +
+                                      item.image.split('/')[
+                                        item.image.split('/').length - 1
+                                      ]
+                                    : defaultImg
+                                }
+                                alt={item.name}
+                                width="402"
+                                height="366"
+                                loading="lazy"
+                              ></ItemImg>
+                            );
+                          })}
+                        <DetailsWrapper>
+                          {events
+                            .filter(
+                              it => it.article_event === event.article_eventID
+                            )
+                            .map(item => {
+                              return (
+                                <Name key={item.article_event}>
+                                  {item.name}
+                                </Name>
+                              );
+                            })}
+                          <DateTimeWrapper>
+                            <li>
+                              <Head>{t('дата')}</Head>
+                              <DateTime>
+                                {new Date(event.date).toLocaleDateString()}
+                              </DateTime>
+                            </li>
+                            <li>
+                              <Head>{t('час')}</Head>
+                              <DateTime>{event.time}</DateTime>
+                            </li>
+                          </DateTimeWrapper>
+                          {events
+                            .filter(
+                              it => it.article_event === event.article_eventID
+                            )
+                            .map(item => {
+                              return (
+                                <Describe key={item.article_event}>
+                                  {item.description.length > 100
+                                    ? item.description.slice(0, 100) + ' ...'
+                                    : item.description}
+                                </Describe>
+                              );
+                            })}
+                          <BtnLink to={`/events/${event.article_event}`}>
+                            <span>{t('Детальніше')}</span>
+                          </BtnLink>
+                        </DetailsWrapper>
+                      </EventListItem>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+              {specialistEvents.length > 3 && (
                 <Pagination>
                   <BtnPagination className="swiper-button-prev">
                     <MdKeyboardArrowLeft size={30} className="buttonSlide" />
@@ -293,104 +310,142 @@ export const Specialist = ({ specialist }) => {
                     <MdKeyboardArrowRight size={30} className="buttonSlide" />
                   </BtnPagination>
                 </Pagination>
-              </>
-            )}
+              )}
+            </ViewportBox>
+            <ViewportBox $mobile>
+              <Swiper
+                modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
+                // breakpoints={{
+                //   375: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 1,
+                //     mousewheel: true,
+                //     autoplay: {
+                //       delay: 5000,
+                //     },
+                //     effect: 'creative',
+                //   },
+                //   768: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 2,
+                //     autoplay: { delay: 5000 },
+                //     effect: 'creative',
+                //   },
+                //   1440: {
+                //     spaceBetween: 50,
+                //     slidesPerView: 3,
+                //   },
+                // }}
+                spaceBetween={50}
+                slidesPerView={1}
+                mousewheel={true}
+                navigation={{
+                  prevEl: '.swiper-button-prev',
+                  nextEl: '.swiper-button-next',
+                }}
+                pagination={{ clickable: true }}
+                keyboard={true}
+                loop={true}
+                loopPreventsSliding={true}
+                loopedslides={1}
+                autoplay={{ delay: 5000 }}
+                effect={'creative'}
+              >
+                {specialistEvents.slice(0, 5).map(event => {
+                  return (
+                    <SwiperSlide key={event.article_eventID}>
+                      <EventListItem>
+                        {events
+                          .filter(
+                            it => it.article_event === event.article_eventID
+                          )
+                          .map(item => {
+                            return (
+                              <ItemImg
+                                key={item.article_event}
+                                src={
+                                  item.image
+                                    ? BASE_URL_IMG +
+                                      'events/' +
+                                      item.image.split('/')[
+                                        item.image.split('/').length - 1
+                                      ]
+                                    : defaultImg
+                                }
+                                alt={item.name}
+                                width="402"
+                                height="366"
+                                loading="lazy"
+                              ></ItemImg>
+                            );
+                          })}
+                        <DetailsWrapper>
+                          {events
+                            .filter(
+                              it => it.article_event === event.article_eventID
+                            )
+                            .map(item => {
+                              return (
+                                <Name key={item.article_event}>
+                                  {item.name}
+                                </Name>
+                              );
+                            })}
+                          <DateTimeWrapper>
+                            <li>
+                              <Head>{t('дата')}</Head>
+                              <DateTime>
+                                {new Date(event.date).toLocaleDateString()}
+                              </DateTime>
+                            </li>
+                            <li>
+                              <Head>{t('час')}</Head>
+                              <DateTime>{event.time}</DateTime>
+                            </li>
+                          </DateTimeWrapper>
+                          {events
+                            .filter(
+                              it => it.article_event === event.article_eventID
+                            )
+                            .map(item => {
+                              return (
+                                <Describe key={item.article_event}>
+                                  {item.description.length > 100
+                                    ? item.description.slice(0, 100) + ' ...'
+                                    : item.description}
+                                </Describe>
+                              );
+                            })}
+                          <BtnLink to={`/events/${event.article_event}`}>
+                            <span>{t('Детальніше')}</span>
+                          </BtnLink>
+                        </DetailsWrapper>
+                      </EventListItem>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+              {specialistEvents.length > 0 && (
+                <Pagination>
+                  <BtnPagination className="swiper-button-prev">
+                    <MdKeyboardArrowLeft size={30} className="buttonSlide" />
+                  </BtnPagination>
+                  <BtnPagination className="swiper-button-next">
+                    <MdKeyboardArrowRight size={30} className="buttonSlide" />
+                  </BtnPagination>
+                </Pagination>
+              )}
+            </ViewportBox>
           </>
+        ) : (
+          <Subtitle>{t('Поки відсутні')}</Subtitle>
         )}
       </EventsSection>
       <MessageSection>
         <Title>
           {t('Є питання до')} {firstName(name)}?
         </Title>
-        <Formik
-          initialValues={{
-            name: '',
-            email: '',
-            message: '',
-          }}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            createMessage(values);
-            setSubmitting(false);
-            resetForm();
-          }}
-          enableReinitialize={true}
-        >
-          {({
-            handleChange,
-            handleSubmit,
-            setFieldValue,
-            resetForm,
-            isSubmitting,
-            values,
-            errors,
-            touched,
-          }) => (
-            <FormList
-              autoComplete="off"
-              onSubmit={handleSubmit}
-              onChange={handleChange}
-            >
-              <FieldsWrapper>
-                <div>
-                  <FormLabel htmlFor="name">
-                    <FormName>{t('Ім’я')}</FormName>
-                    <FormInput
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder={name}
-                      value={values.name}
-                      required
-                    />
-                    {errors.name && touched.name ? (
-                      <Error>{errors.name}</Error>
-                    ) : null}
-                  </FormLabel>
-                  <FormLabel htmlFor="email">
-                    <FormName>{t('E-mail')}</FormName>
-                    <FormInput
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="test@gmail.com"
-                      value={values.email}
-                      required
-                    />
-                    {errors.email && touched.email ? (
-                      <Error>{errors.email}</Error>
-                    ) : null}
-                  </FormLabel>
-                </div>
-                <FormLabel htmlFor="message">
-                  <FormName>{t('Повідомлення')}</FormName>
-                  <FormInputMessage
-                    type="text"
-                    name="message"
-                    id="message"
-                    placeholder={t('Привіт! Я хотів би запитати про...')}
-                    value={values.message}
-                    required
-                    rows="6"
-                    cols="25"
-                    onChange={e => {
-                      setFieldValue('message', e.target.value);
-                    }}
-                  />
-                  {errors.state && touched.state ? (
-                    <Error>{errors.state}</Error>
-                  ) : null}
-                </FormLabel>
-              </FieldsWrapper>
-              <BtnAccent
-                type="submit"
-                disabled={isSubmitting}
-                aria-label="Submit"
-              >
-                {t('Надіслати')}
-              </BtnAccent>
-            </FormList>
-          )}
-        </Formik>
+        <FormMessage specialist={specialist} />
       </MessageSection>
     </Container>
   );

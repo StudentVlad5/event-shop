@@ -38,5 +38,6 @@ export const TextWrapper = styled.div`
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: calc(100% - 400px);
+    max-width: ${theme.breakpoints.desktop};
   }
 `;

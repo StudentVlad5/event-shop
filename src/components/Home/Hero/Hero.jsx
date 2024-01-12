@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { HeroSection, HeroContainer, TextWrapper } from './Hero.styled';
+import { Subtitle, Title } from 'components/baseStyles/CommonStyle.styled';
 
 import hero_mob_png from 'images/hero/hero_mob.png';
 import hero_mob_png_2x from 'images/hero/hero_mob@2x.png';
@@ -15,7 +16,6 @@ import hero_desk_png from 'images/hero/hero_desk.png';
 import hero_desk_png_2x from 'images/hero/hero_desk@2x.png';
 import hero_desk_webp from 'images/hero/hero_desk.webp';
 import hero_desk_webp_2x from 'images/hero/hero_desk@2x.webp';
-import { Subtitle, Title } from 'components/baseStyles/CommonStyle.styled';
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -50,8 +50,22 @@ export const Hero = () => {
           />
         </picture>
         <TextWrapper>
-          <Title $white>{t('Ласкаво просимо до BloomSkill')}</Title>
-          <Subtitle $white>
+          <Title
+            $white
+            // data-aos="fade-right"
+            data-aos="zoom-in"
+            data-aos-easing="linear"
+            data-aos-duration="1000"
+          >
+            {t('Ласкаво просимо до BloomSkill')}
+          </Title>
+          <Subtitle
+            $white
+            // data-aos="fade-left"
+            data-aos="zoom-in"
+            data-aos-easing="linear"
+            data-aos-duration="1500"
+          >
             {t(
               'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odiovoluptatibus aspernatur magni optio nobis nisi quibusdam reiciendis explicabo voluptatum molestias eveniet fuga, in unde cupiditate laboriosam quaerat, velit accusamus. Qui alias blanditiis accusamus adipisci? Nobis porro ducimus laboriosam quam alias odit ut a sequi aliquid aut error, aliquam, dicta enim quos tempora illum doloremque eaque minus quas culpa soluta.'
             )}

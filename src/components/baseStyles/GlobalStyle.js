@@ -85,7 +85,7 @@ img {
 
 .swiper-wrapper {
  @media screen and (min-width: ${theme.breakpoints.desktop}) { 
-  justify-content: center !important;
+  /* justify-content: center !important; */
 }
 }
 
@@ -104,16 +104,18 @@ img {
 .swiper-slide img {
 }
 
-.swiper-button-next::after {
+.swiper-button-next::after,.swiper-btn-next::after {
 color:${theme.colors.primary} !important;
 }
 
-.swiper-button-prev::after {
+.swiper-button-prev::after,.swiper-btn-prev::after  {
 color:${theme.colors.primary} !important;
 }
 
 .swiper-button-prev,
 .swiper-button-next,
+.swiper-btn-prev,
+.swiper-btn-next,
 .swiper-pagination-bullet {
   top: var(--swiper-navigation-sides-offset,10px) !important;
   bottom:var(--swiper-navigation-sides-offset,10px) !important;
