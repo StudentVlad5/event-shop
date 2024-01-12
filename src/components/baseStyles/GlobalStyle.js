@@ -26,7 +26,8 @@ export const GlobalStyle = createGlobalStyle`
 
 @font-face {
   font-family: 'Miama Nueva';
-  src: url('../../../../public/fonts/ofont.ru_Miama Nueva.ttf') format('ttf');
+  /* src: url('../../../../public/fonts/ofont.ru_Miama Nueva.ttf') format('ttf'); */
+  src: url('../../../../public/fonts/miama.otf') format('opentypeformat');
 }
   
 //-----reset-----//
