@@ -18,22 +18,46 @@ import {
 import defaultImg from 'images/No-image-available.webp';
 import { useContext, useEffect, useState } from 'react';
 import { BtnLight, BtnLink } from 'components/baseStyles/Button.styled';
-import { fetchData } from 'services/APIservice';
-import { onFetchError } from 'helpers/Messages/NotifyMessages';
+// import { fetchData } from 'services/APIservice';
+// import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 
-export const EventsList = ({ events }) => {
+export const EventsList = ({ events, activeEvents }) => {
   const { t } = useTranslation();
-  const [activeEvents, setActiveEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [activeEvents, setActiveEvents] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const [isHovered, setHovered] = useState(null);
   // const today = new Date();
   // const activeEvents = events.filter(({ date }) => new Date(date) >= today);
   // const widthWindow = window.innerWidth;
-  const { selectedLanguage } = useContext(StatusContext);
+  // const { selectedLanguage } = useContext(StatusContext);
   const initialEvents = 6;
   const [eventsNumber, setEventsNumber] = useState(initialEvents);
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  useEffect(() => {
+    const storedDate = localStorage.getItem('selectedDate');
+    if (storedDate) {
+      setSelectedDate(new Date(JSON.parse(storedDate)));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedDate) {
+      const newFilteredEvents = activeEvents.filter(
+        event =>
+          new Date(event.date).toLocaleDateString() ===
+          selectedDate.toLocaleDateString()
+      );
+
+      setFilteredEvents(newFilteredEvents);
+    } else {
+      setFilteredEvents(events);
+    }
+  }, [selectedDate, activeEvents, events]);
 
   const handleMouseEnter = eventId => {
     setHovered(eventId);
@@ -43,37 +67,37 @@ export const EventsList = ({ events }) => {
     setHovered(null);
   };
 
-  useEffect(() => {
-    (async function getData() {
-      setIsLoading(true);
-      try {
-        const { data } = await fetchData(`/active_events`);
-        if (!data) {
-          return onFetchError('Whoops, something went wrong');
-        }
+  // useEffect(() => {
+  //   (async function getData() {
+  //     setIsLoading(true);
+  //     try {
+  //       const { data } = await fetchData(`/active_events`);
+  //       if (!data) {
+  //         return onFetchError('Whoops, something went wrong');
+  //       }
 
-        let langData = [];
-        data.map(it => {
-          let item = [
-            {
-              _id: it._id,
-              article_eventID: it.article_eventID,
-              eventId: it.eventId,
-              date: it.date,
-              time: it.time,
-              ...it[selectedLanguage],
-            },
-          ];
-          langData.push(item[0]);
-        });
-        setActiveEvents(langData);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [selectedLanguage]);
+  //       let langData = [];
+  //       data.map(it => {
+  //         let item = [
+  //           {
+  //             _id: it._id,
+  //             article_eventID: it.article_eventID,
+  //             eventId: it.eventId,
+  //             date: it.date,
+  //             time: it.time,
+  //             ...it[selectedLanguage],
+  //           },
+  //         ];
+  //         langData.push(item[0]);
+  //       });
+  //       setActiveEvents(langData);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   })();
+  // }, [selectedLanguage]);
 
   const handleEventsNumber = () => {
     setEventsNumber(eventsNumber + 6);
@@ -81,75 +105,162 @@ export const EventsList = ({ events }) => {
 
   return (
     <List>
-      {events.map(event => {
+      {events.slice(0, eventsNumber).map(event => {
         const matchingActiveEvents = activeEvents.filter(
           activeEvent => activeEvent.eventId === event.article_event
         );
-        return (
-          // data-aos="zoom-in-up" data-aos-delay="200"
-          <Event key={event._id}>
-            <EventNavLink
-              onMouseEnter={() => handleMouseEnter(event._id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <EventImages
-                src={
-                  event.image
-                    ? BASE_URL_IMG +
-                      'events/' +
-                      event.image.split('/')[event.image.split('/').length - 1]
-                    : defaultImg
-                }
-                alt={event.title}
-                loading="lazy"
-              />
 
-              {isHovered === event._id && (
-                <EventDetailBox>
-                  <EventDetailTitle>{event.name}</EventDetailTitle>
-
-                  <DetailsBox>
-                    <EventDetailDate>
-                      <EventDetailDateLi>
-                        <EventDetailDateText>{t('Дата')}</EventDetailDateText>
-                      </EventDetailDateLi>
-                      <EventDetailDateLi>
-                        {matchingActiveEvents.map((ev, idx) => (
-                          <EventDetailDateText2 key={idx}>
-                            {new Date(ev.date).toLocaleDateString()}
-                          </EventDetailDateText2>
-                        ))}
-                      </EventDetailDateLi>
-                    </EventDetailDate>
-
-                    <ul>
-                      <li>
-                        <EventDetailDateText>{t('Час')}</EventDetailDateText>
-                      </li>
-                      <li>
-                        {matchingActiveEvents.map((ev, idx) => (
-                          <EventDetailDateText2 key={idx}>
-                            {ev.time}
-                          </EventDetailDateText2>
-                        ))}
-                      </li>
-                    </ul>
-                  </DetailsBox>
-
-                  <DetailsBoxDiscr>
-                    {event.description.length > 50
-                      ? event.description.slice(0, 50) + ' ...'
-                      : event.description}
-                  </DetailsBoxDiscr>
-
-                  <BtnLink to={`/events/${event.article_event}`}>
-                    <span>{t('Детальніше')}</span>
-                  </BtnLink>
-                </EventDetailBox>
-              )}
-            </EventNavLink>
-          </Event>
+        const filtredActiveEvents = filteredEvents.filter(
+          activeEvent => activeEvent.eventId === event.article_event
         );
+        console.log(filtredActiveEvents);
+        let shouldDisplay;
+
+        if (selectedDate) {
+          shouldDisplay = filtredActiveEvents.length > 0;
+        } else {
+          shouldDisplay = matchingActiveEvents.length > 0;
+        }
+
+        if (shouldDisplay) {
+          return (
+            // data-aos="zoom-in-up" data-aos-delay="200"
+            <Event key={event._id}>
+              <EventNavLink
+                onMouseEnter={() => handleMouseEnter(event._id)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <EventImages
+                  src={
+                    event.image
+                      ? BASE_URL_IMG +
+                        'events/' +
+                        event.image.split('/')[
+                          event.image.split('/').length - 1
+                        ]
+                      : defaultImg
+                  }
+                  alt={event.title}
+                  loading="lazy"
+                />
+
+                {isHovered === event._id && (
+                  <EventDetailBox isHovered={isHovered === event._id}>
+                    <EventDetailTitle>{event.name}</EventDetailTitle>
+
+                    <DetailsBox>
+                      <EventDetailDate>
+                        <EventDetailDateLi>
+                          <EventDetailDateText>{t('Дата')}</EventDetailDateText>
+                        </EventDetailDateLi>
+                        <EventDetailDateLi>
+                          {matchingActiveEvents.map((ev, idx) => (
+                            <EventDetailDateText2 key={idx}>
+                              {new Date(ev.date).toLocaleDateString()}
+                            </EventDetailDateText2>
+                          ))}
+                        </EventDetailDateLi>
+                      </EventDetailDate>
+
+                      <ul>
+                        <li>
+                          <EventDetailDateText>{t('Час')}</EventDetailDateText>
+                        </li>
+                        <li>
+                          {matchingActiveEvents.map((ev, idx) => (
+                            <EventDetailDateText2 key={idx}>
+                              {ev.time}
+                            </EventDetailDateText2>
+                          ))}
+                        </li>
+                      </ul>
+                    </DetailsBox>
+
+                    <DetailsBoxDiscr>
+                      {event.description.length > 50
+                        ? event.description.slice(0, 50) + ' ...'
+                        : event.description}
+                    </DetailsBoxDiscr>
+
+                    <BtnLink to={`/events/${event.article_event}`}>
+                      <span>{t('Детальніше')}</span>
+                    </BtnLink>
+                  </EventDetailBox>
+                )}
+              </EventNavLink>
+            </Event>
+          );
+        }
+
+        // if (matchingActiveEvents.length > 0) {
+        //   return (
+        //     // data-aos="zoom-in-up" data-aos-delay="200"
+        //     <Event key={event._id}>
+        //       <EventNavLink
+        //         onMouseEnter={() => handleMouseEnter(event._id)}
+        //         onMouseLeave={handleMouseLeave}
+        //       >
+        //         <EventImages
+        //           src={
+        //             event.image
+        //               ? BASE_URL_IMG +
+        //                 'events/' +
+        //                 event.image.split('/')[
+        //                   event.image.split('/').length - 1
+        //                 ]
+        //               : defaultImg
+        //           }
+        //           alt={event.title}
+        //           loading="lazy"
+        //         />
+
+        //         {isHovered === event._id && (
+        //           <EventDetailBox isHovered={isHovered === event._id}>
+        //             <EventDetailTitle>{event.name}</EventDetailTitle>
+
+        //             <DetailsBox>
+        //               <EventDetailDate>
+        //                 <EventDetailDateLi>
+        //                   <EventDetailDateText>{t('Дата')}</EventDetailDateText>
+        //                 </EventDetailDateLi>
+        //                 <EventDetailDateLi>
+        //                   {matchingActiveEvents.map((ev, idx) => (
+        //                     <EventDetailDateText2 key={idx}>
+        //                       {new Date(ev.date).toLocaleDateString()}
+        //                     </EventDetailDateText2>
+        //                   ))}
+        //                 </EventDetailDateLi>
+        //               </EventDetailDate>
+
+        //               <ul>
+        //                 <li>
+        //                   <EventDetailDateText>{t('Час')}</EventDetailDateText>
+        //                 </li>
+        //                 <li>
+        //                   {matchingActiveEvents.map((ev, idx) => (
+        //                     <EventDetailDateText2 key={idx}>
+        //                       {ev.time}
+        //                     </EventDetailDateText2>
+        //                   ))}
+        //                 </li>
+        //               </ul>
+        //             </DetailsBox>
+
+        //             <DetailsBoxDiscr>
+        //               {event.description.length > 50
+        //                 ? event.description.slice(0, 50) + ' ...'
+        //                 : event.description}
+        //             </DetailsBoxDiscr>
+
+        //             <BtnLink to={`/events/${event.article_event}`}>
+        //               <span>{t('Детальніше')}</span>
+        //             </BtnLink>
+        //           </EventDetailBox>
+        //         )}
+        //       </EventNavLink>
+        //     </Event>
+        //   );
+        // }
       })}
       {eventsNumber < events.length && (
         <BtnLight onClick={handleEventsNumber}>
@@ -174,4 +285,5 @@ EventsList.propTypes = {
       image: PropTypes.string,
     })
   ),
+  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
 };

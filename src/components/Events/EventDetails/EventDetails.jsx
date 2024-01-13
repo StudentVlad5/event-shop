@@ -100,6 +100,7 @@ export const EventDetails = ({ event }) => {
                 vacancies: it.vacancies,
                 language: it.language,
                 language_secondary: it.language_secondary,
+                language_third: it.language_third,
                 location: it.location,
                 address: it.address,
                 ...it[selectedLanguage],
@@ -245,6 +246,7 @@ export const EventDetails = ({ event }) => {
                 src={
                   image
                     ? BASE_URL_IMG +
+                      'events/' +
                       image.split('/')[image.split('/').length - 1]
                     : defaultImg
                 }
@@ -273,6 +275,7 @@ export const EventDetails = ({ event }) => {
                       {ev.language}
                     </HeadingItemData>
                     <HeadingItemData>{ev.language_secondary}</HeadingItemData>
+                    <HeadingItemData>{ev.language_third}</HeadingItemData>
                   </HeadingItemDataBox>
                 ))}
               </HeadingItem>
