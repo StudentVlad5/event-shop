@@ -337,7 +337,7 @@ export const EventDetails = ({ event }) => {
           </BtnLight>
         </Container>
       </EventsSection>
-      <RegisterModal event={event} />
+      <RegisterModal event={event} activeEvents={activeEvents} />
     </>
   );
 };

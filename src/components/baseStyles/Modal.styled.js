@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { theme } from 'components/baseStyles/Variables.styled';
+import styled from "styled-components";
+import { theme } from "components/baseStyles/Variables.styled";
 
 export const Backdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 999 !important;
 
   display: flex;
   align-items: flex-start;
@@ -31,19 +31,21 @@ export const Modal = styled.div`
 
   width: 90%;
   max-width: calc(100vw - 40px);
-  padding: 30px 20px;
+  padding: 15px 14px;
   margin: auto;
-
-  background-color: ${theme.colors.black};
+  border-radius: 23px;
+  background-color: ${theme.colors.fon};
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    max-width: 600px;
-    padding: 35px;
+    width: 700px;
+    height: 730px;
+    padding: 65px 89px;  
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    max-width: 1020px;
-    padding: 35px 130px;
+    width: 700px;
+    height: 730px;
+    padding: 65px 89px;  
   }
 `;
 
@@ -56,21 +58,19 @@ export const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 0;
-
-  color: ${theme.colors.white};
+  color: ${theme.colors.grey2};
   background-color: transparent;
   border: none;
   cursor: pointer;
 
   & > svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 
     @media screen and (min-width: ${theme.breakpoints.desktop}) {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
     }
   }
 `;

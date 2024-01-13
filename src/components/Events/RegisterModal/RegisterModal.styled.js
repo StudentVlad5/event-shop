@@ -1,14 +1,23 @@
-import { Form, Field } from 'formik';
-import styled from 'styled-components';
-import { theme } from 'components/baseStyles/Variables.styled';
-import { Section } from 'components/baseStyles/CommonStyle.styled';
+import { Form, Field } from "formik";
+import styled from "styled-components";
+import { theme } from "components/baseStyles/Variables.styled";
+import { Section, Title } from "components/baseStyles/CommonStyle.styled";
+import ArrowUp from "../../../images/arrow_up_24px.svg";
+import ArrowDown from "../../../images/arrow_down_24px.svg";
 
 export const MessageSection = styled(Section)`
-  padding-top: 0;
-  padding-bottom: 75px;
-
+  padding: 0;
+`;
+export const TitleMes = styled(Title)`
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 57.6px */
+  margin-bottom: 15px;
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    padding-bottom: 120px;
+    font-size: 48px;
+    margin-bottom: 25px;
   }
 `;
 
@@ -16,27 +25,27 @@ export const FormList = styled(Form)`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 0;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    gap: 45px;
-    padding: 0 70px;
+    gap: 35px;
   }
 `;
 
 export const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 20px;
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    gap: 70px;
+    gap: 35px;
   }
 
   & > div {
@@ -73,7 +82,7 @@ export const FormInput = styled(Field)`
   width: 100%;
   padding: 15px;
 
-  font-family: ${theme.fonts[0]};
+  font-family: ${theme.fonts[1]};
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -93,6 +102,9 @@ export const FormInput = styled(Field)`
     padding: 25px 30px;
   }
 
+  &:focus::placeholder {
+  color: transparent;
+}
   &:focus-visible {
     border: 0.5px solid ${theme.colors.accent};
     outline: none;
@@ -107,10 +119,32 @@ export const FormInput = styled(Field)`
     line-height: normal;
   }
 `;
+export const FormInputSeats = styled(FormInput)`
+  font-size: 36px;
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    padding: 14px 30px 15px;
+    font-size: 36px;
+  }
+  &::placeholder {
+    font-size: 36px;
+  }
+  &::-webkit-outer-spin-button {
+    height: 80px;
+    opacity: 0;
+    z-index: 500;
+    cursor: pointer;
+  }
+  &::-webkit-inner-spin-button {
+    height: 80px;
+    opacity: 0;
+    z-index: 500;
+    cursor: pointer;
+  }
+`;
 
 export const Error = styled.span`
   position: absolute;
-  bottom: -10px;
+  bottom: -20px;
   right: 0;
   z-index: 2;
 
@@ -161,41 +195,52 @@ export const FormBtn = styled.button`
     margin-left: 24px;
   }
 `;
-
-export const FormInputMessage = styled.textarea`
-  height: 100%;
-  padding: 8px 30px 8px 20px;
-
-  font-family: ${theme.fonts[0]};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  color: ${theme.colors.grey2};
-
-  background: ${theme.colors.white};
-  border: 1px solid ${theme.colors.grey2};
-  border-radius: 10px;
-
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+export const QuantityWrapper = styled.div`
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    height: 30px;
+    width: 30px;
+    top: 8px;
+    background-image: url(${ArrowUp});
+    background-size: 30px 30px;
+    cursor: pointer;
+    @media screen and (min-width: ${theme.breakpoints.tablet}) {
+      height: 30px;
+      width: 30px;
+      right: 15px;
+      background-size: 30px 30px;
+    }
+    @media screen and (min-width: ${theme.breakpoints.desktop}) {
+      height: 30px;
+      width: 30px;
+      right: 17px;
+      background-size: 30px 30px;
+    }
   }
-
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    width: 530px;
-    padding: 25px 30px;
-  }
-
-  &:focus-visible {
-    border: 0.5px solid ${theme.colors.accent};
-    outline: none;
-  }
-
-  &::placeholder {
-    color: ${theme.colors.grey2};
-    font-family: ${theme.fonts[0]};
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  &:before {
+    content: "";
+    position: absolute;
+    right: 12px;
+    height: 30px;
+    width: 30px;
+    bottom: 8px;
+    background-image: url(${ArrowDown});
+    background-size: 30px 30px;
+    cursor: pointer;
+    @media screen and (min-width: ${theme.breakpoints.tablet}) {
+      height: 30px;
+      width: 30px;
+      right: 15px;
+      background-size: 30px 30px;
+    }
+    @media screen and (min-width: ${theme.breakpoints.desktop}) {
+      height: 30px;
+      width: 30px;
+      right: 17px;
+      background-size: 30px 30px;
+    }
   }
 `;

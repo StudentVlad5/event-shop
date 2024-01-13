@@ -8,42 +8,71 @@ import { cleanModal } from '../../../redux/modal/operation';
 import { modalComponent } from '../../../redux/modal/selectors';
 import {
   MessageSection,
-  FormInputMessage,
   FormList,
   FormLabel,
   FormName,
   FormInput,
   Error,
   FieldsWrapper,
+  TitleMes,
+  FormInputSeats,
+  QuantityWrapper
 } from './RegisterModal.styled';
-import {
-  Title,
-} from 'components/baseStyles/CommonStyle.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';
 import { BtnAccent } from 'components/baseStyles/Button.styled';
 import { createData } from 'services/APIservice';
-import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
 import { useState } from 'react';
+import { useDispatch} from "react-redux";
+import * as Yup from 'yup';
 
-export const RegisterModal = ({ event }) => {
+
+export const RegisterModal = ({ event, activeEvents }) => {
   const { t } = useTranslation();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const bookingEvent = [];
+  activeEvents.forEach(it => {
+   if(it.eventId === event.article_event){bookingEvent.push(it)}
+  })
+console.log("bookingEvent", bookingEvent)
   const modal = useSelector(modalComponent);
+  const dispatch = useDispatch();
+
+  const RegisterSchema = Yup.object().shape({
+    seats: Yup.number()
+      .positive()
+      .integer()
+      .required('Required'),
+    name: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+  });
 
   async function createOrder(values) {
+    values.activeEventID = bookingEvent[0]["article_eventID"];
+    values.eventId = bookingEvent[0]["eventId"];
+    values.date = bookingEvent[0]["date"];
+    values.time = bookingEvent[0]["time"];
+    values.userName = values.name;
+    values.userEmail = values.email;
+    values.bookingSeats = values.seats;
+    values.priceTotal = values.seats * bookingEvent[0]["price"];
     setIsLoading(true);
     try {
-      const { data } = await createData(`/order`, values);
+      const { data } = await createData(`/orders`, values);
       if (!data) {
-        return onFetchError('Whoops, something went wrong');
+        onFetchError('Whoops, something went wrong');
       } else { onSuccess('Thank you for your order');}
     } catch (error) {
       setError(error);
     } finally {
+      dispatch(cleanModal());
+      closeModalWindow();
       setIsLoading(false);
     }
   }
@@ -70,15 +99,14 @@ export const RegisterModal = ({ event }) => {
             <MdClose />
           </CloseBtn>
           <MessageSection>
-          {isLoading ? onLoading() : onLoaded()}
-        <Title>
-          {t('Реєстрація на подію')} {firstName(name)}?
-        </Title>
+        <TitleMes>
+          {t('Реєстрація на подію')}
+        </TitleMes>
         <Formik
           initialValues={{
             name: '',
             email: '',
-            seats: '',
+            seats: '1',
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             createOrder(values);
@@ -86,12 +114,11 @@ export const RegisterModal = ({ event }) => {
             resetForm();
           }}
           enableReinitialize={true}
+          validationSchema={RegisterSchema}
         >
           {({
             handleChange,
             handleSubmit,
-            // setFieldValue,
-            // resetForm,
             isSubmitting,
             values,
             errors,
@@ -105,19 +132,18 @@ export const RegisterModal = ({ event }) => {
               <FieldsWrapper>
               <FormLabel htmlFor="seats">
                   <FormName>{t('Місць')}</FormName>
-                  <FormInputMessage
-                    type="text"
-                    name="seats"
-                    id="seats"
-                    placeholder={t('3')}
-                    value={values.seats}
-                    required
-                    // onChange={e => {
-                    //   setFieldValue('message', e.target.value);
-                    // }}
-                  />
-                  {errors.state && touched.state ? (
-                    <Error>{errors.state}</Error>
+                  <QuantityWrapper className="quantity-wrapper">
+                    <FormInputSeats
+                      type="number"
+                      name="seats"
+                      id="seats"
+                      placeholder={t('1')}
+                      value={values.seats}
+                      required
+                    />
+                  </QuantityWrapper>
+                  {errors.seats && touched.seats ? (
+                    <Error>{errors.seats}</Error>
                   ) : null}
                 </FormLabel>
                   <FormLabel htmlFor="name">
@@ -126,7 +152,7 @@ export const RegisterModal = ({ event }) => {
                       type="text"
                       name="name"
                       id="name"
-                      placeholder={name}
+                      placeholder={t('Джеймс')}
                       value={values.name}
                       required
                     />

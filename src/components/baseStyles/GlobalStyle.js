@@ -1,6 +1,6 @@
-import 'modern-normalize';
-import { createGlobalStyle } from 'styled-components';
-import { theme } from './Variables.styled';
+import "modern-normalize";
+import { createGlobalStyle } from "styled-components";
+import { theme } from "./Variables.styled";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -53,7 +53,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 45;
+  z-index: 345;
 
   width: 100vw;
   height: 100vh;
@@ -120,6 +120,7 @@ color:${theme.colors.primary} !important;
 .swiper-pagination-bullet {
   top: var(--swiper-navigation-sides-offset,10px) !important;
   bottom:var(--swiper-navigation-sides-offset,10px) !important;
+  user-select: none;
   /* transform: scale(1.1); */
 }
 

@@ -19,6 +19,7 @@ import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getMessages } from "../../../../redux/messages/operation";
 import { messagesComponent } from "../../../../redux/messages/selectors";
+import { specialistsComponent } from "../../../../redux/specialists/selectors";
 
 const Messages = () => {
   const theme = useTheme();
@@ -27,7 +28,13 @@ const Messages = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-
+  const specialists = useSelector(specialistsComponent);
+  console.log(specialists)
+  const listOfSpecialistsNames = {};
+  for (const it in specialists) {
+    listOfSpecialistsNames[specialists[it].specialistId] = specialists[it].ua.name;
+  };
+console.log(listOfSpecialistsNames)
   const objectMessages = useSelector(messagesComponent);
   const listOfMessages = []
   for(const it in objectMessages) {
@@ -36,6 +43,8 @@ const Messages = () => {
     data.name = objectMessages[it].name;
     data.email = objectMessages[it].email;
     data.message = objectMessages[it].message;
+    listOfSpecialistsNames[objectMessages[it].specialistId] ? data.whom = listOfSpecialistsNames[objectMessages[it].specialistId] : '';
+    data.specialistId = objectMessages[it].specialistId;
     data.status = objectMessages[it].status;
     data.date = objectMessages[it].createdAt;
     listOfMessages.push(data)
@@ -50,6 +59,13 @@ const Messages = () => {
       field: "message",
       headerName: "Message",
       minWidth: 500,
+      cellClassName: "name-column--cell",
+      editable: false
+    },
+    {
+      field: "whom",
+      headerName: "Whom",
+      minWidth: 300,
       cellClassName: "name-column--cell",
       editable: false
     },

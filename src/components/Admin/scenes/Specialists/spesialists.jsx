@@ -156,14 +156,16 @@ const Specialists = () => {
       headerName: "Description FR",
       flex: 1,
       cellClassName: "name-column--cell",
-      editable: true
+      editable: true,
+      dialogSize: "large",
     },
     {
       field: "descriptionUa",
       headerName: "Description UA",
       flex: 1,
       cellClassName: "name-column--cell",      
-      editable: true
+      editable: true,
+      dialogSize: "large",
     },
     {
       field: "descriptionRu",
