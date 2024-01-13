@@ -66,6 +66,7 @@ const Orders = () => {
         eventsNames.push(events[it].ua.name);
         eventsIdForNames[events[it].article_event]=events[it].ua.name;
     }
+    console.log("eventsIdForNames", eventsIdForNames)
   // =========
 
   const listOfOrders = [];
@@ -74,7 +75,7 @@ const Orders = () => {
     data.id = ordersList[it]._id;
     data.eventId = ordersList[it].eventId;
     data.activeEventID = ordersList[it].activeEventID;
-    data.event_Name = eventsIdForNames[ordersList[it].activeEventID];
+    data.event_Name = eventsIdForNames[ordersList[it].eventId];
     data.date = ordersList[it].date;
     data.time = ordersList[it].time;
     data.userName = ordersList[it].userName;
