@@ -95,6 +95,10 @@ export const FormInput = styled(Field)`
     font-weight: 400;
     line-height: normal;
   }
+
+  &:focus::placeholder {
+    color: transparent;
+  }
 `;
 
 export const Error = styled.span`
