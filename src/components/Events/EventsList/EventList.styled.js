@@ -1,6 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
-import { NavLink } from 'react-router-dom';
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+`;
 
 export const List = styled.ul`
   display: flex;
@@ -46,6 +56,9 @@ export const EventDetailBox = styled.div`
   border-radius: 40px;
   background: #fcf9f2;
   padding: 25px 40px;
+
+  animation: ${fadeInUp} 0.3s ease;
+  display: ${props => (props.isHovered ? 'flex' : 'none')};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 300px;
@@ -114,4 +127,33 @@ export const DetailsBoxDiscr = styled.p`
   margin-bottom: 25px;
 `;
 
+export const NoEvents = styled.p`
+  color: ${theme.colors.grey1};
+  font-family: ${theme.fonts[0]};
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  margin-top: 20px;
+  text-align: center;
+`;
+
+export const CleanFilterBtn = styled.button`
+  color: ${theme.colors.grey2};
+  font-family: ${theme.fonts[0]};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 1px solid ${theme.colors.grey2};
+  cursor: pointer;
+  
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 20px;
+  }
+`;
+
+// export const EventDetailTitle = styled.p``
 // export const EventDetailTitle = styled.p``

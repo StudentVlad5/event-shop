@@ -1,7 +1,18 @@
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section } from 'components/baseStyles/CommonStyle.styled';
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+`;
 
 export const EventsSection = styled(Section)`
   padding-bottom: 75px;
@@ -80,6 +91,10 @@ export const DetailsWrapper = styled.div`
 
   border-radius: 40px;
   background: ${theme.colors.fon};
+
+  
+  animation: ${fadeInUp} 0.3s ease;
+  display: ${props => (props.isHovered ? 'flex' : 'none')};
 `;
 
 export const Name = styled.span`

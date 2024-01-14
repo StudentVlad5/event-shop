@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -37,6 +38,15 @@ export const FormMessage = ({ specialist }) => {
     }
   }
 
+  const MessageSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+    message: Yup.string().required('Required'),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -51,6 +61,7 @@ export const FormMessage = ({ specialist }) => {
         resetForm();
       }}
       enableReinitialize={true}
+      validationSchema={MessageSchema}
     >
       {({
         handleChange,

@@ -1,6 +1,6 @@
-import "modern-normalize";
-import { createGlobalStyle } from "styled-components";
-import { theme } from "./Variables.styled";
+import 'modern-normalize';
+import { createGlobalStyle } from 'styled-components';
+import { theme } from './Variables.styled';
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -23,13 +23,12 @@ export const GlobalStyle = createGlobalStyle`
   flex-direction: column;
   justify-content: space-between;
 }
-
+/* 
 @font-face {
-  font-family: 'Miama Nueva';
-  /* src: url('../../../../public/fonts/ofont.ru_Miama Nueva.ttf') format('ttf'); */
-  src: url('../../../../public/fonts/miama.otf') format('opentypeformat');
-}
-  
+	font-family: 'Miama Nueva';
+	src: url('../../../../public/fonts/MiamaNueva.woff2') format('woff2'), url('../../../../public/fonts/MiamaNueva.woff') format('woff');
+}  */
+
 //-----reset-----//
 h1, h2, h3, h4, h5, h6, p {
   padding: 0;
@@ -195,11 +194,17 @@ border-radius: 50%;
 }
 
 /* Calendar */
+.calendar-box{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+  position: relative;
+}
 
 .calendar {
   display: block;
   position: relative;
-  width: 100%;
+  width: 345px;
   background: var(--neutral-color);
   border: 1px solid var(--border-color);
 }
@@ -233,38 +238,50 @@ border-radius: 50%;
 
 .calendar .days {
   text-transform: uppercase;
-  font-weight: 400;
-  color: var(--text-color-light);
-  font-size: 70%;
-  padding: 0.75em 0;
-  border-bottom: 1px solid var(--border-color);
+  padding-top: 5px;
+  border-top: 1px solid ${theme.colors.grey1};
+
+  color: ${theme.colors.grey2};
+  font-family: ${theme.fonts[0]};
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 16px;
+  }
 }
 
 .calendar .body .cell {
   position: relative;
-  height: 4em;
-  border-right: 1px solid var(--border-color);
-  overflow: hidden;
+  /* height: 40px; */
+  /* border-right: 1px solid var(--border-color); */
+  /* overflow: hidden; */
   cursor: pointer;
-  background: var(--neutral-color);
+  /* background: var(--neutral-color); */
   transition: 0.25s ease-out;
   font-size: 1.5em;
 }
 
-.calendar .body .cell:hover {
+/* .calendar .body .cell:hover {
   background: var(--bg-color);
   transition: 0.5s ease-out;
-}
+} */
 
 .calendar .body .selected {
-  border-left: 10px solid transparent;
+  /* border-left: 10px solid transparent;
   border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
-  border-image-slice: 1;
+  border-image-slice: 1; */
+  border-radius: 7px;
+border: 1px solid #3A3A3A;
 }
 .calendar .body .today {
-  border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #ff1a79 0%, #eb82b3 40%);
-  border-image-slice: 1;
+  border-radius: 7px;
+border: 1px solid #3A3A3A;
+  /* border-left: 10px solid transparent; */
+  /* border-image: linear-gradient(45deg, #ff1a79 0%, #eb82b3 40%); */
+  /* border-image-slice: 1; */
 }
 .calendar .body .row {
   border-bottom: 1px solid var(--border-color);
@@ -274,17 +291,27 @@ border-radius: 50%;
   border-bottom: none;
 } */
 
-.calendar .body .cell:last-child {
+/* .calendar .body .cell:last-child {
   border-right: none;
-}
+} */
 
 .calendar .body .cell .number {
   position: absolute;
-  font-size: 82.5%;
-  line-height: 1;
   top: 0.75em;
   right: 0.75em;
-  font-weight: 700;
+  padding: 10px;
+  color: ${theme.colors.grey1};
+  font-family: ${theme.fonts[0]};
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 9px;
+  cursor: pointer;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 24px;
+    line-height: 120%;
+  }
 }
 
 .calendar .body .disabled {
@@ -320,4 +347,32 @@ border-radius: 50%;
   flex-basis: calc(100% / 7);
   width: calc(100% / 7);
 }
+
+.footer{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-box{
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-prev, .btn-next{
+  position: absolute;
+  color: ${theme.colors.primary};
+  border-radius: 50%;
+  filter: drop-shadow(0px 4px 14px rgba(0, 0, 0, 0.16));
+  cursor: pointer;
+}
+
+.btn-next{
+  right: -40px;
+}
+
+.btn-prev{
+  left: -40px;
+}
+
 `;
