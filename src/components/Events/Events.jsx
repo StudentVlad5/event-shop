@@ -8,7 +8,6 @@ import { EventsSection } from './Events.styled';
 import { Container, Title } from 'components/baseStyles/CommonStyle.styled';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import Calendar from './Calendar/calendar';
-import Details from './Calendar/details';
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
@@ -19,6 +18,7 @@ export const Events = () => {
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
+  const [activeEvents, setActiveEvents] = useState([]);
 
   useEffect(() => {
     (async function getData() {
@@ -52,6 +52,38 @@ export const Events = () => {
     })();
   }, [selectedLanguage]);
 
+  useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/active_events`);
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+
+        let langData = [];
+        data.map(it => {
+          let item = [
+            {
+              _id: it._id,
+              article_eventID: it.article_eventID,
+              eventId: it.eventId,
+              date: it.date,
+              time: it.time,
+              ...it[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
+        setActiveEvents(langData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [selectedLanguage]);
+
   const showDetailsHandle = dayStr => {
     setData(dayStr);
     setShowDetails(true);
@@ -61,13 +93,16 @@ export const Events = () => {
     <EventsSection>
       <Container>
         <Title>{t('Events calendar')}</Title>
-        <Calendar showDetailsHandle={showDetailsHandle} />
+        <Calendar
+          showDetailsHandle={showDetailsHandle}
+          activeEvents={activeEvents}
+        />
         <br />
-        {showDetails && <Details data={data} />}
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
-        {/* && activeEvents.length  activeEvents={activeEvents}*/}
-        {events.length > 0 && !error && <EventsList events={events} />}
+        {events.length > 0 && !error && (
+          <EventsList events={events} activeEvents={activeEvents} />
+        )}
 
         {/* <Heading>{t('Archive of past events')}</Heading> */}
         {/* {isLoading ? onLoading() : onLoaded()} */}

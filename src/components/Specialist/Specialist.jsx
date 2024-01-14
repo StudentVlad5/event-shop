@@ -275,7 +275,9 @@ export const Specialist = ({ specialist }) => {
                           loading="lazy"
                         />
                         {isHovered === event.article_event && (
-                          <DetailsWrapper>
+                          <DetailsWrapper
+                            isHovered={isHovered === event.article_event}
+                          >
                             <Name>{event.name}</Name>
                             <DateTimeWrapper>
                               <li>

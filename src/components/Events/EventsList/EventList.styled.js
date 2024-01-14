@@ -1,6 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
-import { NavLink } from 'react-router-dom';
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+`;
 
 export const List = styled.ul`
   display: flex;
@@ -46,6 +56,9 @@ export const EventDetailBox = styled.div`
   border-radius: 40px;
   background: #fcf9f2;
   padding: 25px 40px;
+
+  animation: ${fadeInUp} 0.3s ease;
+  display: ${props => (props.isHovered ? 'flex' : 'none')};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 300px;
