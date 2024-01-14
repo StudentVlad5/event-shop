@@ -215,7 +215,7 @@ export const EventDetails = ({ event }) => {
               <HeadingItem>
                 <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx}>
+                  <HeadingItemData key={idx + ev.date}>
                     {new Date(ev.date).toLocaleDateString()}
                   </HeadingItemData>
                 ))}
@@ -223,7 +223,7 @@ export const EventDetails = ({ event }) => {
               <HeadingItem>
                 <HeadingItemTitle>{t('час')}</HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx}>{ev.time}</HeadingItemData>
+                  <HeadingItemData key={idx + ev.time}>{ev.time}</HeadingItemData>
                 ))}
               </HeadingItem>
               <HeadingItem>
@@ -233,7 +233,7 @@ export const EventDetails = ({ event }) => {
               <HeadingItem>
                 <HeadingItemTitle>{t('місце')}</HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx}>
+                  <HeadingItemData key={idx + ev.location + ev.address}>
                     {ev.location} <br /> <br /> {ev.address}
                   </HeadingItemData>
                 ))}
@@ -242,7 +242,7 @@ export const EventDetails = ({ event }) => {
 
             {images.map((image, idx) => (
               <EventImage
-                key={idx}
+                key={idx + event.name}
                 src={
                   image
                     ? BASE_URL_IMG +
@@ -263,19 +263,19 @@ export const EventDetails = ({ event }) => {
                 <HeadingItemTitle>{t('категорія')}</HeadingItemTitle>
                 {categories.map((ct, idx) => (
                   <>
-                    <HeadingItemData key={idx}>{ct.title}</HeadingItemData>
+                    <HeadingItemData key={idx + ct.title}>{ct.title}</HeadingItemData>
                   </>
                 ))}
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('Мова')}</HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemDataBox key={idx}>
+                  <HeadingItemDataBox key={idx + ev?.language}>
                     <HeadingItemData style={{ marginRight: 5 }}>
-                      {ev.language}
+                      {ev?.language}
                     </HeadingItemData>
-                    <HeadingItemData>{ev.language_secondary}</HeadingItemData>
-                    <HeadingItemData>{ev.language_third}</HeadingItemData>
+                    <HeadingItemData>{ev?.language_secondary}</HeadingItemData>
+                    <HeadingItemData>{ev?.language_third}</HeadingItemData>
                   </HeadingItemDataBox>
                 ))}
               </HeadingItem>
@@ -284,15 +284,15 @@ export const EventDetails = ({ event }) => {
                   {t('кількість вільних місць')}
                 </HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx}>
-                    {ev.vacancies}/{ev.seats}
+                  <HeadingItemData key={idx+ev?.vacancies+ev?.seats}>
+                    {ev?.vacancies}/{ev?.seats}
                   </HeadingItemData>
                 ))}
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
                 {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx}>{ev.price}</HeadingItemData>
+                  <HeadingItemData key={idx+ev?.price}>{ev?.price}</HeadingItemData>
                 ))}
               </HeadingItem>
             </EventHeading2>
@@ -320,7 +320,7 @@ export const EventDetails = ({ event }) => {
               {specialist.map((sp, idx) => (
                 <NavLinkSpecialist
                   to={`/specialists/${sp.specialistId}`}
-                  key={idx}
+                  key={idx + sp.specialistId}
                 >
                   <span>{sp.name}</span>
                 </NavLinkSpecialist>
@@ -335,7 +335,7 @@ export const EventDetails = ({ event }) => {
               openModal(e);
             }}
             data-modal="event"
-            disabled={ev.vacancies<=0}
+            disabled={activeEvents.map((ev) => ev?.vacancies<=0)}
           >
             {t('Register')}
           </BtnLight>

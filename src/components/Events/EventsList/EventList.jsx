@@ -96,9 +96,9 @@ export const EventsList = ({ events, activeEvents }) => {
           let shouldDisplay;
 
           if (selectedDate) {
-            shouldDisplay = filtredActiveEvents.length > 0;
+            shouldDisplay = filtredActiveEvents?.length > 0;
           } else {
-            shouldDisplay = matchingActiveEvents.length > 0;
+            shouldDisplay = matchingActiveEvents?.length > 0;
           }
 
           if (shouldDisplay) {
@@ -124,7 +124,7 @@ export const EventsList = ({ events, activeEvents }) => {
                   />
 
                   {isHovered === event._id && (
-                    <EventDetailBox isHovered={isHovered === event._id}>
+                    <EventDetailBox $ishovered={(isHovered === event._id) ? 'flex' : 'none'}>
                       <EventDetailTitle>{event.name}</EventDetailTitle>
 
                       <DetailsBox>
@@ -193,16 +193,18 @@ export const EventsList = ({ events, activeEvents }) => {
 EventsList.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-      time: PropTypes.string.isRequired,
-      duration: PropTypes.string.isRequired,
-      location: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      language: PropTypes.string,
-      image: PropTypes.string,
+
     })
   ),
-  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
+  activeEvents: PropTypes.arrayOf(PropTypes.shape({
+    // _id: PropTypes.string.isRequired,
+    // date: PropTypes.string.isRequired,
+    // time: PropTypes.string.isRequired,
+    // duration: PropTypes.string.isRequired,
+    // location: PropTypes.string.isRequired,
+    // title: PropTypes.string.isRequired,
+    // description: PropTypes.string,
+    // language: PropTypes.string,
+    // image: PropTypes.string,
+  })),
 };

@@ -58,7 +58,7 @@ export const EventDetailBox = styled.div`
   padding: 25px 40px;
 
   animation: ${fadeInUp} 0.3s ease;
-  display: ${props => (props.isHovered ? 'flex' : 'none')};
+  $display: ${props => props.$ishovered };
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 300px;
