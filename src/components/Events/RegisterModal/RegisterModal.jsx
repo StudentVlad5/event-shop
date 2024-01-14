@@ -45,6 +45,7 @@ console.log("bookingEvent", bookingEvent)
     seats: Yup.number()
       .positive()
       .integer()
+      .max(bookingEvent[0]?.vacancies ? bookingEvent[0]?.vacancies : 50,'Not enough free places to book')
       .required('Required'),
     name: Yup.string()
       .min(2, 'Too Short!')

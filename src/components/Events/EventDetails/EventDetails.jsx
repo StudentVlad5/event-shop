@@ -332,6 +332,7 @@ export const EventDetails = ({ event }) => {
               openModal(e);
             }}
             data-modal="event"
+            disabled={ev.vacancies<=0}
           >
             {t('Register')}
           </BtnLight>
