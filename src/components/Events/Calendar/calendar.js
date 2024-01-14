@@ -17,9 +17,10 @@ import { CalendarIcon } from './Calendar.styled';
 import { getFromStorage, saveToStorage } from 'services/localStorService';
 
 const Calendar = ({ showDetailsHandle, activeEvents }) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const selectedDay = getFromStorage('selectedDate');
+  const [currentMonth, setCurrentMonth] = useState(selectedDay ? selectedDay : new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(selectedDay ? selectedDay : new Date());
 
   const changeMonthHandle = btnType => {
     if (btnType === 'prev') {
@@ -29,7 +30,7 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
       setCurrentMonth(addMonths(currentMonth, 1));
     }
   };
-  const selectedDay = getFromStorage('selectedDate');
+
 
   const changeWeekHandle = btnType => {
     //console.log("current week", currentWeek);

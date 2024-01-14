@@ -41,6 +41,12 @@ export const BtnLight = styled.button`
     background-color: ${theme.colors.accent};
     border: 1px solid ${theme.colors.accent};
   }
+  &:disabled {
+    color: ${theme.colors.brown2};
+    background-color: ${theme.colors.grey1};
+    opacity: 0.4;
+    border: 1px solid ${theme.colors.accent};
+  }
 `;
 
 export const BtnAccent = styled.button`

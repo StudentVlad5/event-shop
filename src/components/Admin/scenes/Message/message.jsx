@@ -52,9 +52,9 @@ console.log(listOfSpecialistsNames)
 
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5, editable: false },
+    { field: "id", headerName: "ID", width: 10, editable: false },
     { field: "name", headerName: "Name", flex: 0.5, editable: false },
-    { field: "email", headerName: "Email", width: 10, editable: false },
+    { field: "email", headerName: "Email", flex: 0.75, editable: false },
     {
       field: "message",
       headerName: "Message",
@@ -65,14 +65,14 @@ console.log(listOfSpecialistsNames)
     {
       field: "whom",
       headerName: "Whom",
-      minWidth: 300,
+      minWidth: 200,
       cellClassName: "name-column--cell",
       editable: false
     },
     {
       field: "date",
       headerName: "Date",
-      flex: 1,
+      flex: .25,
       cellClassName: "name-column--cell",      
       editable: false,
       type: "date",
@@ -81,7 +81,7 @@ console.log(listOfSpecialistsNames)
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
+      flex: .25,
       cellClassName: "name-column--cell",
       editable: true,
       type: "singleSelect", valueOptions: ["new", "close", "need answer"],

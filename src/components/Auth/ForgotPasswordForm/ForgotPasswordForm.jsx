@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useFormik, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-// import { forgotPasswordAuth } from '../redux/auth/operations';
+import { forgotPasswordAuth } from '../../../redux/auth/operations';
 import schemas from 'utils/schemas';
 import { onSuccess } from 'helpers/Messages/NotifyMessages.jsx';
 import { Section, Container } from 'components/baseStyles/CommonStyle.styled';
@@ -33,21 +33,21 @@ const ForgotPasswordForm = () => {
   const onSubmit = ({ values }) => {
     setIsLoading(true);
     const { email } = values;
-    // dispatch(
-    //   forgotPasswordAuth({
-    //     email,
-    //   })
-    // );
+    dispatch(
+      forgotPasswordAuth({
+        email,
+      })
+    );
     onSuccess('password has been changed. Please check your email');
     setIsLoading(false);
-    navigate(`/signin`);
+    navigate(`/login`);
   };
 
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    // validationSchema: schemas.changePasswordSchema,
+    validationSchema: schemas.changePasswordSchema,
     onSubmit: (values, action) => {
       onSubmit({ values, action });
     },
