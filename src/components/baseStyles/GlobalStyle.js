@@ -23,11 +23,11 @@ export const GlobalStyle = createGlobalStyle`
   flex-direction: column;
   justify-content: space-between;
 }
-
+/* 
 @font-face {
 	font-family: 'Miama Nueva';
 	src: url('../../../../public/fonts/MiamaNueva.woff2') format('woff2'), url('../../../../public/fonts/MiamaNueva.woff') format('woff');
-} 
+}  */
 
 //-----reset-----//
 h1, h2, h3, h4, h5, h6, p {
