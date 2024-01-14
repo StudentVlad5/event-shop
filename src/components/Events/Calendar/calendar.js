@@ -14,6 +14,7 @@ import {
 import PropTypes from 'prop-types';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { CalendarIcon } from './Calendar.styled';
+import { getFromStorage, saveToStorage } from 'services/localStorService';
 
 const Calendar = ({ showDetailsHandle, activeEvents }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -28,6 +29,7 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
       setCurrentMonth(addMonths(currentMonth, 1));
     }
   };
+  const selectedDay = getFromStorage('selectedDate');
 
   const changeWeekHandle = btnType => {
     //console.log("current week", currentWeek);
@@ -46,8 +48,7 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
   const onDateClickHandle = (day, dayStr) => {
     setSelectedDate(day);
     showDetailsHandle(dayStr);
-    // saveToStorage('selectedDate', 'fr');
-    localStorage.setItem('selectedDate', JSON.stringify(day));
+    saveToStorage('selectedDate', day);
   };
 
   const renderHeader = () => {
@@ -103,7 +104,7 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
               className={`cell number ${
                 isSameDay(day, new Date())
                   ? 'today'
-                  : isSameDay(day, selectedDate)
+                  : isSameDay(day, selectedDay)
                   ? 'selected'
                   : ''
               }`}
@@ -142,13 +143,6 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
         {/* </div> */}
       </div>
     );
-  };
-
-  const renderFilteredEvents = () => {
-    // використовуйте filteredEvents для відображення відфільтрованих подій
-    return filteredEvents.map(event => (
-      <div key={event.id}>{/* Відображення деталей події */}</div>
-    ));
   };
 
   return (
