@@ -249,9 +249,9 @@ export const Specialist = ({ specialist }) => {
                 loopPreventsSliding={true}
                 loopedslides={1}
               >
-                {specialistEvents.slice(0, 5).map(event => {
+                {specialistEvents.slice(0, 5).map((event, i) => {
                   return (
-                    <SwiperSlide key={event.article_event}>
+                    <SwiperSlide key={i}>
                       <EventListItem
                         onMouseEnter={() =>
                           handleMouseEnter(event.article_event)
@@ -275,9 +275,7 @@ export const Specialist = ({ specialist }) => {
                           loading="lazy"
                         />
                         {isHovered === event.article_event && (
-                          <DetailsWrapper
-                            isHovered={isHovered === event.article_event}
-                          >
+                          <DetailsWrapper>
                             <Name>{event.name}</Name>
                             <DateTimeWrapper>
                               <li>
@@ -335,9 +333,9 @@ export const Specialist = ({ specialist }) => {
                 autoplay={{ delay: 5000 }}
                 effect={'creative'}
               >
-                {specialistEvents.slice(0, 5).map(event => {
+                {specialistEvents.slice(0, 5).map((event, i) => {
                   return (
-                    <SwiperSlide key={event.article_event}>
+                    <SwiperSlide key={i}>
                       <EventListItem
                         onMouseEnter={() =>
                           handleMouseEnter(event.article_event)
