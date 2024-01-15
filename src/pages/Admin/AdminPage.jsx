@@ -95,6 +95,7 @@ const AdminPage = () => {
       } finally {
         setIsLoading(false);
       }
+      setTimeout(()=>getData(), 60000)
     })();
   }, []);
 
