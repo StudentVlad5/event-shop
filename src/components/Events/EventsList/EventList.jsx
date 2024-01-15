@@ -20,7 +20,7 @@ import {
 import defaultImg from 'images/No-image-available.webp';
 import { useEffect, useState } from 'react';
 import { BtnLight, BtnLink } from 'components/baseStyles/Button.styled';
-import { getFromStorage, removeItem } from 'services/localStorService';
+import { getFromStorage, removeItem, saveToStorage } from 'services/localStorService';
 
 export const EventsList = ({ events, activeEvents }) => {
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const EventsList = ({ events, activeEvents }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
-  const [currentWeek, setCurrentWeek] = useState([]);
+  // const [currentWeek, setCurrentWeek] = useState([]);
   const [filterLanguage, setfilterLanguage] = useState([]);
   const [filterCategory, setfilterCategory] = useState([]);
 
@@ -48,13 +48,31 @@ export const EventsList = ({ events, activeEvents }) => {
       setSelectedDate(new Date(storedDate));
     }
 
-    const storedCurrentWeek = getFromStorage('currentWeek');
-    if (storedCurrentWeek) {
-      setCurrentWeek(
-        storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
-      );
-    }
-  }, [getFromStorage('selectedDate'), getFromStorage('currentWeek')]);
+    // const storedCurrentWeek = getFromStorage('currentWeek');
+    // if (storedCurrentWeek) {
+    //   setCurrentWeek(
+    //     storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
+    //   );
+    // }
+  }, [getFromStorage('selectedDate')]);
+
+  // if (!getFromStorage('selectedDate')) {
+  //   saveToStorage(new Date());
+  // }
+
+  // const [selectedDate, setSelectedDate] = useState(
+  //   getFromStorage('selectedDate')
+  //     ? new Date(getFromStorage('selectedDate'))
+  //     : new Date()
+  // );
+  
+  const [currentWeek, setCurrentWeek] = useState(
+    getFromStorage('currentWeek')
+      ? getFromStorage('currentWeek').map(dateStr =>
+          new Date(dateStr).toLocaleDateString()
+        )
+      : []
+  );
 
   useEffect(() => {
     if (selectedDate) {
@@ -134,7 +152,7 @@ export const EventsList = ({ events, activeEvents }) => {
               day => new Date(week.date).toLocaleDateString() === day
             )
           );
-          console.log(newFilteredWeek);
+          // console.log(newFilteredWeek);
 
           const matchingActiveEvents = activeEvents.filter(
             activeEvent => activeEvent.eventId === event.article_event
