@@ -8,6 +8,7 @@ import { EventsSection } from './Events.styled';
 import { Container, Title } from 'components/baseStyles/CommonStyle.styled';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import Calendar from './Calendar/calendar';
+import { Filters } from './Filters/Filters';
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
@@ -38,6 +39,9 @@ export const Events = () => {
               name: it.name,
               description: it.description,
               image: it.image,
+              category: it.category,
+              category_second: it.category_second,
+              category_third: it.category_third,
               ...it[selectedLanguage],
             },
           ];
@@ -70,6 +74,9 @@ export const Events = () => {
               eventId: it.eventId,
               date: it.date,
               time: it.time,
+              language: it.language,
+              language_secondary: it.language_secondary,
+              language_third: it.language_third,
               ...it[selectedLanguage],
             },
           ];
@@ -97,7 +104,7 @@ export const Events = () => {
           showDetailsHandle={showDetailsHandle}
           activeEvents={activeEvents}
         />
-        <br />
+        <Filters events={events} activeEvents={activeEvents} />
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
         {events.length > 0 && !error && (

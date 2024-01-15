@@ -298,7 +298,6 @@ border: 1px solid #3A3A3A;
 .calendar .body .cell .number {
   position: absolute;
   top: 0.75em;
-  right: 0.75em;
   padding: 10px;
   color: ${theme.colors.grey1};
   font-family: ${theme.fonts[0]};

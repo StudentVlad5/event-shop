@@ -20,7 +20,7 @@ import {
 import defaultImg from 'images/No-image-available.webp';
 import { useEffect, useState } from 'react';
 import { BtnLight, BtnLink } from 'components/baseStyles/Button.styled';
-import { getFromStorage, removeItem } from 'services/localStorService';
+import { getFromStorage, removeItem, saveToStorage } from 'services/localStorService';
 
 export const EventsList = ({ events, activeEvents }) => {
   const { t } = useTranslation();
@@ -38,13 +38,41 @@ export const EventsList = ({ events, activeEvents }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
+  // const [currentWeek, setCurrentWeek] = useState([]);
+  const [filterLanguage, setfilterLanguage] = useState([]);
+  const [filterCategory, setfilterCategory] = useState([]);
 
   useEffect(() => {
     const storedDate = getFromStorage('selectedDate');
     if (storedDate) {
       setSelectedDate(new Date(storedDate));
     }
+
+    // const storedCurrentWeek = getFromStorage('currentWeek');
+    // if (storedCurrentWeek) {
+    //   setCurrentWeek(
+    //     storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
+    //   );
+    // }
   }, [getFromStorage('selectedDate')]);
+
+  // if (!getFromStorage('selectedDate')) {
+  //   saveToStorage(new Date());
+  // }
+
+  // const [selectedDate, setSelectedDate] = useState(
+  //   getFromStorage('selectedDate')
+  //     ? new Date(getFromStorage('selectedDate'))
+  //     : new Date()
+  // );
+  
+  const [currentWeek, setCurrentWeek] = useState(
+    getFromStorage('currentWeek')
+      ? getFromStorage('currentWeek').map(dateStr =>
+          new Date(dateStr).toLocaleDateString()
+        )
+      : []
+  );
 
   useEffect(() => {
     if (selectedDate) {
@@ -53,14 +81,44 @@ export const EventsList = ({ events, activeEvents }) => {
           new Date(event.date).toLocaleDateString() ===
           selectedDate.toLocaleDateString()
       );
-
       setFilteredEvents(newFilteredEvents);
+
       setNoEvents(newFilteredEvents.length === 0);
     } else {
       setFilteredEvents(events);
       setNoEvents(false);
     }
   }, [selectedDate, activeEvents, events]);
+
+  useEffect(() => {
+    const getLang = getFromStorage('filterSelectedLanguage');
+    const filteredEventsByLang = activeEvents.filter(event => {
+      return (
+        event.language === getLang ||
+        event.language_secondary === getLang ||
+        event.language_third === getLang
+      );
+    });
+    // console.log(filteredEventsByLang);
+
+    setfilterLanguage(filteredEventsByLang);
+
+    const getCategoty = getFromStorage('filterSelectedCategory');
+    const filteredEventsByCategoty = events.filter(event => {
+      return (
+        event.category === getCategoty ||
+        event.category_second === getCategoty ||
+        event.category_third === getCategoty
+      );
+    });
+    // console.log(filteredEventsByCategoty);
+    setfilterCategory(filteredEventsByCategoty);
+  }, [
+    activeEvents,
+    events,
+    getFromStorage('filterSelectedCategory'),
+    getFromStorage('filterSelectedLanguage'),
+  ]);
 
   const handleMouseEnter = eventId => {
     setHovered(eventId);
@@ -76,6 +134,9 @@ export const EventsList = ({ events, activeEvents }) => {
 
   const handleCleanFilter = () => {
     removeItem('selectedDate');
+    removeItem('filterSelectedLanguage');
+    removeItem('filterSelectedCategory');
+
     setSelectedDate(null);
   };
 
@@ -86,6 +147,13 @@ export const EventsList = ({ events, activeEvents }) => {
       </CleanFilterBtn>
       <List>
         {events.slice(0, eventsNumber).map(event => {
+          const newFilteredWeek = activeEvents.filter(week =>
+            currentWeek.some(
+              day => new Date(week.date).toLocaleDateString() === day
+            )
+          );
+          // console.log(newFilteredWeek);
+
           const matchingActiveEvents = activeEvents.filter(
             activeEvent => activeEvent.eventId === event.article_event
           );
@@ -93,17 +161,25 @@ export const EventsList = ({ events, activeEvents }) => {
           const filtredActiveEvents = filteredEvents.filter(
             activeEvent => activeEvent.eventId === event.article_event
           );
+
+          const filtredActiveByLang = activeEvents.filter(
+            activeEvent => activeEvent.eventId === event.article_event
+          );
+
           let shouldDisplay;
 
           if (selectedDate) {
-            shouldDisplay = filtredActiveEvents?.length > 0;
+            // shouldDisplay = filtredActiveEvents?.length > 0;
+            shouldDisplay = newFilteredWeek.length > 0;
           } else {
-            shouldDisplay = matchingActiveEvents?.length > 0;
+            // shouldDisplay = matchingActiveEvents?.length > 0;
+            shouldDisplay = newFilteredWeek.some(
+              filteredEvent => filteredEvent.eventId === event.article_event
+            );
           }
 
           if (shouldDisplay) {
             return (
-              // data-aos="zoom-in-up" data-aos-delay="200"
               <Event key={event._id}>
                 <EventNavLink
                   onMouseEnter={() => handleMouseEnter(event._id)}
@@ -124,7 +200,9 @@ export const EventsList = ({ events, activeEvents }) => {
                   />
 
                   {isHovered === event._id && (
-                    <EventDetailBox $ishovered={(isHovered === event._id) ? 'flex' : 'none'}>
+                    <EventDetailBox
+                      $ishovered={isHovered === event._id ? 'flex' : 'none'}
+                    >
                       <EventDetailTitle>{event.name}</EventDetailTitle>
 
                       <DetailsBox>
@@ -191,20 +269,18 @@ export const EventsList = ({ events, activeEvents }) => {
 };
 
 EventsList.propTypes = {
-  events: PropTypes.arrayOf(
+  events: PropTypes.arrayOf(PropTypes.shape({})),
+  activeEvents: PropTypes.arrayOf(
     PropTypes.shape({
-
+      // _id: PropTypes.string.isRequired,
+      // date: PropTypes.string.isRequired,
+      // time: PropTypes.string.isRequired,
+      // duration: PropTypes.string.isRequired,
+      // location: PropTypes.string.isRequired,
+      // title: PropTypes.string.isRequired,
+      // description: PropTypes.string,
+      // language: PropTypes.string,
+      // image: PropTypes.string,
     })
   ),
-  activeEvents: PropTypes.arrayOf(PropTypes.shape({
-    // _id: PropTypes.string.isRequired,
-    // date: PropTypes.string.isRequired,
-    // time: PropTypes.string.isRequired,
-    // duration: PropTypes.string.isRequired,
-    // location: PropTypes.string.isRequired,
-    // title: PropTypes.string.isRequired,
-    // description: PropTypes.string,
-    // language: PropTypes.string,
-    // image: PropTypes.string,
-  })),
 };
