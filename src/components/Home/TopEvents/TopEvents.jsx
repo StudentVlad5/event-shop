@@ -197,52 +197,55 @@ export const TopEvents = () => {
                 loopPreventsSliding={true}
                 loopedslides={1}
               >
-                {activeEvents.slice(0, 5).map(event => {
-                  return (
-                    <SwiperSlide key={event.article_event}>
-                      <EventListItem>
-                        <ItemImg
-                          src={
-                            event.image
-                              ? BASE_URL_IMG +
-                                'events/' +
-                                event.image.split('/')[
-                                  event.image.split('/').length - 1
-                                ]
-                              : defaultImg
-                          }
-                          alt={event.name}
-                          width="402"
-                          height="366"
-                          loading="lazy"
-                        ></ItemImg>
-                        <DetailsWrapper>
-                          <Name>{event.name}</Name>
-                          <DateTimeWrapper>
-                            <li>
-                              <Head>{t('дата')}</Head>
-                              <DateTime>
-                                {new Date(event.date).toLocaleDateString()}
-                              </DateTime>
-                            </li>
-                            <li>
-                              <Head>{t('час')}</Head>
-                              <DateTime>{event.time}</DateTime>
-                            </li>
-                          </DateTimeWrapper>
-                          <Describe>
-                            {event.description.length > 50
-                              ? event.description.slice(0, 50) + ' ...'
-                              : event.description}
-                          </Describe>
-                          <BtnLink to={`/events/${event.article_event}`}>
-                            <span>{t('Детальніше')}</span>
-                          </BtnLink>
-                        </DetailsWrapper>
-                      </EventListItem>
-                    </SwiperSlide>
-                  );
-                })}
+                {activeEvents
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
+                  .slice(0, 5)
+                  .map((event, i) => {
+                    return (
+                      <SwiperSlide key={i}>
+                        <EventListItem>
+                          <ItemImg
+                            src={
+                              event.image
+                                ? BASE_URL_IMG +
+                                  'events/' +
+                                  event.image.split('/')[
+                                    event.image.split('/').length - 1
+                                  ]
+                                : defaultImg
+                            }
+                            alt={event.name}
+                            width="402"
+                            height="366"
+                            loading="lazy"
+                          ></ItemImg>
+                          <DetailsWrapper>
+                            <Name>{event.name}</Name>
+                            <DateTimeWrapper>
+                              <li>
+                                <Head>{t('дата')}</Head>
+                                <DateTime>
+                                  {new Date(event.date).toLocaleDateString()}
+                                </DateTime>
+                              </li>
+                              <li>
+                                <Head>{t('час')}</Head>
+                                <DateTime>{event.time}</DateTime>
+                              </li>
+                            </DateTimeWrapper>
+                            <Describe>
+                              {event.description.length > 50
+                                ? event.description.slice(0, 50) + ' ...'
+                                : event.description}
+                            </Describe>
+                            <BtnLink to={`/events/${event.article_event}`}>
+                              <span>{t('Детальніше')}</span>
+                            </BtnLink>
+                          </DetailsWrapper>
+                        </EventListItem>
+                      </SwiperSlide>
+                    );
+                  })}
               </Swiper>
             </ViewportBox>
             <ViewportBox $mobile>
@@ -263,52 +266,55 @@ export const TopEvents = () => {
                 autoplay={{ delay: 5000 }}
                 effect={'creative'}
               >
-                {activeEvents.slice(0, 5).map(event => {
-                  return (
-                    <SwiperSlide key={event.article_event}>
-                      <EventListItem>
-                        <ItemImg
-                          src={
-                            event.image
-                              ? BASE_URL_IMG +
-                                'events/' +
-                                event.image.split('/')[
-                                  event.image.split('/').length - 1
-                                ]
-                              : defaultImg
-                          }
-                          alt={event.name}
-                          width="402"
-                          height="366"
-                          loading="lazy"
-                        ></ItemImg>
-                        <DetailsWrapper>
-                          <Name>{event.name}</Name>
-                          <DateTimeWrapper>
-                            <li>
-                              <Head>{t('дата')}</Head>
-                              <DateTime>
-                                {new Date(event.date).toLocaleDateString()}
-                              </DateTime>
-                            </li>
-                            <li>
-                              <Head>{t('час')}</Head>
-                              <DateTime>{event.time}</DateTime>
-                            </li>
-                          </DateTimeWrapper>
-                          <Describe>
-                            {event.description.length > 50
-                              ? event.description.slice(0, 50) + ' ...'
-                              : event.description}
-                          </Describe>
-                          <BtnLink to={`/events/${event.article_event}`}>
-                            <span>{t('Детальніше')}</span>
-                          </BtnLink>
-                        </DetailsWrapper>
-                      </EventListItem>
-                    </SwiperSlide>
-                  );
-                })}
+                {activeEvents
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
+                  .slice(0, 5)
+                  .map((event, i) => {
+                    return (
+                      <SwiperSlide key={i}>
+                        <EventListItem>
+                          <ItemImg
+                            src={
+                              event.image
+                                ? BASE_URL_IMG +
+                                  'events/' +
+                                  event.image.split('/')[
+                                    event.image.split('/').length - 1
+                                  ]
+                                : defaultImg
+                            }
+                            alt={event.name}
+                            width="402"
+                            height="366"
+                            loading="lazy"
+                          ></ItemImg>
+                          <DetailsWrapper>
+                            <Name>{event.name}</Name>
+                            <DateTimeWrapper>
+                              <li>
+                                <Head>{t('дата')}</Head>
+                                <DateTime>
+                                  {new Date(event.date).toLocaleDateString()}
+                                </DateTime>
+                              </li>
+                              <li>
+                                <Head>{t('час')}</Head>
+                                <DateTime>{event.time}</DateTime>
+                              </li>
+                            </DateTimeWrapper>
+                            <Describe>
+                              {event.description.length > 50
+                                ? event.description.slice(0, 50) + ' ...'
+                                : event.description}
+                            </Describe>
+                            <BtnLink to={`/events/${event.article_event}`}>
+                              <span>{t('Детальніше')}</span>
+                            </BtnLink>
+                          </DetailsWrapper>
+                        </EventListItem>
+                      </SwiperSlide>
+                    );
+                  })}
               </Swiper>
             </ViewportBox>
             <Pagination>

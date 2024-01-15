@@ -80,6 +80,7 @@ export const DetailsWrapper = styled.div`
   transform: translate(-50%, -50%);
 
   display: flex;
+  /* display: ${props => (props.isHovered ? 'flex' : 'none')}; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -92,9 +93,7 @@ export const DetailsWrapper = styled.div`
   border-radius: 40px;
   background: ${theme.colors.fon};
 
-  
   animation: ${fadeInUp} 0.3s ease;
-  display: ${props => (props.isHovered ? 'flex' : 'none')};
 `;
 
 export const Name = styled.span`

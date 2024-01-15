@@ -23,7 +23,7 @@ export const Hero = () => {
   return (
     <HeroSection>
       <HeroContainer>
-        <picture>
+        {/* <picture>
           <source
             media="(min-width:1440px)"
             srcSet={`${hero_desk_webp} 1x, ${hero_desk_webp_2x} 2x`}
@@ -48,7 +48,7 @@ export const Hero = () => {
             alt="Girls"
             loading="lazy"
           />
-        </picture>
+        </picture> */}
         <TextWrapper>
           <Title
             $white

@@ -22,6 +22,7 @@ export const DescriptionSection = styled(Section)`
 export const Image = styled.img`
   width: 182px;
   height: 216px;
+  border-radius: 8px;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 350px;
