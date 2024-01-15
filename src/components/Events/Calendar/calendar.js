@@ -18,9 +18,13 @@ import { getFromStorage, saveToStorage } from 'services/localStorService';
 
 const Calendar = ({ showDetailsHandle, activeEvents }) => {
   const selectedDay = getFromStorage('selectedDate');
-  const [currentMonth, setCurrentMonth] = useState(selectedDay ? selectedDay : new Date());
+  const [currentMonth, setCurrentMonth] = useState(
+    selectedDay ? selectedDay : new Date()
+  );
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
-  const [selectedDate, setSelectedDate] = useState(selectedDay ? selectedDay : new Date());
+  const [selectedDate, setSelectedDate] = useState(
+    selectedDay ? selectedDay : new Date()
+  );
 
   const changeMonthHandle = btnType => {
     if (btnType === 'prev') {
@@ -31,16 +35,12 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
     }
   };
 
-
   const changeWeekHandle = btnType => {
-    //console.log("current week", currentWeek);
     if (btnType === 'prev') {
-      //console.log(subWeeks(currentMonth, 1));
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(subWeeks(currentMonth, 1)));
     }
     if (btnType === 'next') {
-      //console.log(addWeeks(currentMonth, 1));
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(addWeeks(currentMonth, 1)));
     }
@@ -51,6 +51,17 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
     showDetailsHandle(dayStr);
     saveToStorage('selectedDate', day);
   };
+
+  const getCurrentWeekDates = () => {
+    const weekDates = [];
+    let startWeek = startOfWeek(currentMonth, { weekStartsOn: 1 });
+    for (let i = 0; i < 7; i++) {
+      weekDates.push(format(addDays(startWeek, i), 'ccc dd MMM yy'));
+    }
+    // console.log(weekDates);
+    saveToStorage('currentWeek', weekDates);
+  };
+  getCurrentWeekDates();
 
   const renderHeader = () => {
     const dateFormat = 'MMMMMMMMM yyyy';
@@ -161,14 +172,7 @@ const Calendar = ({ showDetailsHandle, activeEvents }) => {
 };
 
 export default Calendar;
-/**
- * Header:
- * icon for switching to the previous month,
- * formatted date showing current month and year,
- * another icon for switching to next month
- * icons should also handle onClick events to change a month
- */
-// Calendar.propTypes = { showDetailsHandle: PropTypes.any };
+
 Calendar.propTypes = {
   showDetailsHandle: PropTypes.any,
   activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
