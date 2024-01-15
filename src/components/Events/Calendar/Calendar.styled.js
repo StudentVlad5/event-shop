@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { ReactComponent as calendar } from 'images/events/calendar.svg';
 
 export const CalendarIcon = styled(calendar)`
-  position: absolute;
-  left: -85px;
-  bottom: 0;
+display: none;
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    display: block;
+    position: absolute;
+    left: -85px;
+    bottom: 0;
+  }
 `;
 
 export const CalendarBox = styled.div`
