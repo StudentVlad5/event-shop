@@ -42,6 +42,7 @@ export const EventsList = ({ events, activeEvents }) => {
   // const [currentWeek, setCurrentWeek] = useState([]);
   const [filterLanguage, setfilterLanguage] = useState([]);
   const [filterCategory, setfilterCategory] = useState([]);
+  const [filterPlaces, setfilterPlaces] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
 
   useEffect(() => {
@@ -111,13 +112,33 @@ export const EventsList = ({ events, activeEvents }) => {
         event.category_third === getCategoty
       );
     });
-    console.log(filteredEventsByCategoty);
+
+    // console.log(filteredEventsByCategoty);
     setfilterCategory(filteredEventsByCategoty);
+
+    const getPlaces = getFromStorage('filterSelectedPlaces');
+    let filteredEventsByPlaces = [];
+
+    if (getPlaces === 'yes') {
+      filteredEventsByPlaces = activeEvents.filter(event => {
+        return event.vacancies !== 0;
+      });
+    } else if (getPlaces === 'no') {
+      filteredEventsByPlaces = activeEvents.filter(event => {
+        return event.vacancies === 0;
+      });
+    } else {
+      filteredEventsByPlaces = [];
+    }
+
+    console.log(filteredEventsByPlaces);
+    setfilterPlaces(filteredEventsByPlaces);
   }, [
     activeEvents,
     events,
-    getFromStorage('filterSelectedCategory'),
     getFromStorage('filterSelectedLanguage'),
+    getFromStorage('filterSelectedCategory'),
+    getFromStorage('filterSelectedPlaces'),
   ]);
 
   const handleMouseEnter = i => {
@@ -136,6 +157,7 @@ export const EventsList = ({ events, activeEvents }) => {
     removeItem('selectedDate');
     removeItem('filterSelectedLanguage');
     removeItem('filterSelectedCategory');
+    removeItem('filterSelectedPlaces');
 
     setSelectedDate(null);
   };
@@ -165,6 +187,8 @@ export const EventsList = ({ events, activeEvents }) => {
             (data.rating = item.rating),
             (data.duration = item.duration),
             (data.category = item.category),
+            (data.category_second = item.category_second),
+            (data.category_third = item.category_third),
             (data.specialistId = item.specialistId),
             (data.description = item.description),
             (data.name = item.name),
@@ -175,7 +199,6 @@ export const EventsList = ({ events, activeEvents }) => {
     });
     setActiveEventsArr(array);
   }, [activeEvents, events]);
-  console.log(activeEventsArr);
 
   return (
     <>
@@ -192,31 +215,51 @@ export const EventsList = ({ events, activeEvents }) => {
                 day => new Date(week.date).toLocaleDateString() === day
               )
             );
-            // console.log(newFilteredWeek);
 
-            const matchingActiveEvents = activeEvents.filter(
+            // const matchingActiveEvents = activeEvents.filter(
+            //   activeEvent => activeEvent.eventId === event.article_event
+            // );
+
+            const filteredActiveByEvents = filteredEvents.filter(
               activeEvent => activeEvent.eventId === event.article_event
             );
 
-            const filtredActiveEvents = filteredEvents.filter(
+            const filteredActiveByLang = filterLanguage.filter(
               activeEvent => activeEvent.eventId === event.article_event
             );
 
-            const filtredActiveByLang = activeEvents.filter(
-              activeEvent => activeEvent.eventId === event.article_event
-            );
-
-            let shouldDisplay;
-
-            if (selectedDate) {
-              // shouldDisplay = filtredActiveEvents?.length > 0;
-              shouldDisplay = newFilteredWeek.length > 0;
-            } else {
-              // shouldDisplay = matchingActiveEvents?.length > 0;
-              shouldDisplay = newFilteredWeek.some(
-                filteredEvent => filteredEvent.eventId === event.article_event
+            const filteredActiveByCategory = filterCategory.filter(ev => {
+              return activeEvents.filter(
+                activeEvent => activeEvent.eventId === ev.article_event
               );
-            }
+            });
+
+            const filteredActiveByPlaces = filterPlaces.filter(
+              activeEvent => activeEvent.eventId === event.article_event
+            );
+
+            // const filteredActiveByCategory = filterCategory.map(eventIt => {
+            //   const matchingActiveEvent = activeEvents.find(
+            //     activeEvent => activeEvent.eventId === eventIt.article_event
+            //   );
+
+            //   return matchingActiveEvent;
+            // });
+            // console.log(filteredActiveByCategory);
+
+            let shouldDisplay = true;
+
+            // if (selectedDate) {
+            // shouldDisplay = filtredActiveByEvents?.length > 0;
+            // shouldDisplay = newFilteredWeek.length > 0;
+            // shouldDisplay = filteredActiveByPlaces.length > 0;
+
+            // } else {
+            // shouldDisplay = matchingActiveEvents?.length > 0;
+            // shouldDisplay = newFilteredWeek.some(
+            //   filteredEvent => filteredEvent.eventId === event.article_event
+            // );
+            // }
 
             if (shouldDisplay) {
               return (

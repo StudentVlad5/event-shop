@@ -70,6 +70,10 @@ export const Filters = ({ events, activeEvents }) => {
     saveToStorage('filterSelectedCategory', category);
   };
 
+  const handlePlacesSelect = palces => {
+    saveToStorage('filterSelectedPlaces', palces);
+  };
+
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
@@ -115,7 +119,9 @@ export const Filters = ({ events, activeEvents }) => {
                     {categories.map(category => (
                       <li
                         key={category._id}
-                        onClick={() => handleCategorySelect(category.categoryId)}
+                        onClick={() =>
+                          handleCategorySelect(category.categoryId)
+                        }
                       >
                         <p>{category.title}</p>
                       </li>
@@ -139,17 +145,11 @@ export const Filters = ({ events, activeEvents }) => {
               {isOpen[4] && (
                 <div>
                   <ul>
-                    <li>
-                      <p>Більше 5</p>
+                    <li onClick={() => handlePlacesSelect('yes')}>
+                      <p>Вільні місця є</p>
                     </li>
-                    <li>
-                      <p>Більше 10</p>
-                    </li>
-                    <li>
-                      <p>Менше 5</p>
-                    </li>
-                    <li>
-                      <p>Менше 10</p>
+                    <li onClick={() => handlePlacesSelect('no')}>
+                      <p>Вільних місць немає</p>
                     </li>
                   </ul>
                 </div>
