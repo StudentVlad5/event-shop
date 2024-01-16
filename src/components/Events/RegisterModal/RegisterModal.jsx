@@ -16,7 +16,7 @@ import {
   FieldsWrapper,
   TitleMes,
   FormInputSeats,
-  QuantityWrapper
+  QuantityWrapper,
 } from './RegisterModal.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';
@@ -24,9 +24,8 @@ import { BtnAccent } from 'components/baseStyles/Button.styled';
 import { createData } from 'services/APIservice';
 import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
 import { useState } from 'react';
-import { useDispatch} from "react-redux";
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-
 
 export const RegisterModal = ({ event, activeEvents }) => {
   const { t } = useTranslation();
@@ -35,9 +34,11 @@ export const RegisterModal = ({ event, activeEvents }) => {
 
   const bookingEvent = [];
   activeEvents.forEach(it => {
-   if(it.eventId === event.article_event){bookingEvent.push(it)}
-  })
-console.log("bookingEvent", bookingEvent)
+    if (it.eventId === event.article_event) {
+      bookingEvent.push(it);
+    }
+  });
+  // console.log("bookingEvent", bookingEvent)
   const modal = useSelector(modalComponent);
   const dispatch = useDispatch();
 
@@ -45,7 +46,10 @@ console.log("bookingEvent", bookingEvent)
     seats: Yup.number()
       .positive()
       .integer()
-      .max(bookingEvent[0]?.vacancies ? bookingEvent[0]?.vacancies : 50,'Not enough free places to book')
+      .max(
+        bookingEvent[0]?.vacancies ? bookingEvent[0]?.vacancies : 50,
+        'Not enough free places to book'
+      )
       .required('Required'),
     name: Yup.string()
       .min(2, 'Too Short!')
@@ -55,20 +59,22 @@ console.log("bookingEvent", bookingEvent)
   });
 
   async function createOrder(values) {
-    values.activeEventID = bookingEvent[0]["article_eventID"];
-    values.eventId = bookingEvent[0]["eventId"];
-    values.date = bookingEvent[0]["date"];
-    values.time = bookingEvent[0]["time"];
+    values.activeEventID = bookingEvent[0]['article_eventID'];
+    values.eventId = bookingEvent[0]['eventId'];
+    values.date = bookingEvent[0]['date'];
+    values.time = bookingEvent[0]['time'];
     values.userName = values.name;
     values.userEmail = values.email;
     values.bookingSeats = values.seats;
-    values.priceTotal = values.seats * bookingEvent[0]["price"];
+    values.priceTotal = values.seats * bookingEvent[0]['price'];
     setIsLoading(true);
     try {
       const { data } = await createData(`/orders`, values);
       if (!data) {
         onFetchError('Whoops, something went wrong');
-      } else { onSuccess('Thank you for your order');}
+      } else {
+        onSuccess('Thank you for your order');
+      }
     } catch (error) {
       setError(error);
     } finally {
@@ -100,98 +106,95 @@ console.log("bookingEvent", bookingEvent)
             <MdClose />
           </CloseBtn>
           <MessageSection>
-        <TitleMes>
-          {t('Реєстрація на подію')}
-        </TitleMes>
-        <Formik
-          initialValues={{
-            name: '',
-            email: '',
-            seats: '1',
-          }}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            createOrder(values);
-            setSubmitting(false);
-            resetForm();
-          }}
-          enableReinitialize={true}
-          validationSchema={RegisterSchema}
-        >
-          {({
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-            values,
-            errors,
-            touched,
-          }) => (
-            <FormList
-              autoComplete="off"
-              onSubmit={handleSubmit}
-              onChange={handleChange}
+            <TitleMes>{t('Реєстрація на подію')}</TitleMes>
+            <Formik
+              initialValues={{
+                name: '',
+                email: '',
+                seats: '1',
+              }}
+              onSubmit={(values, { setSubmitting, resetForm }) => {
+                createOrder(values);
+                setSubmitting(false);
+                resetForm();
+              }}
+              enableReinitialize={true}
+              validationSchema={RegisterSchema}
             >
-              <FieldsWrapper>
-              <FormLabel htmlFor="seats">
-                  <FormName>{t('Місць')}</FormName>
-                  <QuantityWrapper className="quantity-wrapper">
-                    <FormInputSeats
-                      type="number"
-                      name="seats"
-                      id="seats"
-                      placeholder={t('1')}
-                      value={values.seats}
-                      required
-                    />
-                  </QuantityWrapper>
-                  {errors.seats && touched.seats ? (
-                    <Error>{errors.seats}</Error>
-                  ) : null}
-                </FormLabel>
-                  <FormLabel htmlFor="name">
-                    <FormName>{t('Ім’я')}</FormName>
-                    <FormInput
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder={t('Джеймс')}
-                      value={values.name}
-                      required
-                    />
-                    {errors.name && touched.name ? (
-                      <Error>{errors.name}</Error>
-                    ) : null}
-                  </FormLabel>
-                  <FormLabel htmlFor="email">
-                    <FormName>{t('E-mail')}</FormName>
-                    <FormInput
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="test@gmail.com"
-                      value={values.email}
-                      required
-                    />
-                    {errors.email && touched.email ? (
-                      <Error>{errors.email}</Error>
-                    ) : null}
-                  </FormLabel>
- 
-              </FieldsWrapper>
-              <BtnAccent
-                type="submit"
-                disabled={isSubmitting}
-                aria-label="Submit"
-              >
-                {t('Надіслати')}
-              </BtnAccent>
-            </FormList>
-          )}
-        </Formik>
-      </MessageSection>
+              {({
+                handleChange,
+                handleSubmit,
+                isSubmitting,
+                values,
+                errors,
+                touched,
+              }) => (
+                <FormList
+                  autoComplete="off"
+                  onSubmit={handleSubmit}
+                  onChange={handleChange}
+                >
+                  <FieldsWrapper>
+                    <FormLabel htmlFor="seats">
+                      <FormName>{t('Місць')}</FormName>
+                      <QuantityWrapper className="quantity-wrapper">
+                        <FormInputSeats
+                          type="number"
+                          name="seats"
+                          id="seats"
+                          placeholder={t('1')}
+                          value={values.seats}
+                          required
+                        />
+                      </QuantityWrapper>
+                      {errors.seats && touched.seats ? (
+                        <Error>{errors.seats}</Error>
+                      ) : null}
+                    </FormLabel>
+                    <FormLabel htmlFor="name">
+                      <FormName>{t('Ім’я')}</FormName>
+                      <FormInput
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder={t('Джеймс')}
+                        value={values.name}
+                        required
+                      />
+                      {errors.name && touched.name ? (
+                        <Error>{errors.name}</Error>
+                      ) : null}
+                    </FormLabel>
+                    <FormLabel htmlFor="email">
+                      <FormName>{t('E-mail')}</FormName>
+                      <FormInput
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="test@gmail.com"
+                        value={values.email}
+                        required
+                      />
+                      {errors.email && touched.email ? (
+                        <Error>{errors.email}</Error>
+                      ) : null}
+                    </FormLabel>
+                  </FieldsWrapper>
+                  <BtnAccent
+                    type="submit"
+                    disabled={isSubmitting}
+                    aria-label="Submit"
+                  >
+                    {t('Надіслати')}
+                  </BtnAccent>
+                </FormList>
+              )}
+            </Formik>
+          </MessageSection>
         </Modal>
       </Backdrop>
     ),
-    document.querySelector('#popup-root'),
+    document.querySelector('#popup-root')
   );
 };
 

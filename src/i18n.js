@@ -10,6 +10,9 @@ i18n
       ua: {
         translation: require('../src/translate/ua.json'),
       },
+      ru: {
+        translation: require('../src//translate/ru.json'),
+      },
     },
     fallbackLng: 'fr',
     debug: false,

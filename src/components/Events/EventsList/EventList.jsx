@@ -182,7 +182,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   return (
     <>
       <CleanFilterBtn onClick={handleCleanFilter}>
-        Очистити фільтри
+        {t('Очистити фільтри')}
       </CleanFilterBtn>
       <List>
         {activeEventsArr
@@ -303,7 +303,8 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
           })}
         {noEvents && (
           <NoEvents>
-            На дату {new Date(selectedDate).toLocaleDateString()} подій немає
+            {t('На дату')} {new Date(selectedDate).toLocaleDateString()}
+            {t('подій немає')}
           </NoEvents>
         )}
       </List>
