@@ -63,7 +63,9 @@ export const TopEvents = () => {
               language_secondary: activeEvent.language_secondary,
               price: activeEvent.price,
               eventId: activeEvent.eventId,
-              ...activeEvent[selectedLanguage],
+              address: activeEvent.address,
+              location: activeEvent.location,
+              status: activeEvent.status,
             },
           ];
           langData.push(item[0]);
@@ -75,7 +77,7 @@ export const TopEvents = () => {
         setIsLoading(false);
       }
     })();
-  }, [selectedLanguage]);
+  }, [t]);
 
   useEffect(() => {
     (async function getData() {
@@ -111,7 +113,7 @@ export const TopEvents = () => {
         setIsLoading(false);
       }
     })();
-  }, [selectedLanguage]);
+  }, [selectedLanguage, t]);
 
   useEffect(() => {
     let array = [];
@@ -129,6 +131,7 @@ export const TopEvents = () => {
             (data.time = it.time),
             (data.location = it.location),
             (data.address = it.address),
+            (data.status = it.status),
             (data.seats = it.seats),
             (data.booking = it.booking),
             (data.vacancies = it.vacancies),
@@ -146,7 +149,7 @@ export const TopEvents = () => {
       });
     });
     setActiveEvents(array);
-  }, [active_events, events]);
+  }, [active_events, events, t]);
 
   return (
     <EventsSection>
@@ -198,8 +201,10 @@ export const TopEvents = () => {
                 loopedslides={1}
               >
                 {activeEvents
+                  .filter(event => event.status === 'active')
                   .sort((a, b) => new Date(b.date) - new Date(a.date))
                   .slice(0, 5)
+                  .sort((a, b) => new Date(a.date) - new Date(b.date))
                   .map((event, i) => {
                     return (
                       <SwiperSlide key={i}>
@@ -238,7 +243,7 @@ export const TopEvents = () => {
                                 ? event.description.slice(0, 50) + ' ...'
                                 : event.description}
                             </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
+                            <BtnLink to={`/events/${event._id}`}>
                               <span>{t('Детальніше')}</span>
                             </BtnLink>
                           </DetailsWrapper>
@@ -267,8 +272,10 @@ export const TopEvents = () => {
                 effect={'creative'}
               >
                 {activeEvents
+                  .filter(event => event.status === 'active')
                   .sort((a, b) => new Date(b.date) - new Date(a.date))
                   .slice(0, 5)
+                  .sort((a, b) => new Date(a.date) - new Date(b.date))
                   .map((event, i) => {
                     return (
                       <SwiperSlide key={i}>
@@ -307,7 +314,7 @@ export const TopEvents = () => {
                                 ? event.description.slice(0, 50) + ' ...'
                                 : event.description}
                             </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
+                            <BtnLink to={`/events/${event._id}`}>
                               <span>{t('Детальніше')}</span>
                             </BtnLink>
                           </DetailsWrapper>

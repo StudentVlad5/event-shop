@@ -9,13 +9,13 @@ export const SHeader = styled.header`
   right: 0;
   z-index: 215;
 
-  /* width: 100vw; */
+  width: 100vw;
   padding: 20px;
 
   background-color: ${theme.colors.fon};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    width: ${theme.breakpoints.desktop};
+    /* width: ${theme.breakpoints.desktop}; */
     margin: 0 auto;
     padding: 20px 50px;
   }
