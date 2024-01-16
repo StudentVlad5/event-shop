@@ -43,6 +43,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   const [filterLanguage, setfilterLanguage] = useState([]);
   const [filterCategory, setfilterCategory] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
+  const [arr, setArr] = useState([]);
 
   console.log("currentWeek", currentWeek)
   useEffect(() => {
@@ -144,7 +145,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   useEffect(() => {
     let array = [];
     activeEvents.map(it => {
-      events.map(item => {
+      events.map(item => { 
         if (it.eventId === item.article_event && it.status === 'active') {
           let data = {};
           (data._id = it._id),
@@ -176,7 +177,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
     });
     setActiveEventsArr(array);
   }, [activeEvents, events]);
-  // console.log(activeEventsArr);
+  console.log("activeEventsArr", activeEventsArr);
 
   return (
     <>
@@ -188,15 +189,18 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, eventsNumber)
           .map((event, i) => {
-            const newFilteredWeek = activeEvents.filter(week =>
-              currentWeek.some(
-                day => {console.log(new Date(week.date));
-                console.log("day", day)}
+            let newFilteredWeek = [];
+            activeEventsArr.map(it => {currentWeek.map(item => {if((new Date(it.date) - new Date(item)) === 0 ){newFilteredWeek.push(it)}})});
+
+            // const dd = activeEvents.map(it => console.log(it.date));
+            // const newFilteredWeek = activeEvents.filter(week =>
+            //   currentWeek.filter(
+            //     day => (new Date(week.date) === new Date(day))
                 // new Date(week.date).toLocaleDateString() === day
-              )
-            );
-            console.log(newFilteredWeek);
-            console.log(activeEventsArr);
+            //   )
+            // );
+            console.log("newFilteredWeek", newFilteredWeek);
+            // console.log("activeEventsArr", activeEventsArr);
 
             const matchingActiveEvents = activeEvents.filter(
               activeEvent => activeEvent.eventId === event.article_event
