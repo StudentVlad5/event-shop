@@ -23,7 +23,12 @@ import { useEffect, useState } from 'react';
 import { BtnLink } from 'components/baseStyles/Button.styled';
 import { getFromStorage, removeItem } from 'services/localStorService';
 
-export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }) => {
+export const EventsList = ({
+  events,
+  activeEvents,
+  // currentWeek,
+  // setCurrentWeek,
+}) => {
   const { t } = useTranslation();
   // const [activeEvents, setActiveEvents] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +51,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   const [activeEventsArr, setActiveEventsArr] = useState([]);
   const [arr, setArr] = useState([]);
 
-  console.log("currentWeek", currentWeek)
+  // console.log('currentWeek', currentWeek);
   useEffect(() => {
     const storedDate = getFromStorage('selectedDate');
     if (storedDate) {
@@ -64,18 +69,17 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   //     : new Date()
   // );
 
-  // const [currentWeek, setCurrentWeek] = useState([]);
-  // console.log(currentWeek, "currentWeek");
-  // useEffect(() => {
-  //   const storedCurrentWeek = getFromStorage('currentWeek');
-  //   const formattedStoredWeek = storedCurrentWeek
-  //     ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
-  //     : [];
+  const [currentWeek, setCurrentWeek] = useState([]);
+  useEffect(() => {
+    const storedCurrentWeek = getFromStorage('currentWeek');
+    const formattedStoredWeek = storedCurrentWeek
+      ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
+      : [];
 
-  //   if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
-  //     setCurrentWeek(formattedStoredWeek);
-  //   }
-  // }, [getFromStorage('currentWeek')]);
+    if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
+      setCurrentWeek(formattedStoredWeek);
+    }
+  }, [getFromStorage('currentWeek')]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -167,7 +171,7 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
   useEffect(() => {
     let array = [];
     activeEvents.map(it => {
-      events.map(item => { 
+      events.map(item => {
         if (it.eventId === item.article_event && it.status === 'active') {
           let data = {};
           (data._id = it._id),
@@ -201,8 +205,37 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
     });
     setActiveEventsArr(array);
   }, [activeEvents, events]);
-  
-  console.log("activeEventsArr", activeEventsArr);
+
+  // console.log('activeEventsArr', activeEventsArr);
+
+  const filteredList = activeEventsArr
+  .filter(event => {
+    const isEventMatched = filteredEvents.filter(
+      filteredEvent => filteredEvent.eventId === event.article_event
+    );
+
+    const isLangMatched = filterLanguage.filter(
+      filteredEvent => filteredEvent.eventId === event.article_event
+    );
+
+    const isCategoryMatched = filterCategory.filter(ev => {
+      return activeEvents.filter(
+        activeEvent => activeEvent.eventId === ev.article_event
+      );
+    });
+
+    const isPlacesMatched = filterPlaces.filter(
+      filteredEvent => filteredEvent.eventId === event.article_event
+    );
+
+    return (
+      isEventMatched || isLangMatched || isCategoryMatched || isPlacesMatched
+    );
+  })
+  .sort((a, b) => new Date(a.date) - new Date(b.date))
+  .slice(0, eventsNumber);
+
+  console.log('filteredList', filteredList);
 
   return (
     <>
@@ -210,27 +243,33 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
         {t('Очистити фільтри')}
       </CleanFilterBtn>
       <List>
+        {/* activeEventsArr
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+          .slice(0, eventsNumber)
+          .map((event, i)  */}
         {activeEventsArr
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, eventsNumber)
-          .map((event, i) => {
-            // const newFilteredWeek = activeEvents.filter(week =>
-            //   currentWeek.some(
-            //     day => new Date(week.date).toLocaleDateString() === day
-            //   )
-            // );
-            let newFilteredWeek = [];
-            activeEventsArr.map(it => {currentWeek.map(item => {if((new Date(it.date) - new Date(item)) === 0 ){newFilteredWeek.push(it)}})});
+          .map((event, i)=> {
 
-            // const dd = activeEvents.map(it => console.log(it.date));
-            // const newFilteredWeek = activeEvents.filter(week =>
-            //   currentWeek.filter(
-            //     day => (new Date(week.date) === new Date(day))
-                // new Date(week.date).toLocaleDateString() === day
-            //   )
-            // );
-            console.log("newFilteredWeek", newFilteredWeek);
-            // console.log("activeEventsArr", activeEventsArr);
+            const newFilteredWeek = activeEvents
+              .filter(week =>
+                currentWeek.some(
+                  day => new Date(week.date).toLocaleDateString() === day
+                )
+              )
+              .filter(event => event.status === 'active');
+
+            // let newFilteredWeek = [];
+            // activeEventsArr.map(it => {
+            //   currentWeek.map(item => {
+            //     if (new Date(it.date) - new Date(item) === 0) {
+            //       newFilteredWeek.push(it);
+            //     }
+            //   });
+            // });
+
+            // console.log('newFilteredWeek', newFilteredWeek);
 
             // const matchingActiveEvents = activeEvents.filter(
             //   activeEvent => activeEvent.eventId === event.article_event
@@ -254,27 +293,20 @@ export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }
               activeEvent => activeEvent.eventId === event.article_event
             );
 
-            // const filteredActiveByCategory = filterCategory.map(eventIt => {
-            //   const matchingActiveEvent = activeEvents.find(
-            //     activeEvent => activeEvent.eventId === eventIt.article_event
-            //   );
-
-            //   return matchingActiveEvent;
-            // });
-            // console.log(filteredActiveByCategory);
-
-            let shouldDisplay = true;
+            let shouldDisplay;
 
             // if (selectedDate) {
             // shouldDisplay = filtredActiveByEvents?.length > 0;
             // shouldDisplay = newFilteredWeek.length > 0;
             // shouldDisplay = filteredActiveByPlaces.length > 0;
+            // shouldDisplay = filteredActiveByLang.length > 0;
 
+            
             // } else {
             // shouldDisplay = matchingActiveEvents?.length > 0;
-            // shouldDisplay = newFilteredWeek.some(
-            //   filteredEvent => filteredEvent.eventId === event.article_event
-            // );
+            shouldDisplay = newFilteredWeek.some(
+              filteredEvent => filteredEvent.eventId === event.article_event
+            );
             // }
 
             if (shouldDisplay) {
