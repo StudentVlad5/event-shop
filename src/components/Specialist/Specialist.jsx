@@ -109,13 +109,6 @@ export const Specialist = ({ specialist }) => {
     })();
   }, [selectedLanguage]);
 
-  // useEffect(() => {
-  //   let specialistActiveEvents = activeEvents.filter(event =>
-  //     events.every(item => item.article_event === event.eventId)
-  //   );
-  //   setSpecialistEvents(specialistActiveEvents);
-  // }, [activeEvents, events]);
-
   useEffect(() => {
     let array = [];
     activeEvents.map(it => {
@@ -132,6 +125,7 @@ export const Specialist = ({ specialist }) => {
             (data.time = it.time),
             (data.location = it.location),
             (data.address = it.address),
+            (data.status = it.status),
             (data.seats = it.seats),
             (data.booking = it.booking),
             (data.vacancies = it.vacancies),
@@ -249,60 +243,63 @@ export const Specialist = ({ specialist }) => {
                 loopPreventsSliding={true}
                 loopedslides={1}
               >
-                {specialistEvents.slice(0, 5).map((event, i) => {
-                  return (
-                    <SwiperSlide key={i}>
-                      <EventListItem
-                        onMouseEnter={() =>
-                          handleMouseEnter(event.article_event)
-                        }
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <ItemImg
-                          key={event.article_event}
-                          src={
-                            event.image
-                              ? BASE_URL_IMG +
-                                'events/' +
-                                event.image.split('/')[
-                                  event.image.split('/').length - 1
-                                ]
-                              : defaultImg
-                          }
-                          alt={event.name}
-                          width="402"
-                          height="366"
-                          loading="lazy"
-                        />
-                        {isHovered === event.article_event && (
-                          <DetailsWrapper>
-                            <Name>{event.name}</Name>
-                            <DateTimeWrapper>
-                              <li>
-                                <Head>{t('дата')}</Head>
-                                <DateTime>
-                                  {new Date(event.date).toLocaleDateString()}
-                                </DateTime>
-                              </li>
-                              <li>
-                                <Head>{t('час')}</Head>
-                                <DateTime>{event.time}</DateTime>
-                              </li>
-                            </DateTimeWrapper>
-                            <Describe>
-                              {event.description.length > 50
-                                ? event.description.slice(0, 50) + ' ...'
-                                : event.description}
-                            </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
-                              <span>{t('Детальніше')}</span>
-                            </BtnLink>
-                          </DetailsWrapper>
-                        )}
-                      </EventListItem>
-                    </SwiperSlide>
-                  );
-                })}
+                {specialistEvents
+                  .filter(event => event.status === 'active')
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
+                  .slice(0, 5)
+                  .sort((a, b) => new Date(a.date) - new Date(b.date))
+                  .map((event, i) => {
+                    return (
+                      <SwiperSlide key={i}>
+                        <EventListItem
+                          onMouseEnter={() => handleMouseEnter(event._id)}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          <ItemImg
+                            key={event._id}
+                            src={
+                              event.image
+                                ? BASE_URL_IMG +
+                                  'events/' +
+                                  event.image.split('/')[
+                                    event.image.split('/').length - 1
+                                  ]
+                                : defaultImg
+                            }
+                            alt={event.name}
+                            width="402"
+                            height="366"
+                            loading="lazy"
+                          />
+                          {isHovered === event._id && (
+                            <DetailsWrapper>
+                              <Name>{event.name}</Name>
+                              <DateTimeWrapper>
+                                <li>
+                                  <Head>{t('дата')}</Head>
+                                  <DateTime>
+                                    {new Date(event.date).toLocaleDateString()}
+                                  </DateTime>
+                                </li>
+                                <li>
+                                  <Head>{t('час')}</Head>
+                                  <DateTime>{event.time}</DateTime>
+                                </li>
+                              </DateTimeWrapper>
+                              <Describe>
+                                {event.description.length > 50
+                                  ? event.description.slice(0, 50) + ' ...'
+                                  : event.description}
+                              </Describe>
+                              <BtnLink to={`/events/${event._id}`}>
+                                <span>{t('Детальніше')}</span>
+                              </BtnLink>
+                            </DetailsWrapper>
+                          )}
+                        </EventListItem>
+                      </SwiperSlide>
+                    );
+                  })}
               </Swiper>
               {specialistEvents.length > 3 && (
                 <Pagination>
@@ -333,60 +330,63 @@ export const Specialist = ({ specialist }) => {
                 autoplay={{ delay: 5000 }}
                 effect={'creative'}
               >
-                {specialistEvents.slice(0, 5).map((event, i) => {
-                  return (
-                    <SwiperSlide key={i}>
-                      <EventListItem
-                        onMouseEnter={() =>
-                          handleMouseEnter(event.article_event)
-                        }
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <ItemImg
-                          key={event.article_event}
-                          src={
-                            event.image
-                              ? BASE_URL_IMG +
-                                'events/' +
-                                event.image.split('/')[
-                                  event.image.split('/').length - 1
-                                ]
-                              : defaultImg
-                          }
-                          alt={event.name}
-                          width="402"
-                          height="366"
-                          loading="lazy"
-                        />
-                        {isHovered === event.article_event && (
-                          <DetailsWrapper>
-                            <Name>{event.name}</Name>
-                            <DateTimeWrapper>
-                              <li>
-                                <Head>{t('дата')}</Head>
-                                <DateTime>
-                                  {new Date(event.date).toLocaleDateString()}
-                                </DateTime>
-                              </li>
-                              <li>
-                                <Head>{t('час')}</Head>
-                                <DateTime>{event.time}</DateTime>
-                              </li>
-                            </DateTimeWrapper>
-                            <Describe>
-                              {event.description.length > 50
-                                ? event.description.slice(0, 50) + ' ...'
-                                : event.description}
-                            </Describe>
-                            <BtnLink to={`/events/${event.article_event}`}>
-                              <span>{t('Детальніше')}</span>
-                            </BtnLink>
-                          </DetailsWrapper>
-                        )}
-                      </EventListItem>
-                    </SwiperSlide>
-                  );
-                })}
+                {specialistEvents
+                  .filter(event => event.status === 'active')
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
+                  .slice(0, 5)
+                  .sort((a, b) => new Date(a.date) - new Date(b.date))
+                  .map((event, i) => {
+                    return (
+                      <SwiperSlide key={i}>
+                        <EventListItem
+                          onMouseEnter={() => handleMouseEnter(event._id)}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          <ItemImg
+                            key={event._id}
+                            src={
+                              event.image
+                                ? BASE_URL_IMG +
+                                  'events/' +
+                                  event.image.split('/')[
+                                    event.image.split('/').length - 1
+                                  ]
+                                : defaultImg
+                            }
+                            alt={event.name}
+                            width="402"
+                            height="366"
+                            loading="lazy"
+                          />
+                          {isHovered === event._id && (
+                            <DetailsWrapper>
+                              <Name>{event.name}</Name>
+                              <DateTimeWrapper>
+                                <li>
+                                  <Head>{t('дата')}</Head>
+                                  <DateTime>
+                                    {new Date(event.date).toLocaleDateString()}
+                                  </DateTime>
+                                </li>
+                                <li>
+                                  <Head>{t('час')}</Head>
+                                  <DateTime>{event.time}</DateTime>
+                                </li>
+                              </DateTimeWrapper>
+                              <Describe>
+                                {event.description.length > 50
+                                  ? event.description.slice(0, 50) + ' ...'
+                                  : event.description}
+                              </Describe>
+                              <BtnLink to={`/events/${event._id}`}>
+                                <span>{t('Детальніше')}</span>
+                              </BtnLink>
+                            </DetailsWrapper>
+                          )}
+                        </EventListItem>
+                      </SwiperSlide>
+                    );
+                  })}
               </Swiper>
               {specialistEvents.length > 1 && (
                 <Pagination>

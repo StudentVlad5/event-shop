@@ -80,7 +80,6 @@ export const DetailsWrapper = styled.div`
   transform: translate(-50%, -50%);
 
   display: flex;
-  /* display: ${props => (props.isHovered ? 'flex' : 'none')}; */
   flex-direction: column;
   justify-content: center;
   align-items: center;

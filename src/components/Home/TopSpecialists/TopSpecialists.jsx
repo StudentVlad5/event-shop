@@ -66,7 +66,7 @@ export const TopSpecialists = () => {
         setIsLoading(false);
       }
     })();
-  }, [selectedLanguage]);
+  }, [selectedLanguage, t]);
 
   return (
     <Section>

@@ -8,6 +8,7 @@ import {
   FiltersBtnMenu,
   FiltersMenu,
 } from './Filters.styled';
+import { useTranslation } from 'react-i18next';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
@@ -20,6 +21,7 @@ export const Filters = ({ events, activeEvents }) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   const toggleFilters = () => {
     setIsShown(!isShown);
@@ -74,30 +76,30 @@ export const Filters = ({ events, activeEvents }) => {
     <FiltersBox>
       <div style={{ position: 'relative' }}>
         <FiltersBtn onClick={toggleFilters}>
-          Фільтрувати за {isShown ? <ArrowIconUp /> : <ArrowIcon />}
+          {t('Фільтрувати за')} {isShown ? <ArrowIconUp /> : <ArrowIcon />}
         </FiltersBtn>
 
         {isShown && (
           <FiltersMenu>
             <div>
               <FiltersBtnMenu onClick={() => toggleVisibility(1)}>
-                Мова {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
+                {t('Мова')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
               {isOpen[1] && (
                 <div>
                   <ul>
                     <li onClick={() => handleLanguageSelect('Fr')}>
-                      <p>Французька</p>
+                      <p>{t('Французька')}</p>
                     </li>
                     <li onClick={() => handleLanguageSelect('En')}>
-                      <p>Англійська</p>
+                      <p>{t('Англійська')}</p>
                     </li>
                     <li onClick={() => handleLanguageSelect('Uk')}>
-                      <p>Українська</p>
+                      <p>{t('Українська')}</p>
                     </li>
                     <li onClick={() => handleLanguageSelect('Ru')}>
-                      <p>Російська</p>
+                      <p>{t('Російська')}</p>
                     </li>
                   </ul>
                 </div>
@@ -106,7 +108,8 @@ export const Filters = ({ events, activeEvents }) => {
 
             <div>
               <FiltersBtnMenu onClick={() => toggleVisibility(2)}>
-                Категорія заходу {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
+                {t('Категорія заходу')}
+                {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
               {isOpen[2] && (
@@ -115,7 +118,9 @@ export const Filters = ({ events, activeEvents }) => {
                     {categories.map(category => (
                       <li
                         key={category._id}
-                        onClick={() => handleCategorySelect(category.categoryId)}
+                        onClick={() =>
+                          handleCategorySelect(category.categoryId)
+                        }
                       >
                         <p>{category.title}</p>
                       </li>
@@ -127,29 +132,30 @@ export const Filters = ({ events, activeEvents }) => {
 
             <div>
               <FiltersBtnMenu>
-                Місце <ArrowIcon />
+                {t('Місце')} <ArrowIcon />
               </FiltersBtnMenu>
             </div>
 
             <div>
               <FiltersBtnMenu onClick={() => toggleVisibility(4)}>
-                Вільні місця {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
+                {t('Вільні місця')}
+                {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
               {isOpen[4] && (
                 <div>
                   <ul>
                     <li>
-                      <p>Більше 5</p>
+                      <p>{t('Більше')} 5</p>
                     </li>
                     <li>
-                      <p>Більше 10</p>
+                      <p>{t('Більше')} 10</p>
                     </li>
                     <li>
-                      <p>Менше 5</p>
+                      <p>{t('Менше')} 5</p>
                     </li>
                     <li>
-                      <p>Менше 10</p>
+                      <p>{t('Менше')} 10</p>
                     </li>
                   </ul>
                 </div>
