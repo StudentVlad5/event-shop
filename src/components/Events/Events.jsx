@@ -16,6 +16,7 @@ export const Events = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
+  const [currentWeek, setCurrentWeek] = useState([]);
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -104,12 +105,15 @@ export const Events = () => {
         <Calendar
           showDetailsHandle={showDetailsHandle}
           activeEvents={activeEvents}
+          currentWeek={currentWeek}
+          setCurrentWeek={setCurrentWeek}
         />
         <Filters events={events} activeEvents={activeEvents} />
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
         {events.length > 0 && !error && (
-          <EventsList events={events} activeEvents={activeEvents} />
+          <EventsList events={events} activeEvents={activeEvents}           currentWeek={currentWeek}
+          setCurrentWeek={setCurrentWeek}/>
         )}
 
         {/* <Heading>{t('Archive of past events')}</Heading> */}

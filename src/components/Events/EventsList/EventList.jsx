@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import { BtnLink } from 'components/baseStyles/Button.styled';
 import { getFromStorage, removeItem } from 'services/localStorService';
 
-export const EventsList = ({ events, activeEvents }) => {
+export const EventsList = ({ events, activeEvents, currentWeek, setCurrentWeek }) => {
   const { t } = useTranslation();
   // const [activeEvents, setActiveEvents] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +44,7 @@ export const EventsList = ({ events, activeEvents }) => {
   const [filterCategory, setfilterCategory] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
 
+  console.log("currentWeek", currentWeek)
   useEffect(() => {
     const storedDate = getFromStorage('selectedDate');
     if (storedDate) {
@@ -61,18 +62,18 @@ export const EventsList = ({ events, activeEvents }) => {
   //     : new Date()
   // );
 
-  const [currentWeek, setCurrentWeek] = useState([]);
+  // const [currentWeek, setCurrentWeek] = useState([]);
+  // console.log(currentWeek, "currentWeek");
+  // useEffect(() => {
+  //   const storedCurrentWeek = getFromStorage('currentWeek');
+  //   const formattedStoredWeek = storedCurrentWeek
+  //     ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
+  //     : [];
 
-  useEffect(() => {
-    const storedCurrentWeek = getFromStorage('currentWeek');
-    const formattedStoredWeek = storedCurrentWeek
-      ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
-      : [];
-
-    if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
-      setCurrentWeek(formattedStoredWeek);
-    }
-  }, [getFromStorage('currentWeek')]);
+  //   if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
+  //     setCurrentWeek(formattedStoredWeek);
+  //   }
+  // }, [getFromStorage('currentWeek')]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -189,10 +190,13 @@ export const EventsList = ({ events, activeEvents }) => {
           .map((event, i) => {
             const newFilteredWeek = activeEvents.filter(week =>
               currentWeek.some(
-                day => new Date(week.date).toLocaleDateString() === day
+                day => {console.log(new Date(week.date));
+                console.log("day", day)}
+                // new Date(week.date).toLocaleDateString() === day
               )
             );
-            // console.log(newFilteredWeek);
+            console.log(newFilteredWeek);
+            console.log(activeEventsArr);
 
             const matchingActiveEvents = activeEvents.filter(
               activeEvent => activeEvent.eventId === event.article_event
@@ -311,6 +315,8 @@ export const EventsList = ({ events, activeEvents }) => {
 
 EventsList.propTypes = {
   events: PropTypes.arrayOf(PropTypes.shape({})),
+  currentWeek: PropTypes.any,
+  setCurrentWeek: PropTypes.any,
   activeEvents: PropTypes.arrayOf(
     PropTypes.shape({
       // _id: PropTypes.string.isRequired,
