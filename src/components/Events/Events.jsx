@@ -77,6 +77,7 @@ export const Events = () => {
               language: it.language,
               language_secondary: it.language_secondary,
               language_third: it.language_third,
+              status: it.status,
               ...it[selectedLanguage],
             },
           ];

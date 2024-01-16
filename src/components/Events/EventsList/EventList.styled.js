@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
+import { BtnLight } from 'components/baseStyles/Button.styled';
 
 const fadeInUp = keyframes`
   from {
@@ -58,7 +59,7 @@ export const EventDetailBox = styled.div`
   padding: 25px 40px;
 
   animation: ${fadeInUp} 0.3s ease;
-  $display: ${props => props.$ishovered };
+  $display: ${props => props.$ishovered};
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 300px;
@@ -149,11 +150,13 @@ export const CleanFilterBtn = styled.button`
   border-color: transparent;
   border-bottom: 1px solid ${theme.colors.grey2};
   cursor: pointer;
-  
+
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 20px;
   }
 `;
 
-// export const EventDetailTitle = styled.p``
+export const BtnLightEvents = styled(BtnLight)`
+margin-top: 45px;
+`;
 // export const EventDetailTitle = styled.p``
