@@ -72,6 +72,16 @@ export const Filters = ({ events, activeEvents }) => {
     saveToStorage('filterSelectedCategory', category);
   };
 
+  const handlePlacesSelect = palces => {
+    saveToStorage('filterSelectedPlaces', palces);
+  };
+
+  const handleLocationSelect = location => {
+    saveToStorage('filterSelectedLocation', location);
+  };
+
+  const uniqueLocations = [];
+
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
@@ -131,9 +141,32 @@ export const Filters = ({ events, activeEvents }) => {
             </div>
 
             <div>
-              <FiltersBtnMenu>
-                {t('Місце')} <ArrowIcon />
+              <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
+                {t('Місце')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
+              {isOpen[3] && (
+                <div>
+                  <ul>
+                    {activeEvents
+                      .filter(event => event.status === 'active')
+                      .map((event, idx) => {
+                        if (!uniqueLocations.includes(event.location)) {
+                          uniqueLocations.push(event.location);
+                          return (
+                            <li
+                              key={idx}
+                              onClick={() =>
+                                handleLocationSelect(event.location)
+                              }
+                            >
+                              <p>{event.location}</p>
+                            </li>
+                          );
+                        }
+                      })}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <div>
@@ -145,17 +178,11 @@ export const Filters = ({ events, activeEvents }) => {
               {isOpen[4] && (
                 <div>
                   <ul>
-                    <li>
-                      <p>{t('Більше')} 5</p>
+                    <li onClick={() => handlePlacesSelect('yes')}>
+                      <p>Вільні місця є</p>
                     </li>
-                    <li>
-                      <p>{t('Більше')} 10</p>
-                    </li>
-                    <li>
-                      <p>{t('Менше')} 5</p>
-                    </li>
-                    <li>
-                      <p>{t('Менше')} 10</p>
+                    <li onClick={() => handlePlacesSelect('no')}>
+                      <p>Вільних місць немає</p>
                     </li>
                   </ul>
                 </div>

@@ -30,7 +30,7 @@ const Calendar = ({
     getWeek(currentMonth)
   );
 
-  console.log(getWeek(currentMonth));
+  // console.log(getWeek(currentMonth));
   const [selectedDate, setSelectedDate] = useState(
     selectedDay ? selectedDay : new Date()
   );

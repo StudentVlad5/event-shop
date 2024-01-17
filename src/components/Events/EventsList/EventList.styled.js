@@ -157,6 +157,6 @@ export const CleanFilterBtn = styled.button`
 `;
 
 export const BtnLightEvents = styled(BtnLight)`
-margin-top: 45px;
+  margin-top: 45px;
 `;
 // export const EventDetailTitle = styled.p``
