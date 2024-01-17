@@ -26,8 +26,9 @@ import { getFromStorage, removeItem } from 'services/localStorService';
 export const EventsList = ({
   events,
   activeEvents,
-  // currentWeek,
-  // setCurrentWeek,
+  currentWeek,
+  selectedDate,
+  setSelectedDate
 }) => {
   const { t } = useTranslation();
   const [isHovered, setHovered] = useState(null);
@@ -38,7 +39,7 @@ export const EventsList = ({
   const initialEvents = 6;
   const [eventsNumber, setEventsNumber] = useState(initialEvents);
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  // const [selectedDate, setSelectedDate] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
   const [filterLanguage, setfilterLanguage] = useState([]);
@@ -46,25 +47,27 @@ export const EventsList = ({
   const [filterPlaces, setfilterPlaces] = useState([]);
   const [filterLocation, setfilterLocation] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
-  const [currentWeek, setCurrentWeek] = useState([]);
+  // const [currentWeek, setCurrentWeek] = useState([]);
 
-  useEffect(() => {
-    const storedDate = getFromStorage('selectedDate');
-    if (storedDate) {
-      setSelectedDate(new Date(storedDate));
-    }
-  }, [getFromStorage('selectedDate')]);
+  console.log("currentWeek 1", currentWeek)
+  // useEffect(() => {
+  //   const storedDate = getFromStorage('selectedDate');
+  //   if (storedDate) {
+  //     setSelectedDate(new Date(storedDate));
+  //   }
+  // }, [getFromStorage('selectedDate')]);
 
-  useEffect(() => {
-    const storedCurrentWeek = getFromStorage('currentWeek');
-    const formattedStoredWeek = storedCurrentWeek
-      ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
-      : [];
+  // useEffect(() => {
+  //   const storedCurrentWeek = getFromStorage('currentWeek');
+  //   const formattedStoredWeek = storedCurrentWeek
+  //     ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
+  //     : [];
 
-    if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
-      setCurrentWeek(formattedStoredWeek);
-    }
-  }, [getFromStorage('currentWeek')]);
+  //   if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
+  //     setCurrentWeek(formattedStoredWeek);
+  //   }
+  //   console.log("formattedStoredWeek", formattedStoredWeek)
+  // }, [getFromStorage('currentWeek')]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -393,7 +396,8 @@ export const EventsList = ({
 EventsList.propTypes = {
   events: PropTypes.arrayOf(PropTypes.shape({})),
   currentWeek: PropTypes.any,
-  setCurrentWeek: PropTypes.any,
+  selectedDate: PropTypes.any,
+  setSelectedDate: PropTypes.any,
   activeEvents: PropTypes.arrayOf(
     PropTypes.shape({
       // _id: PropTypes.string.isRequired,

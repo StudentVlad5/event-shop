@@ -9,6 +9,7 @@ import { Container, Title } from 'components/baseStyles/CommonStyle.styled';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import Calendar from './Calendar/calendar';
 import { Filters } from './Filters/Filters';
+import { getFromStorage } from "services/localStorService";
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
@@ -16,7 +17,8 @@ export const Events = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState([]);
+  const [currentWeek, setCurrentWeek] = useState(getFromStorage('currentWeek')?getFromStorage('currentWeek'):[]);
+  const [selectedDate, setSelectedDate] = useState(getFromStorage('selectedDate')? new Date(getFromStorage('selectedDate')) : null);
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -106,9 +108,10 @@ export const Events = () => {
         <Title>{t('Events calendar')}</Title>
         <Calendar
           showDetailsHandle={showDetailsHandle}
-          activeEvents={activeEvents}
           currentWeek={currentWeek}
+          selectedDate={selectedDate}
           setCurrentWeek={setCurrentWeek}
+          setSelectedDate={setSelectedDate}
         />
         <Filters events={events} activeEvents={activeEvents} />
         {isLoading ? onLoading() : onLoaded()}
@@ -119,6 +122,8 @@ export const Events = () => {
             activeEvents={activeEvents}
             currentWeek={currentWeek}
             setCurrentWeek={setCurrentWeek}
+            selectedDate = {selectedDate}
+            setSelectedDate = {setSelectedDate}
           />
         )}
 

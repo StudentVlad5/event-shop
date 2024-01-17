@@ -364,6 +364,7 @@ border: 1px solid #3A3A3A;
   border-radius: 50%;
   filter: drop-shadow(0px 4px 14px rgba(0, 0, 0, 0.16));
   cursor: pointer;
+  user-select: none;
 }
 
 .btn-next{
