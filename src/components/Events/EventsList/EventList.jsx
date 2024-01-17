@@ -32,53 +32,25 @@ export const EventsList = ({
 }) => {
   const { t } = useTranslation();
   const [isHovered, setHovered] = useState(null);
-  // const today = new Date();
-  // const activeEvents = events.filter(({ date }) => new Date(date) >= today);
-  // const widthWindow = window.innerWidth;
-  // const { selectedLanguage } = useContext(StatusContext);
   const initialEvents = 6;
   const [eventsNumber, setEventsNumber] = useState(initialEvents);
-
-  // const [selectedDate, setSelectedDate] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
   const [filterLanguage, setfilterLanguage] = useState([]);
-  // console.log(filterLanguage);
   const [filterCategory, setfilterCategory] = useState([]);
   const [filterPlaces, setfilterPlaces] = useState([]);
   const [filterLocation, setfilterLocation] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
-  // const [currentWeek, setCurrentWeek] = useState([]);
-
-  console.log("currentWeek 1", currentWeek)
-  // useEffect(() => {
-  //   const storedDate = getFromStorage('selectedDate');
-  //   if (storedDate) {
-  //     setSelectedDate(new Date(storedDate));
-  //   }
-  // }, [getFromStorage('selectedDate')]);
-
-  // useEffect(() => {
-  //   const storedCurrentWeek = getFromStorage('currentWeek');
-  //   const formattedStoredWeek = storedCurrentWeek
-  //     ? storedCurrentWeek.map(dateStr => new Date(dateStr).toLocaleDateString())
-  //     : [];
-
-  //   if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
-  //     setCurrentWeek(formattedStoredWeek);
-  //   }
-  //   console.log("formattedStoredWeek", formattedStoredWeek)
-  // }, [getFromStorage('currentWeek')]);
 
   useEffect(() => {
     if (selectedDate) {
       const newFilteredEvents = activeEvents.filter(
         event =>
           new Date(event.date).toLocaleDateString() ===
-          selectedDate.toLocaleDateString()
+          new Date(selectedDate).toLocaleDateString()
       );
+      console.log("newFilteredEvents", newFilteredEvents)
       setFilteredEvents(newFilteredEvents);
-
       setNoEvents(newFilteredEvents.length === 0);
     } else {
       setNoEvents(false);
@@ -121,13 +93,11 @@ export const EventsList = ({
     const filteredEventsByLang = activeEvents.filter(event => {
       return isLanguageSelected(event);
     });
-    // console.log(filteredEventsByLang);
     setfilterLanguage(filteredEventsByLang);
 
     const filteredEventsByCategory = events.filter(event => {
       return isCategorySelected(event);
     });
-    // console.log(filteredEventsByCategory);
     setfilterCategory(filteredEventsByCategory);
 
     const getPlaces = getFromStorage('filterSelectedPlaces');
@@ -144,15 +114,12 @@ export const EventsList = ({
     } else {
       filteredEventsByPlaces = [];
     }
-
-    // console.log(filteredEventsByPlaces);
     setfilterPlaces(filteredEventsByPlaces);
 
     const filteredEventsByLocation = activeEvents.filter(event => {
       return isLocationSelected(event);
     });
 
-    // console.log(filteredEventsByLocation);
     setfilterLocation(filteredEventsByLocation);
   }, [
     activeEvents,
@@ -224,19 +191,12 @@ export const EventsList = ({
     setActiveEventsArr(array);
   }, [activeEvents, events]);
 
-  // const filteredList = activeEvents.filter(event => {
-  //   return selectedDate.filter(
-  //     filteredEvent => filteredEvent.eventId === event.article_event
-  //   );
-  // });
-
-  // console.log('filteredList', filteredList);
 
   const languageFilterLength = filterLanguage.length;
   const categoryFilterLength = filterCategory.length;
   const placesFilterLength = filterPlaces.length;
   const locationFilterLength = filterLocation.length;
-  // console.log(filterCategory);
+
 
   let filteredActiveEvents = activeEventsArr;
   let filtersApplied = false;
@@ -280,17 +240,14 @@ export const EventsList = ({
       )
       .filter(event => event.status === 'active');
 
-    const res = activeEventsArr.filter(it =>
+      filteredActiveEvents = activeEventsArr.filter(it =>
       newFilteredWeek.some(
         filteredEvent => filteredEvent.eventId === it.article_event
       )
     );
-    filteredActiveEvents = res;
   }
-  // console.log(filteredActiveEvents);
 
-  const eventsToDisplay = filteredActiveEvents;
-  // console.log(eventsToDisplay);
+  const eventsToDisplay = filteredActiveEvents.map(it=>it);
   return (
     <>
       <CleanFilterBtn onClick={handleCleanFilter}>
@@ -303,33 +260,10 @@ export const EventsList = ({
         </NoEvents>
       )}
       <List>
-        {/* activeEventsArr
-         */}
         {eventsToDisplay
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, eventsNumber)
           .map((event, i) => {
-            // const newFilteredWeek = activeEvents
-            //   .filter(week =>
-            //     currentWeek.some(
-            //       day => new Date(week.date).toLocaleDateString() === day
-            //     )
-            //   )
-            //   .filter(event => event.status === 'active');
-
-            // let newFilteredWeek = [];
-            // activeEventsArr.map(it => {
-            //   currentWeek.map(item => {
-            //     if (new Date(it.date) - new Date(item) === 0) {
-            //       newFilteredWeek.push(it);
-            //     }
-            //   });
-            // });
-
-            // const matchingActiveEvents = activeEvents.filter(
-            //   activeEvent => activeEvent.eventId === event.article_event
-            // );
-
             return (
               <Event key={i}>
                 <EventNavLink
@@ -364,11 +298,9 @@ export const EventsList = ({
                             </EventDetailDateText>
                           </EventDetailDateLi>
                           <EventDetailDateLi>
-                            {/* {matchingActiveEvents.map((ev, idx) => ( */}
                             <EventDetailDateText2>
                               {new Date(event.date).toLocaleDateString()}
                             </EventDetailDateText2>
-                            {/* // ))} */}
                           </EventDetailDateLi>
                         </EventDetailDate>
 
@@ -379,11 +311,9 @@ export const EventsList = ({
                             </EventDetailDateText>
                           </li>
                           <li>
-                            {/* {matchingActiveEvents.map((ev, idx) => ( */}
                             <EventDetailDateText2>
                               {event.time}
                             </EventDetailDateText2>
-                            {/* ))} */}
                           </li>
                         </ul>
                       </DetailsBox>
@@ -420,15 +350,6 @@ EventsList.propTypes = {
   setSelectedDate: PropTypes.any,
   activeEvents: PropTypes.arrayOf(
     PropTypes.shape({
-      // _id: PropTypes.string.isRequired,
-      // date: PropTypes.string.isRequired,
-      // time: PropTypes.string.isRequired,
-      // duration: PropTypes.string.isRequired,
-      // location: PropTypes.string.isRequired,
-      // title: PropTypes.string.isRequired,
-      // description: PropTypes.string,
-      // language: PropTypes.string,
-      // image: PropTypes.string,
     })
   ),
 };
