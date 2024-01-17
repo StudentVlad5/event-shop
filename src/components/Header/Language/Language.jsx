@@ -1,24 +1,16 @@
 import i18next from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { SelectContainerLanguage, SelectLanguage } from './Language.styled';
-import { saveToStorage, getFromStorage} from "../../../services/localStorService";
+import { saveToStorage} from "../../../services/localStorService";
+import { StatusContext } from 'components/ContextStatus/ContextStatus';
 
 const Language = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
-
-  useEffect(() => {
-    const saveLanguage = getFromStorage('chosenLanguage');
-    if (saveLanguage) {
-      i18next.changeLanguage(saveLanguage);
-      setSelectedLanguage(saveLanguage);
-    }
-  }, []);
-
+  const { selectedLanguage, setSelectedLanguage } = useContext(StatusContext);
+ 
   const changeLanguage = event => {
-    const language = event.target.value;
-    i18next.changeLanguage(language);
-    saveToStorage('chosenLanguage', language);
-    setSelectedLanguage(language);
+    i18next.changeLanguage(event.target.value);
+    saveToStorage('chosenLanguage', event.target.value);
+    setSelectedLanguage(event.target.value);
   };
 
   return (
