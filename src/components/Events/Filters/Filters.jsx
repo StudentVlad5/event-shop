@@ -76,6 +76,12 @@ export const Filters = ({ events, activeEvents }) => {
     saveToStorage('filterSelectedPlaces', palces);
   };
 
+  const handleLocationSelect = location => {
+    saveToStorage('filterSelectedLocation', location);
+  };
+
+  const uniqueLocations = [];
+
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
@@ -135,9 +141,32 @@ export const Filters = ({ events, activeEvents }) => {
             </div>
 
             <div>
-              <FiltersBtnMenu>
-                {t('Місце')} <ArrowIcon />
+              <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
+                {t('Місце')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
+              {isOpen[3] && (
+                <div>
+                  <ul>
+                    {activeEvents
+                      .filter(event => event.status === 'active')
+                      .map((event, idx) => {
+                        if (!uniqueLocations.includes(event.location)) {
+                          uniqueLocations.push(event.location);
+                          return (
+                            <li
+                              key={idx}
+                              onClick={() =>
+                                handleLocationSelect(event.location)
+                              }
+                            >
+                              <p>{event.location}</p>
+                            </li>
+                          );
+                        }
+                      })}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <div>

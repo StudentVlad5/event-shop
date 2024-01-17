@@ -30,9 +30,6 @@ export const EventsList = ({
   // setCurrentWeek,
 }) => {
   const { t } = useTranslation();
-  // const [activeEvents, setActiveEvents] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const [isHovered, setHovered] = useState(null);
   // const today = new Date();
   // const activeEvents = events.filter(({ date }) => new Date(date) >= today);
@@ -44,14 +41,13 @@ export const EventsList = ({
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
-  // const [currentWeek, setCurrentWeek] = useState([]);
   const [filterLanguage, setfilterLanguage] = useState([]);
   const [filterCategory, setfilterCategory] = useState([]);
   const [filterPlaces, setfilterPlaces] = useState([]);
+  const [filterLocation, setfilterLocation] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
-  const [arr, setArr] = useState([]);
+  const [currentWeek, setCurrentWeek] = useState([]);
 
-  // console.log('currentWeek', currentWeek);
   useEffect(() => {
     const storedDate = getFromStorage('selectedDate');
     if (storedDate) {
@@ -59,17 +55,6 @@ export const EventsList = ({
     }
   }, [getFromStorage('selectedDate')]);
 
-  // if (!getFromStorage('selectedDate')) {
-  //   saveToStorage(new Date());
-  // }
-
-  // const [selectedDate, setSelectedDate] = useState(
-  //   getFromStorage('selectedDate')
-  //     ? new Date(getFromStorage('selectedDate'))
-  //     : new Date()
-  // );
-
-  const [currentWeek, setCurrentWeek] = useState([]);
   useEffect(() => {
     const storedCurrentWeek = getFromStorage('currentWeek');
     const formattedStoredWeek = storedCurrentWeek
@@ -92,10 +77,9 @@ export const EventsList = ({
 
       setNoEvents(newFilteredEvents.length === 0);
     } else {
-      setFilteredEvents(events);
       setNoEvents(false);
     }
-  }, [selectedDate, activeEvents, events]);
+  }, [selectedDate, activeEvents]);
 
   useEffect(() => {
     const getLang = getFromStorage('filterSelectedLanguage');
@@ -137,14 +121,23 @@ export const EventsList = ({
       filteredEventsByPlaces = [];
     }
 
-    console.log(filteredEventsByPlaces);
+    // console.log(filteredEventsByPlaces);
     setfilterPlaces(filteredEventsByPlaces);
+
+    const getLocation = getFromStorage('filterSelectedLocation');
+    const filteredEventsByLocation = activeEvents.filter(
+      event => event.location === getLocation
+    );
+
+    // console.log(filteredEventsByLocation);
+    setfilterLocation(filteredEventsByLocation);
   }, [
     activeEvents,
     events,
     getFromStorage('filterSelectedLanguage'),
     getFromStorage('filterSelectedCategory'),
     getFromStorage('filterSelectedPlaces'),
+    getFromStorage('filterSelectedLocation'),
   ]);
 
   const handleMouseEnter = i => {
@@ -164,8 +157,13 @@ export const EventsList = ({
     removeItem('filterSelectedLanguage');
     removeItem('filterSelectedCategory');
     removeItem('filterSelectedPlaces');
+    removeItem('filterSelectedLocation');
 
     setSelectedDate(null);
+    setfilterLanguage([]);
+    setfilterCategory([]);
+    setfilterPlaces([]);
+    setfilterLocation([]);
   };
 
   useEffect(() => {
@@ -206,59 +204,95 @@ export const EventsList = ({
     setActiveEventsArr(array);
   }, [activeEvents, events]);
 
-  // console.log('activeEventsArr', activeEventsArr);
+  // const filteredList = activeEvents.filter(event => {
+  //   return selectedDate.filter(
+  //     filteredEvent => filteredEvent.eventId === event.article_event
+  //   );
+  // });
 
-  const filteredList = activeEventsArr
-  .filter(event => {
-    const isEventMatched = filteredEvents.filter(
-      filteredEvent => filteredEvent.eventId === event.article_event
+  // console.log('filteredList', filteredList);
+
+  const languageFilterLength = filterLanguage.length;
+  const categoryFilterLength = filterCategory.length;
+  const placesFilterLength = filterPlaces.length;
+  const locationFilterLength = filterLocation.length;
+  // console.log(filterCategory);
+
+  let filteredActiveEvents;
+
+  if (languageFilterLength > 0) {
+    filteredActiveEvents = activeEventsArr.filter(it =>
+      filterLanguage.some(
+        activeEvent => activeEvent.eventId === it.article_event
+      )
     );
-
-    const isLangMatched = filterLanguage.filter(
-      filteredEvent => filteredEvent.eventId === event.article_event
-    );
-
-    const isCategoryMatched = filterCategory.filter(ev => {
-      return activeEvents.filter(
-        activeEvent => activeEvent.eventId === ev.article_event
+  }
+  // else if (categoryFilterLength > 0) {
+  //   filteredActiveEvents = filterCategory.filter(it =>
+  //     activeEvents.some(ev => ev.eventId === it.article_event)
+  //   );
+  // }
+  else if (filteredEvents.length > 0) {
+    filteredActiveEvents = activeEventsArr.filter(it => {
+      filteredEvents.filter(
+        activeEvent => activeEvent.eventId === it.article_event
       );
     });
-
-    const isPlacesMatched = filterPlaces.filter(
-      filteredEvent => filteredEvent.eventId === event.article_event
+  } else if (placesFilterLength > 0) {
+    filteredActiveEvents = activeEventsArr.filter(it =>
+      filterPlaces.some(activeEvent => activeEvent.eventId === it.article_event)
     );
-
-    return (
-      isEventMatched || isLangMatched || isCategoryMatched || isPlacesMatched
+  } else if (locationFilterLength > 0) {
+    filteredActiveEvents = activeEventsArr.filter(it =>
+      filterLocation.some(
+        activeEvent => activeEvent.eventId === it.article_event
+      )
     );
-  })
-  .sort((a, b) => new Date(a.date) - new Date(b.date))
-  .slice(0, eventsNumber);
+  } else {
+    const newFilteredWeek = activeEvents
+      .filter(week =>
+        currentWeek.some(
+          day => new Date(week.date).toLocaleDateString() === day
+        )
+      )
+      .filter(event => event.status === 'active');
 
-  console.log('filteredList', filteredList);
+    const res = activeEventsArr.filter(it =>
+      newFilteredWeek.some(
+        filteredEvent => filteredEvent.eventId === it.article_event
+      )
+    );
+    filteredActiveEvents = res;
+  }
+  console.log(filteredEvents);
 
+  const eventsToDisplay = filteredActiveEvents;
+  // console.log(eventsToDisplay);
   return (
     <>
       <CleanFilterBtn onClick={handleCleanFilter}>
         {t('Очистити фільтри')}
       </CleanFilterBtn>
+      {noEvents && (
+        <NoEvents>
+          {t('На дату')} {new Date(selectedDate).toLocaleDateString()}
+          {t('подій немає')}
+        </NoEvents>
+      )}
       <List>
         {/* activeEventsArr
+         */}
+        {eventsToDisplay
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, eventsNumber)
-          .map((event, i)  */}
-        {activeEventsArr
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-          .slice(0, eventsNumber)
-          .map((event, i)=> {
-
-            const newFilteredWeek = activeEvents
-              .filter(week =>
-                currentWeek.some(
-                  day => new Date(week.date).toLocaleDateString() === day
-                )
-              )
-              .filter(event => event.status === 'active');
+          .map((event, i) => {
+            // const newFilteredWeek = activeEvents
+            //   .filter(week =>
+            //     currentWeek.some(
+            //       day => new Date(week.date).toLocaleDateString() === day
+            //     )
+            //   )
+            //   .filter(event => event.status === 'active');
 
             // let newFilteredWeek = [];
             // activeEventsArr.map(it => {
@@ -269,127 +303,83 @@ export const EventsList = ({
             //   });
             // });
 
-            // console.log('newFilteredWeek', newFilteredWeek);
-
             // const matchingActiveEvents = activeEvents.filter(
             //   activeEvent => activeEvent.eventId === event.article_event
             // );
 
-            const filteredActiveByEvents = filteredEvents.filter(
-              activeEvent => activeEvent.eventId === event.article_event
+            return (
+              <Event key={i}>
+                <EventNavLink
+                  onMouseEnter={() => handleMouseEnter(i)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <EventImages
+                    src={
+                      event.image
+                        ? BASE_URL_IMG +
+                          'events/' +
+                          event.image.split('/')[
+                            event.image.split('/').length - 1
+                          ]
+                        : defaultImg
+                    }
+                    alt={event.title}
+                    loading="lazy"
+                  />
+
+                  {isHovered === i && (
+                    <EventDetailBox
+                      $ishovered={isHovered === i ? 'flex' : 'none'}
+                    >
+                      <EventDetailTitle>{event.name}</EventDetailTitle>
+
+                      <DetailsBox>
+                        <EventDetailDate>
+                          <EventDetailDateLi>
+                            <EventDetailDateText>
+                              {t('Дата')}
+                            </EventDetailDateText>
+                          </EventDetailDateLi>
+                          <EventDetailDateLi>
+                            {/* {matchingActiveEvents.map((ev, idx) => ( */}
+                            <EventDetailDateText2>
+                              {new Date(event.date).toLocaleDateString()}
+                            </EventDetailDateText2>
+                            {/* // ))} */}
+                          </EventDetailDateLi>
+                        </EventDetailDate>
+
+                        <ul>
+                          <li>
+                            <EventDetailDateText>
+                              {t('Час')}
+                            </EventDetailDateText>
+                          </li>
+                          <li>
+                            {/* {matchingActiveEvents.map((ev, idx) => ( */}
+                            <EventDetailDateText2>
+                              {event.time}
+                            </EventDetailDateText2>
+                            {/* ))} */}
+                          </li>
+                        </ul>
+                      </DetailsBox>
+
+                      <DetailsBoxDiscr>
+                        {event.description.length > 50
+                          ? event.description.slice(0, 50) + ' ...'
+                          : event.description}
+                      </DetailsBoxDiscr>
+
+                      <BtnLink to={`/events/${event.article_event}`}>
+                        <span>{t('Детальніше')}</span>
+                      </BtnLink>
+                    </EventDetailBox>
+                  )}
+                </EventNavLink>
+              </Event>
             );
-
-            const filteredActiveByLang = filterLanguage.filter(
-              activeEvent => activeEvent.eventId === event.article_event
-            );
-
-            const filteredActiveByCategory = filterCategory.filter(ev => {
-              return activeEvents.filter(
-                activeEvent => activeEvent.eventId === ev.article_event
-              );
-            });
-
-            const filteredActiveByPlaces = filterPlaces.filter(
-              activeEvent => activeEvent.eventId === event.article_event
-            );
-
-            let shouldDisplay;
-
-            // if (selectedDate) {
-            // shouldDisplay = filtredActiveByEvents?.length > 0;
-            // shouldDisplay = newFilteredWeek.length > 0;
-            // shouldDisplay = filteredActiveByPlaces.length > 0;
-            // shouldDisplay = filteredActiveByLang.length > 0;
-
-            
-            // } else {
-            // shouldDisplay = matchingActiveEvents?.length > 0;
-            shouldDisplay = newFilteredWeek.some(
-              filteredEvent => filteredEvent.eventId === event.article_event
-            );
-            // }
-
-            if (shouldDisplay) {
-              return (
-                <Event key={i}>
-                  <EventNavLink
-                    onMouseEnter={() => handleMouseEnter(i)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    <EventImages
-                      src={
-                        event.image
-                          ? BASE_URL_IMG +
-                            'events/' +
-                            event.image.split('/')[
-                              event.image.split('/').length - 1
-                            ]
-                          : defaultImg
-                      }
-                      alt={event.title}
-                      loading="lazy"
-                    />
-
-                    {isHovered === i && (
-                      <EventDetailBox
-                        $ishovered={isHovered === i ? 'flex' : 'none'}
-                      >
-                        <EventDetailTitle>{event.name}</EventDetailTitle>
-
-                        <DetailsBox>
-                          <EventDetailDate>
-                            <EventDetailDateLi>
-                              <EventDetailDateText>
-                                {t('Дата')}
-                              </EventDetailDateText>
-                            </EventDetailDateLi>
-                            <EventDetailDateLi>
-                              {/* {matchingActiveEvents.map((ev, idx) => ( */}
-                              <EventDetailDateText2>
-                                {new Date(event.date).toLocaleDateString()}
-                              </EventDetailDateText2>
-                              {/* // ))} */}
-                            </EventDetailDateLi>
-                          </EventDetailDate>
-
-                          <ul>
-                            <li>
-                              <EventDetailDateText>
-                                {t('Час')}
-                              </EventDetailDateText>
-                            </li>
-                            <li>
-                              {/* {matchingActiveEvents.map((ev, idx) => ( */}
-                              <EventDetailDateText2>
-                                {event.time}
-                              </EventDetailDateText2>
-                              {/* ))} */}
-                            </li>
-                          </ul>
-                        </DetailsBox>
-
-                        <DetailsBoxDiscr>
-                          {event.description.length > 50
-                            ? event.description.slice(0, 50) + ' ...'
-                            : event.description}
-                        </DetailsBoxDiscr>
-
-                        <BtnLink to={`/events/${event.article_event}`}>
-                          <span>{t('Детальніше')}</span>
-                        </BtnLink>
-                      </EventDetailBox>
-                    )}
-                  </EventNavLink>
-                </Event>
-              );
-            }
           })}
-        {noEvents && (
-          <NoEvents>
-            {t('На дату')} {new Date(selectedDate).toLocaleDateString()}
-            {t('подій немає')}
-          </NoEvents>
-        )}
       </List>
       {eventsNumber < activeEventsArr.length && (
         <BtnLightEvents onClick={handleEventsNumber}>

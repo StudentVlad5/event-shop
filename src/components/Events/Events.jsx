@@ -80,6 +80,7 @@ export const Events = () => {
               language_third: it.language_third,
               status: it.status,
               vacancies: it.vacancies,
+              location: it.location,
               ...it[selectedLanguage],
             },
           ];
@@ -113,8 +114,12 @@ export const Events = () => {
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
         {events.length > 0 && !error && (
-          <EventsList events={events} activeEvents={activeEvents}           currentWeek={currentWeek}
-          setCurrentWeek={setCurrentWeek}/>
+          <EventsList
+            events={events}
+            activeEvents={activeEvents}
+            currentWeek={currentWeek}
+            setCurrentWeek={setCurrentWeek}
+          />
         )}
 
         {/* <Heading>{t('Archive of past events')}</Heading> */}
