@@ -7,12 +7,14 @@ import {
   FiltersBtn,
   FiltersBtnMenu,
   FiltersMenu,
+  FiltersMenuOpen,
+  FiltersMenuOpenText,
 } from './Filters.styled';
 import { useTranslation } from 'react-i18next';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { saveToStorage } from 'services/localStorService';
+import { getFromStorage, saveToStorage } from 'services/localStorService';
 
 export const Filters = ({ events, activeEvents }) => {
   const [isShown, setIsShown] = useState(false);
@@ -65,19 +67,55 @@ export const Filters = ({ events, activeEvents }) => {
   }, [selectedLanguage]);
 
   const handleLanguageSelect = language => {
-    saveToStorage('filterSelectedLanguage', language);
+    const selectedLanguages = getFromStorage('filterSelectedLanguages') || [];
+    const languageIndex = selectedLanguages.indexOf(language);
+
+    if (languageIndex !== -1) {
+      const updatedLanguages = [...selectedLanguages];
+      updatedLanguages.splice(languageIndex, 1);
+      saveToStorage('filterSelectedLanguages', updatedLanguages);
+    } else {
+      const updatedLanguages = [...selectedLanguages, language];
+      saveToStorage('filterSelectedLanguages', updatedLanguages);
+    }
   };
 
   const handleCategorySelect = category => {
-    saveToStorage('filterSelectedCategory', category);
-  };
+    const selectedCategories = getFromStorage('filterSelectedCategories') || [];
+    const categoryIndex = selectedCategories.indexOf(category);
 
-  const handlePlacesSelect = palces => {
-    saveToStorage('filterSelectedPlaces', palces);
+    if (categoryIndex !== -1) {
+      const updatedCategories = [...selectedCategories];
+      updatedCategories.splice(categoryIndex, 1);
+      saveToStorage('filterSelectedCategories', updatedCategories);
+    } else {
+      const updatedCategories = [...selectedCategories, category];
+      saveToStorage('filterSelectedCategories', updatedCategories);
+    }
   };
 
   const handleLocationSelect = location => {
-    saveToStorage('filterSelectedLocation', location);
+    const selectedLocations = getFromStorage('filterSelectedLocation') || [];
+    const locationIndex = selectedLocations.indexOf(location);
+
+    if (locationIndex !== -1) {
+      const updatedLocations = [...selectedLocations];
+      updatedLocations.splice(locationIndex, 1);
+      saveToStorage('filterSelectedLocation', updatedLocations);
+    } else {
+      const updatedLocations = [...selectedLocations, location];
+      saveToStorage('filterSelectedLocation', updatedLocations);
+    }
+  };
+
+  const handlePlacesSelect = places => {
+    const selectedPlaces = getFromStorage('filterSelectedPlaces') || '';
+
+    if (selectedPlaces === places) {
+      saveToStorage('filterSelectedPlaces', '');
+    } else {
+      saveToStorage('filterSelectedPlaces', places);
+    }
   };
 
   const uniqueLocations = [];
@@ -97,22 +135,20 @@ export const Filters = ({ events, activeEvents }) => {
               </FiltersBtnMenu>
 
               {isOpen[1] && (
-                <div>
-                  <ul>
-                    <li onClick={() => handleLanguageSelect('Fr')}>
-                      <p>{t('Французька')}</p>
-                    </li>
-                    <li onClick={() => handleLanguageSelect('En')}>
-                      <p>{t('Англійська')}</p>
-                    </li>
-                    <li onClick={() => handleLanguageSelect('Uk')}>
-                      <p>{t('Українська')}</p>
-                    </li>
-                    <li onClick={() => handleLanguageSelect('Ru')}>
-                      <p>{t('Російська')}</p>
-                    </li>
-                  </ul>
-                </div>
+                <FiltersMenuOpen>
+                  <li onClick={() => handleLanguageSelect('Fr')}>
+                    <FiltersMenuOpenText>{t('Французька')}</FiltersMenuOpenText>
+                  </li>
+                  <li onClick={() => handleLanguageSelect('En')}>
+                    <FiltersMenuOpenText>{t('Англійська')}</FiltersMenuOpenText>
+                  </li>
+                  <li onClick={() => handleLanguageSelect('Uk')}>
+                    <FiltersMenuOpenText>{t('Українська')}</FiltersMenuOpenText>
+                  </li>
+                  <li onClick={() => handleLanguageSelect('Ru')}>
+                    <FiltersMenuOpenText>{t('Російська')}</FiltersMenuOpenText>
+                  </li>
+                </FiltersMenuOpen>
               )}
             </div>
 
@@ -123,20 +159,18 @@ export const Filters = ({ events, activeEvents }) => {
               </FiltersBtnMenu>
 
               {isOpen[2] && (
-                <div>
-                  <ul>
-                    {categories.map(category => (
-                      <li
-                        key={category._id}
-                        onClick={() =>
-                          handleCategorySelect(category.categoryId)
-                        }
-                      >
-                        <p>{category.title}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <FiltersMenuOpen>
+                  {categories.map(category => (
+                    <li
+                      key={category._id}
+                      onClick={() => handleCategorySelect(category.categoryId)}
+                    >
+                      <FiltersMenuOpenText>
+                        {category.title}
+                      </FiltersMenuOpenText>
+                    </li>
+                  ))}
+                </FiltersMenuOpen>
               )}
             </div>
 
@@ -145,27 +179,25 @@ export const Filters = ({ events, activeEvents }) => {
                 {t('Місце')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
               {isOpen[3] && (
-                <div>
-                  <ul>
-                    {activeEvents
-                      .filter(event => event.status === 'active')
-                      .map((event, idx) => {
-                        if (!uniqueLocations.includes(event.location)) {
-                          uniqueLocations.push(event.location);
-                          return (
-                            <li
-                              key={idx}
-                              onClick={() =>
-                                handleLocationSelect(event.location)
-                              }
-                            >
-                              <p>{event.location}</p>
-                            </li>
-                          );
-                        }
-                      })}
-                  </ul>
-                </div>
+                <FiltersMenuOpen>
+                  {activeEvents
+                    .filter(event => event.status === 'active')
+                    .map((event, idx) => {
+                      if (!uniqueLocations.includes(event.location)) {
+                        uniqueLocations.push(event.location);
+                        return (
+                          <li
+                            key={idx}
+                            onClick={() => handleLocationSelect(event.location)}
+                          >
+                            <FiltersMenuOpenText>
+                              {event.location}
+                            </FiltersMenuOpenText>
+                          </li>
+                        );
+                      }
+                    })}
+                </FiltersMenuOpen>
               )}
             </div>
 
@@ -176,16 +208,16 @@ export const Filters = ({ events, activeEvents }) => {
               </FiltersBtnMenu>
 
               {isOpen[4] && (
-                <div>
-                  <ul>
-                    <li onClick={() => handlePlacesSelect('yes')}>
-                      <p>Вільні місця є</p>
-                    </li>
-                    <li onClick={() => handlePlacesSelect('no')}>
-                      <p>Вільних місць немає</p>
-                    </li>
-                  </ul>
-                </div>
+                <FiltersMenuOpen>
+                  <li onClick={() => handlePlacesSelect('yes')}>
+                    <FiltersMenuOpenText>Вільні місця є</FiltersMenuOpenText>
+                  </li>
+                  <li onClick={() => handlePlacesSelect('no')}>
+                    <FiltersMenuOpenText>
+                      Вільних місць немає
+                    </FiltersMenuOpenText>
+                  </li>
+                </FiltersMenuOpen>
               )}
             </div>
           </FiltersMenu>

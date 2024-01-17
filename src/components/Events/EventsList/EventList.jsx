@@ -42,6 +42,7 @@ export const EventsList = ({
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
   const [filterLanguage, setfilterLanguage] = useState([]);
+  // console.log(filterLanguage);
   const [filterCategory, setfilterCategory] = useState([]);
   const [filterPlaces, setfilterPlaces] = useState([]);
   const [filterLocation, setfilterLocation] = useState([]);
@@ -81,30 +82,50 @@ export const EventsList = ({
     }
   }, [selectedDate, activeEvents]);
 
-  useEffect(() => {
-    const getLang = getFromStorage('filterSelectedLanguage');
-    const filteredEventsByLang = activeEvents.filter(event => {
+  const isLanguageSelected = event => {
+    const selectedLanguages = getFromStorage('filterSelectedLanguages') || [];
+
+    return selectedLanguages.some(selectedLanguage => {
       return (
-        event.language === getLang ||
-        event.language_secondary === getLang ||
-        event.language_third === getLang
+        event.language === selectedLanguage ||
+        event.language_secondary === selectedLanguage ||
+        event.language_third === selectedLanguage
       );
+    });
+  };
+
+  const isCategorySelected = event => {
+    const selectedCategories = getFromStorage('filterSelectedCategories') || [];
+
+    return selectedCategories.some(selectedCategory => {
+      return (
+        event.category === selectedCategory ||
+        event.category_secondary === selectedCategory ||
+        event.category_third === selectedCategory
+      );
+    });
+  };
+
+  const isLocationSelected = event => {
+    const selectedLocations = getFromStorage('filterSelectedLocation') || [];
+
+    return selectedLocations.some(selectedLocation => {
+      return event.location === selectedLocation;
+    });
+  };
+
+  useEffect(() => {
+    const filteredEventsByLang = activeEvents.filter(event => {
+      return isLanguageSelected(event);
     });
     // console.log(filteredEventsByLang);
-
     setfilterLanguage(filteredEventsByLang);
 
-    const getCategoty = getFromStorage('filterSelectedCategory');
-    const filteredEventsByCategoty = events.filter(event => {
-      return (
-        event.category === getCategoty ||
-        event.category_second === getCategoty ||
-        event.category_third === getCategoty
-      );
+    const filteredEventsByCategory = events.filter(event => {
+      return isCategorySelected(event);
     });
-
-    // console.log(filteredEventsByCategoty);
-    setfilterCategory(filteredEventsByCategoty);
+    // console.log(filteredEventsByCategory);
+    setfilterCategory(filteredEventsByCategory);
 
     const getPlaces = getFromStorage('filterSelectedPlaces');
     let filteredEventsByPlaces = [];
@@ -124,20 +145,16 @@ export const EventsList = ({
     // console.log(filteredEventsByPlaces);
     setfilterPlaces(filteredEventsByPlaces);
 
-    const getLocation = getFromStorage('filterSelectedLocation');
-    const filteredEventsByLocation = activeEvents.filter(
-      event => event.location === getLocation
-    );
+    const filteredEventsByLocation = activeEvents.filter(event => {
+      return isLocationSelected(event);
+    });
 
     // console.log(filteredEventsByLocation);
     setfilterLocation(filteredEventsByLocation);
   }, [
     activeEvents,
     events,
-    getFromStorage('filterSelectedLanguage'),
-    getFromStorage('filterSelectedCategory'),
     getFromStorage('filterSelectedPlaces'),
-    getFromStorage('filterSelectedLocation'),
   ]);
 
   const handleMouseEnter = i => {
@@ -154,8 +171,8 @@ export const EventsList = ({
 
   const handleCleanFilter = () => {
     removeItem('selectedDate');
-    removeItem('filterSelectedLanguage');
-    removeItem('filterSelectedCategory');
+    removeItem('filterSelectedLanguages');
+    removeItem('filterSelectedCategories');
     removeItem('filterSelectedPlaces');
     removeItem('filterSelectedLocation');
 
@@ -218,37 +235,40 @@ export const EventsList = ({
   const locationFilterLength = filterLocation.length;
   // console.log(filterCategory);
 
-  let filteredActiveEvents;
+  let filteredActiveEvents = activeEventsArr;
+  let filtersApplied = false;
 
   if (languageFilterLength > 0) {
-    filteredActiveEvents = activeEventsArr.filter(it =>
+    filteredActiveEvents = filteredActiveEvents.filter(it =>
       filterLanguage.some(
         activeEvent => activeEvent.eventId === it.article_event
       )
     );
+    filtersApplied = true;
   }
-  // else if (categoryFilterLength > 0) {
-  //   filteredActiveEvents = filterCategory.filter(it =>
-  //     activeEvents.some(ev => ev.eventId === it.article_event)
-  //   );
-  // }
-  else if (filteredEvents.length > 0) {
-    filteredActiveEvents = activeEventsArr.filter(it => {
+
+  if (filteredEvents.length > 0) {
+    filteredActiveEvents = filteredActiveEvents.filter(it => {
       filteredEvents.filter(
         activeEvent => activeEvent.eventId === it.article_event
       );
     });
-  } else if (placesFilterLength > 0) {
-    filteredActiveEvents = activeEventsArr.filter(it =>
+  }
+  if (placesFilterLength > 0) {
+    filteredActiveEvents = filteredActiveEvents.filter(it =>
       filterPlaces.some(activeEvent => activeEvent.eventId === it.article_event)
     );
-  } else if (locationFilterLength > 0) {
-    filteredActiveEvents = activeEventsArr.filter(it =>
+    filtersApplied = true;
+  }
+  if (locationFilterLength > 0) {
+    filteredActiveEvents = filteredActiveEvents.filter(it =>
       filterLocation.some(
         activeEvent => activeEvent.eventId === it.article_event
       )
     );
-  } else {
+    filtersApplied = true;
+  }
+  if (!filtersApplied) {
     const newFilteredWeek = activeEvents
       .filter(week =>
         currentWeek.some(
@@ -264,7 +284,7 @@ export const EventsList = ({
     );
     filteredActiveEvents = res;
   }
-  console.log(filteredEvents);
+  // console.log(filteredActiveEvents);
 
   const eventsToDisplay = filteredActiveEvents;
   // console.log(eventsToDisplay);

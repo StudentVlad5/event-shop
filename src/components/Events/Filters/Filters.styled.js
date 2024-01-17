@@ -50,7 +50,9 @@ export const FiltersMenu = styled.div`
   background-color: ${theme.colors.fon};
   width: 215px;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 0px 0px 20px 20px;
+  border: 1px solid ${theme.colors.accent};
+  border-top: 0px;
 `;
 
 export const FiltersBtnMenu = styled.button`
@@ -68,8 +70,36 @@ export const FiltersBtnMenu = styled.button`
   cursor: pointer;
 `;
 
-// export const FiltersBox = styled.div``;
-// export const FiltersBox = styled.div``;
+export const FiltersMenuOpen = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const FiltersMenuOpenText = styled.p`
+  color: ${theme.colors.grey1};
+  font-family: ${theme.fonts[0]};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  /* ${({ isSelected }) =>
+    isSelected &&
+    `
+    color: red; 
+  `} */
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    color: ${theme.colors.accent};
+  }
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    font-size: 20px;
+  }
+`;
+
 // export const FiltersBox = styled.div``;
 // export const FiltersBox = styled.div``;
 // export const FiltersBox = styled.div``;
