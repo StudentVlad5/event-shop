@@ -9,6 +9,7 @@ import { Container, Title } from 'components/baseStyles/CommonStyle.styled';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import Calendar from './Calendar/calendar';
 import { Filters } from './Filters/Filters';
+import { getFromStorage } from "services/localStorService";
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
@@ -16,7 +17,15 @@ export const Events = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState([]);
+  const [currentWeek, setCurrentWeek] = useState(getFromStorage('currentWeek')?getFromStorage('currentWeek'):[]);
+  const [selectedDate, setSelectedDate] = useState(getFromStorage('selectedDate')? new Date(getFromStorage('selectedDate')) : null);
+  const [selectedLanguages, setSelectedLanguages] = useState(getFromStorage('filterSelectedLanguages')? getFromStorage('filterSelectedLanguages') : []);
+  const [selectedCategories, setSelectedCategories] = useState(getFromStorage('filterSelectedCategories')? getFromStorage('filterSelectedCategories') : []);
+  const [selectedLocations, setSelectedLocations] = useState(getFromStorage('filterSelectedLocation')? getFromStorage('filterSelectedLocation') : []);
+  const [selectedPlaces, setSelectedPlaces] = useState(getFromStorage('filterSelectedPlaces')? getFromStorage('filterSelectedPlaces') : '');
+
+
+
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -106,11 +115,22 @@ export const Events = () => {
         <Title>{t('Events calendar')}</Title>
         <Calendar
           showDetailsHandle={showDetailsHandle}
-          activeEvents={activeEvents}
           currentWeek={currentWeek}
+          selectedDate={selectedDate}
           setCurrentWeek={setCurrentWeek}
+          setSelectedDate={setSelectedDate}
         />
-        <Filters events={events} activeEvents={activeEvents} />
+        <Filters 
+        activeEvents={activeEvents} 
+        setSelectedLanguages={setSelectedLanguages}
+        setSelectedCategories={setSelectedCategories}
+        setSelectedLocations={setSelectedLocations} 
+        setSelectedPlaces={setSelectedPlaces}
+        selectedLanguages={selectedLanguages}
+        selectedCategories={selectedCategories}
+        selectedLocations={selectedLocations} 
+        selectedPlaces={selectedPlaces}
+        />
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
         {events.length > 0 && !error && (
@@ -119,13 +139,18 @@ export const Events = () => {
             activeEvents={activeEvents}
             currentWeek={currentWeek}
             setCurrentWeek={setCurrentWeek}
+            selectedDate = {selectedDate}
+            setSelectedDate = {setSelectedDate}
+            selectedLanguages={selectedLanguages}
+            selectedCategories={selectedCategories} 
+            selectedLocations={selectedLocations} 
+            selectedPlaces={selectedPlaces}
+            setSelectedLanguages={setSelectedLanguages}
+            setSelectedCategories={setSelectedCategories}
+            setSelectedLocations={setSelectedLocations}
+            setSelectedPlaces={setSelectedPlaces}
           />
         )}
-
-        {/* <Heading>{t('Archive of past events')}</Heading> */}
-        {/* {isLoading ? onLoading() : onLoaded()} */}
-        {/* {error && onFetchError('Whoops, something went wrong')} */}
-        {/* {events.length > 0 && !error && <ArchiveEventsList events={events} />} */}
       </Container>
     </EventsSection>
   );

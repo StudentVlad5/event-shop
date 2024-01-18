@@ -18,21 +18,16 @@ import { getFromStorage, saveToStorage } from "services/localStorService";
 
 const Calendar = ({
   showDetailsHandle,
-  activeEvents,
   currentWeek,
   setCurrentWeek,
+  selectedDate,
+  setSelectedDate,
 }) => {
-  const selectedDay = getFromStorage("selectedDate");
   const [currentMonth, setCurrentMonth] = useState(
-    selectedDay ? selectedDay : new Date()
+    selectedDate ? selectedDate : new Date()
   );
   const [currentWeekNumber, setCurrentWeekNumber] = useState(
     getWeek(currentMonth)
-  );
-
-  // console.log(getWeek(currentMonth));
-  const [selectedDate, setSelectedDate] = useState(
-    selectedDay ? selectedDay : new Date()
   );
 
   const changeMonthHandle = (btnType) => {
@@ -49,11 +44,15 @@ const Calendar = ({
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeekNumber(getWeek(subWeeks(currentMonth, 1)));
       getCurrentWeekDates(subWeeks(currentMonth, 1));
+      setSelectedDate(null);
+      saveToStorage("selectedDate", null)
     }
     if (btnType === "next") {
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeekNumber(getWeek(addWeeks(currentMonth, 1)));
       getCurrentWeekDates(addWeeks(currentMonth, 1));
+      setSelectedDate(null);
+      saveToStorage("selectedDate", null)
     }
   };
 
@@ -70,14 +69,19 @@ const Calendar = ({
       weekDates.push(format(addDays(startWeek, i), "ccc dd MMM yy"));
     }
     saveToStorage("currentWeek", weekDates);
-    setCurrentWeek(weekDates);
+    const formattedStoredWeek = weekDates
+      ? weekDates.map((dateStr) => new Date(dateStr).toLocaleDateString())
+      : [];
+    if (JSON.stringify(formattedStoredWeek) !== JSON.stringify(currentWeek)) {
+      setCurrentWeek(formattedStoredWeek);
+    }
   };
+
   useEffect(() => getCurrentWeekDates(currentMonth), []);
 
   const renderHeader = () => {
     const dateFormat = "MMMMMMMMM yyyy";
-    // console.log("selected day", selectedDate);
-    return (
+     return (
       <div className="header row flex-middle">
         <div className="col col-center">
           <span>{format(currentMonth, dateFormat)}</span>
@@ -123,11 +127,10 @@ const Calendar = ({
             }}
           >
             <span
-              // className="number"
               className={`cell number ${
                 isSameDay(day, new Date())
                   ? "today"
-                  : isSameDay(day, selectedDay)
+                  : isSameDay(day, selectedDate )
                   ? "selected"
                   : ""
               }`}
@@ -186,7 +189,8 @@ export default Calendar;
 
 Calendar.propTypes = {
   showDetailsHandle: PropTypes.any,
-  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
   currentWeek: PropTypes.any,
   setCurrentWeek: PropTypes.any,
+  selectedDate: PropTypes.any,
+  setSelectedDate: PropTypes.any,
 };
