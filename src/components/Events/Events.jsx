@@ -19,6 +19,13 @@ export const Events = () => {
   const [data, setData] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(getFromStorage('currentWeek')?getFromStorage('currentWeek'):[]);
   const [selectedDate, setSelectedDate] = useState(getFromStorage('selectedDate')? new Date(getFromStorage('selectedDate')) : null);
+  const [selectedLanguages, setSelectedLanguages] = useState(getFromStorage('filterSelectedLanguages')? getFromStorage('filterSelectedLanguages') : []);
+  const [selectedCategories, setSelectedCategories] = useState(getFromStorage('filterSelectedCategories')? getFromStorage('filterSelectedCategories') : []);
+  const [selectedLocations, setSelectedLocations] = useState(getFromStorage('filterSelectedLocation')? getFromStorage('filterSelectedLocation') : []);
+  const [selectedPlaces, setSelectedPlaces] = useState(getFromStorage('filterSelectedPlaces')? getFromStorage('filterSelectedPlaces') : '');
+
+
+
 
   const { selectedLanguage } = useContext(StatusContext);
   const { t } = useTranslation();
@@ -113,7 +120,17 @@ export const Events = () => {
           setCurrentWeek={setCurrentWeek}
           setSelectedDate={setSelectedDate}
         />
-        <Filters events={events} activeEvents={activeEvents} />
+        <Filters 
+        activeEvents={activeEvents} 
+        setSelectedLanguages={setSelectedLanguages}
+        setSelectedCategories={setSelectedCategories}
+        setSelectedLocations={setSelectedLocations} 
+        setSelectedPlaces={setSelectedPlaces}
+        selectedLanguages={selectedLanguages}
+        selectedCategories={selectedCategories}
+        selectedLocations={selectedLocations} 
+        selectedPlaces={selectedPlaces}
+        />
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError('Whoops, something went wrong')}
         {events.length > 0 && !error && (
@@ -124,13 +141,16 @@ export const Events = () => {
             setCurrentWeek={setCurrentWeek}
             selectedDate = {selectedDate}
             setSelectedDate = {setSelectedDate}
+            selectedLanguages={selectedLanguages}
+            selectedCategories={selectedCategories} 
+            selectedLocations={selectedLocations} 
+            selectedPlaces={selectedPlaces}
+            setSelectedLanguages={setSelectedLanguages}
+            setSelectedCategories={setSelectedCategories}
+            setSelectedLocations={setSelectedLocations}
+            setSelectedPlaces={setSelectedPlaces}
           />
         )}
-
-        {/* <Heading>{t('Archive of past events')}</Heading> */}
-        {/* {isLoading ? onLoading() : onLoaded()} */}
-        {/* {error && onFetchError('Whoops, something went wrong')} */}
-        {/* {events.length > 0 && !error && <ArchiveEventsList events={events} />} */}
       </Container>
     </EventsSection>
   );

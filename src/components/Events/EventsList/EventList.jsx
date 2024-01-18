@@ -21,14 +21,23 @@ import {
 import defaultImg from 'images/No-image-available.webp';
 import { useEffect, useState } from 'react';
 import { BtnLink } from 'components/baseStyles/Button.styled';
-import { getFromStorage, removeItem } from 'services/localStorService';
+import { removeItem } from 'services/localStorService';
+import { use } from 'i18next';
 
 export const EventsList = ({
   events,
   activeEvents,
   currentWeek,
   selectedDate,
-  setSelectedDate
+  setSelectedDate,
+  selectedLanguages, 
+  selectedCategories, 
+  selectedLocations, 
+  selectedPlaces,
+  setSelectedLanguages,
+  setSelectedCategories, 
+  setSelectedLocations, 
+  setSelectedPlaces, 
 }) => {
   const { t } = useTranslation();
   const [isHovered, setHovered] = useState(null);
@@ -36,96 +45,8 @@ export const EventsList = ({
   const [eventsNumber, setEventsNumber] = useState(initialEvents);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [noEvents, setNoEvents] = useState(false);
-  const [filterLanguage, setfilterLanguage] = useState([]);
-  const [filterCategory, setfilterCategory] = useState([]);
-  const [filterPlaces, setfilterPlaces] = useState([]);
-  const [filterLocation, setfilterLocation] = useState([]);
   const [activeEventsArr, setActiveEventsArr] = useState([]);
-
-  useEffect(() => {
-    if (selectedDate) {
-      const newFilteredEvents = activeEvents.filter(
-        event =>
-          new Date(event.date).toLocaleDateString() ===
-          new Date(selectedDate).toLocaleDateString()
-      );
-      console.log("newFilteredEvents", newFilteredEvents)
-      setFilteredEvents(newFilteredEvents);
-      setNoEvents(newFilteredEvents.length === 0);
-    } else {
-      setNoEvents(false);
-    }
-  }, [selectedDate, activeEvents]);
-
-  const isLanguageSelected = event => {
-    const selectedLanguages = getFromStorage('filterSelectedLanguages') || [];
-
-    return selectedLanguages.some(selectedLanguage => {
-      return (
-        event.language === selectedLanguage ||
-        event.language_secondary === selectedLanguage ||
-        event.language_third === selectedLanguage
-      );
-    });
-  };
-
-  const isCategorySelected = event => {
-    const selectedCategories = getFromStorage('filterSelectedCategories') || [];
-
-    return selectedCategories.some(selectedCategory => {
-      return (
-        event.category === selectedCategory ||
-        event.category_secondary === selectedCategory ||
-        event.category_third === selectedCategory
-      );
-    });
-  };
-
-  const isLocationSelected = event => {
-    const selectedLocations = getFromStorage('filterSelectedLocation') || [];
-
-    return selectedLocations.some(selectedLocation => {
-      return event.location === selectedLocation;
-    });
-  };
-
-  useEffect(() => {
-    const filteredEventsByLang = activeEvents.filter(event => {
-      return isLanguageSelected(event);
-    });
-    setfilterLanguage(filteredEventsByLang);
-
-    const filteredEventsByCategory = events.filter(event => {
-      return isCategorySelected(event);
-    });
-    setfilterCategory(filteredEventsByCategory);
-
-    const getPlaces = getFromStorage('filterSelectedPlaces');
-    let filteredEventsByPlaces = [];
-
-    if (getPlaces === 'yes') {
-      filteredEventsByPlaces = activeEvents.filter(event => {
-        return event.vacancies !== 0;
-      });
-    } else if (getPlaces === 'no') {
-      filteredEventsByPlaces = activeEvents.filter(event => {
-        return event.vacancies === 0;
-      });
-    } else {
-      filteredEventsByPlaces = [];
-    }
-    setfilterPlaces(filteredEventsByPlaces);
-
-    const filteredEventsByLocation = activeEvents.filter(event => {
-      return isLocationSelected(event);
-    });
-
-    setfilterLocation(filteredEventsByLocation);
-  }, [
-    activeEvents,
-    events,
-    getFromStorage('filterSelectedPlaces'),
-  ]);
+  const [activeFilteredEvents, setActiveFilteredEvents] = useState([]);
 
   const handleMouseEnter = i => {
     setHovered(i);
@@ -147,15 +68,22 @@ export const EventsList = ({
     removeItem('filterSelectedLocation');
 
     setSelectedDate(null);
-    setfilterLanguage([]);
-    setfilterCategory([]);
-    setfilterPlaces([]);
-    setfilterLocation([]);
+    setSelectedLanguages([]);
+    setSelectedCategories([]);
+    setSelectedPlaces("");
+    setSelectedLocations([]);
   };
 
   useEffect(() => {
+    const newFilteredWeek = activeEvents
+      .filter(week =>
+        currentWeek.some(
+          day => new Date(week.date).toLocaleDateString() === day
+        )
+      )
+      .filter(event => event.status === 'active');
     let array = [];
-    activeEvents.map(it => {
+    newFilteredWeek.map(it => {
       events.map(item => {
         if (it.eventId === item.article_event && it.status === 'active') {
           let data = {};
@@ -189,65 +117,103 @@ export const EventsList = ({
       });
     });
     setActiveEventsArr(array);
-  }, [activeEvents, events]);
-
-
-  const languageFilterLength = filterLanguage.length;
-  const categoryFilterLength = filterCategory.length;
-  const placesFilterLength = filterPlaces.length;
-  const locationFilterLength = filterLocation.length;
-
-
-  let filteredActiveEvents = activeEventsArr;
-  let filtersApplied = false;
-
-  if (languageFilterLength > 0) {
-    filteredActiveEvents = filteredActiveEvents.filter(it =>
-      filterLanguage.some(
-        activeEvent => activeEvent.eventId === it.article_event
-      )
-    );
-    filtersApplied = true;
-  }
-
-  if (filteredEvents.length > 0) {
-    filteredActiveEvents = filteredActiveEvents.filter(it => {
-      filteredEvents.filter(
-        activeEvent => activeEvent.eventId === it.article_event
+    if (selectedDate) {
+      const newFilteredEvents = activeEventsArr.filter(
+        event =>
+          new Date(event.date).toLocaleDateString() ===
+          new Date(selectedDate).toLocaleDateString()
       );
-    });
-  }
-  if (placesFilterLength > 0) {
-    filteredActiveEvents = filteredActiveEvents.filter(it =>
-      filterPlaces.some(activeEvent => activeEvent.eventId === it.article_event)
-    );
-    filtersApplied = true;
-  }
-  if (locationFilterLength > 0) {
-    filteredActiveEvents = filteredActiveEvents.filter(it =>
-      filterLocation.some(
-        activeEvent => activeEvent.eventId === it.article_event
-      )
-    );
-    filtersApplied = true;
-  }
-  if (!filtersApplied) {
-    const newFilteredWeek = activeEvents
-      .filter(week =>
-        currentWeek.some(
-          day => new Date(week.date).toLocaleDateString() === day
-        )
-      )
-      .filter(event => event.status === 'active');
+      setFilteredEvents(newFilteredEvents);
+      setActiveFilteredEvents(newFilteredEvents);
+      setNoEvents(newFilteredEvents.length === 0);
+    } else {
+      setFilteredEvents(array);
+      setActiveFilteredEvents(array);
+      setNoEvents(false);
+    }
+  }, [activeEvents, events, currentWeek, selectedDate]);
 
-      filteredActiveEvents = activeEventsArr.filter(it =>
-      newFilteredWeek.some(
-        filteredEvent => filteredEvent.eventId === it.article_event
-      )
-    );
-  }
+useEffect(()=>{
+  let ARR_L = []; 
+    console.log("selectedLanguages", selectedLanguages);
+    if (selectedLanguages.length > 0){
+      let lab = [];
+      filteredEvents.map(it =>{
+      selectedLanguages.map(
+        activeEvent => {if(activeEvent === it.language || activeEvent === it.language_secondary || activeEvent === it.language_third){lab.push(it)}}
+          )})
+          const res = lab.reduce((o, i) => {
+            if (!o.find(v => v._id == i._id)) {
+              o.push(i);
+            }
+            return o;
+          }, []); 
+          ARR_L =  res.map(it=>it)
+        } else {ARR_L =  filteredEvents.map(it=>it)}
 
-  const eventsToDisplay = filteredActiveEvents.map(it=>it);
+  let ARR_C = []; 
+  console.log("selectedCategories", selectedCategories);
+  if (selectedCategories.length > 0){
+    let lab = [];
+    ARR_L.map(it =>{
+        selectedCategories.map(
+          activeEvent => {if(activeEvent === it.category || activeEvent === it.category_secondary || activeEvent === it.category_third){lab.push(it)}}
+            )})
+            const res = lab.reduce((o, i) => {
+              if (!o.find(v => v._id == i._id)) {
+                o.push(i);
+              }
+              return o;
+            }, []);   
+            ARR_C =  res.map(it=>it)
+          } else {ARR_C =  ARR_L.map(it=>it)}
+
+  let ARR_Loc = []; 
+  console.log("selectedLocations", selectedLocations);
+  if (selectedLocations.length > 0){
+    let lab = [];
+    ARR_C.map(it =>{
+      selectedLocations.map(
+          activeEvent => {if(activeEvent === it.location){lab.push(it)}}
+            )})
+            const res = lab.reduce((o, i) => {
+              if (!o.find(v => v._id == i._id)) {
+                o.push(i);
+              }
+              return o;
+            }, []);   
+            ARR_Loc =  res.map(it=>it)
+          } else {ARR_Loc =  ARR_C.map(it=>it)}
+
+  let ARR_P = []; 
+  console.log("selectedPlaces", selectedPlaces);
+  if (selectedPlaces === 'yes'){
+    let lab = [];
+    ARR_Loc.map(it =>{if(it.vacancies > 0){lab.push(it)}})
+            const res = lab.reduce((o, i) => {
+              if (!o.find(v => v._id == i._id)) {
+                o.push(i);
+              }
+              return o;
+            }, []);   
+            ARR_P =  res.map(it=>it)
+          } 
+  else if (selectedPlaces === 'no'){
+    let lab = [];
+    ARR_Loc.map(it =>{if(it.vacancies <= 0){lab.push(it)}})
+            const res = lab.reduce((o, i) => {
+              if (!o.find(v => v._id == i._id)) {
+                o.push(i);
+              }
+              return o;
+            }, []);   
+            ARR_P =  res.map(it=>it)
+          } 
+  else {ARR_P =  ARR_Loc.map(it=>it)}
+
+          setActiveFilteredEvents(ARR_P)
+},[selectedLanguages, selectedCategories, selectedLocations, selectedPlaces])
+
   return (
     <>
       <CleanFilterBtn onClick={handleCleanFilter}>
@@ -260,7 +226,7 @@ export const EventsList = ({
         </NoEvents>
       )}
       <List>
-        {eventsToDisplay
+        {activeFilteredEvents
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, eventsNumber)
           .map((event, i) => {
@@ -334,7 +300,7 @@ export const EventsList = ({
             );
           })}
       </List>
-      {eventsNumber < activeEventsArr.length && (
+      {eventsNumber < activeFilteredEvents.length && (
         <BtnLightEvents onClick={handleEventsNumber}>
           <span> {t('Показати більше')} </span>
         </BtnLightEvents>
@@ -348,6 +314,14 @@ EventsList.propTypes = {
   currentWeek: PropTypes.any,
   selectedDate: PropTypes.any,
   setSelectedDate: PropTypes.any,
+  selectedLanguages: PropTypes.any, 
+  selectedCategories: PropTypes.any, 
+  selectedLocations: PropTypes.any, 
+  selectedPlaces: PropTypes.any,
+  setSelectedLanguages: PropTypes.any,
+  setSelectedCategories: PropTypes.any, 
+  setSelectedLocations: PropTypes.any, 
+  setSelectedPlaces: PropTypes.any, 
   activeEvents: PropTypes.arrayOf(
     PropTypes.shape({
     })

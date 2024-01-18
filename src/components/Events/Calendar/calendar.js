@@ -23,18 +23,12 @@ const Calendar = ({
   selectedDate,
   setSelectedDate,
 }) => {
-  // const selectedDay = getFromStorage("selectedDate");
   const [currentMonth, setCurrentMonth] = useState(
     selectedDate ? selectedDate : new Date()
   );
   const [currentWeekNumber, setCurrentWeekNumber] = useState(
     getWeek(currentMonth)
   );
-
-  // console.log(getWeek(currentMonth));
-  // const [selectedDate, setSelectedDate] = useState(
-  //   selectedDay ? selectedDay : new Date()
-  // );
 
   const changeMonthHandle = (btnType) => {
     if (btnType === "prev") {
@@ -50,11 +44,15 @@ const Calendar = ({
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeekNumber(getWeek(subWeeks(currentMonth, 1)));
       getCurrentWeekDates(subWeeks(currentMonth, 1));
+      setSelectedDate(null);
+      saveToStorage("selectedDate", null)
     }
     if (btnType === "next") {
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeekNumber(getWeek(addWeeks(currentMonth, 1)));
       getCurrentWeekDates(addWeeks(currentMonth, 1));
+      setSelectedDate(null);
+      saveToStorage("selectedDate", null)
     }
   };
 
@@ -83,8 +81,7 @@ const Calendar = ({
 
   const renderHeader = () => {
     const dateFormat = "MMMMMMMMM yyyy";
-    // console.log("selected day", selectedDate);
-    return (
+     return (
       <div className="header row flex-middle">
         <div className="col col-center">
           <span>{format(currentMonth, dateFormat)}</span>
@@ -130,7 +127,6 @@ const Calendar = ({
             }}
           >
             <span
-              // className="number"
               className={`cell number ${
                 isSameDay(day, new Date())
                   ? "today"
