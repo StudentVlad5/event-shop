@@ -13,7 +13,9 @@ const EventDetailsPage = () => {
   const [error, setError] = useState(null);
   const routeParams = useParams();
   const { selectedLanguage } = useContext(StatusContext);
-
+  const [articleEventID , setArticleEventID ] = useState([]);
+  const [article_event, setArticleEvent] = useState(null)
+  
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
@@ -42,6 +44,8 @@ const EventDetailsPage = () => {
           },
         ];
         setEvent(langData[0]);
+        setArticleEvent(data.article_event)
+
       } catch (error) {
         setError(error);
       } finally {
@@ -53,6 +57,44 @@ const EventDetailsPage = () => {
     }
   }, [routeParams.id]);
 
+  useEffect(() => {
+    (async function getData() {
+      setIsLoading(true);
+      try {
+        const { data } = await fetchData(`/active_events`);
+        if (!data) {
+          return onFetchError('Whoops, something went wrong');
+        }
+
+        let langData = [];
+        data.map(it => {
+          let item = [
+            {
+              _id: it._id,
+              article_eventID: it.article_eventID,
+              eventId: it.eventId,
+              date: it.date,
+              time: it.time,
+              // language: it.language,
+              // language_secondary: it.language_secondary,
+              // language_third: it.language_third,
+              // status: it.status,
+              // vacancies: it.vacancies,
+              // location: it.location,
+              ...it[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
+        setArticleEventID(langData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [selectedLanguage]);
+  
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
   return (
@@ -61,7 +103,7 @@ const EventDetailsPage = () => {
       {isLoading ? onLoading() : onLoaded()}
       {error && onFetchError('Whoops, something went wrong')}
       {Object.keys(event).length > 0 && !error && (
-        <EventDetails event={event} />
+        <EventDetails articleEventID={articleEventID} event={event} />
       )}
     </>
   );

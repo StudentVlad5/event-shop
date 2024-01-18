@@ -36,7 +36,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import 'swiper/css';
 import { HiArrowLeft } from 'react-icons/hi';
 
-export const EventDetails = ({ event }) => {
+export const EventDetails = ({ event, articleEventID }) => {
   const {
     article_event,
     specialistId,
@@ -51,7 +51,7 @@ export const EventDetails = ({ event }) => {
     image_1,
     image_2,
   } = event;
-
+  console.log(articleEventID);
   const { t } = useTranslation();
   const { selectedLanguage } = useContext(StatusContext);
   const [activeEvents, setActiveEvents] = useState([]);
@@ -59,6 +59,7 @@ export const EventDetails = ({ event }) => {
   const [specialist, setSpecialist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [arrE, setArrE] = useState([]);
 
   const dispatch = useDispatch();
   const openModal = e => {
@@ -103,6 +104,7 @@ export const EventDetails = ({ event }) => {
                 language_third: it.language_third,
                 location: it.location,
                 address: it.address,
+                status: it.status,
                 ...it[selectedLanguage],
               },
             ];
@@ -201,6 +203,104 @@ export const EventDetails = ({ event }) => {
     setCurrentImage(prevEL => (prevEL === images.length - 1 ? 0 : prevEL + 1));
   };
 
+  // useEffect(() => {
+  //   let array = [];
+  //   activeEvents.map(it => {
+  //     // event.map(item => {
+  //     if (it.eventId === article_event && it.status === 'active') {
+  //       let data = {};
+  //       (data._id = it._id),
+  //         (data.article_event = article_event),
+  //         (data.language = it.language),
+  //         (data.language_secondary = it.language_secondary),
+  //         (data.language_third = it.language_third),
+  //         (data.price = it.price),
+  //         (data.date = it.date),
+  //         (data.time = it.time),
+  //         (data.location = it.location),
+  //         (data.address = it.address),
+  //         (data.seats = it.seats),
+  //         (data.booking = it.booking),
+  //         (data.vacancies = it.vacancies),
+  //         (data.status = it.status),
+  //         (data.image = image),
+  //         (data.image_1 = image_1),
+  //         (data.image_2 = image_2),
+  //         (data.rating = rating),
+  //         (data.duration = duration),
+  //         (data.category = category),
+  //         (data.category_second = category_second),
+  //         (data.category_third = category_third),
+  //         (data.specialistId = specialistId),
+  //         (data.description = description),
+  //         (data.name = name),
+  //         array.push(data);
+  //     }
+  //     // });
+  //   });
+  //   setArrE(array);
+  // }, [activeEvents]);
+
+  useEffect(() => {
+    let array = [];
+    activeEvents.forEach(it => {
+      if (it.eventId === article_event && it.status === 'active') {
+        array.push({
+          _id: it._id,
+          article_event,
+          article_eventID: it.article_eventID,
+          eventId: it.eventId,
+          language: it.language,
+          language_secondary: it.language_secondary,
+          language_third: it.language_third,
+          price: it.price,
+          date: it.date,
+          time: it.time,
+          location: it.location,
+          address: it.address,
+          seats: it.seats,
+          booking: it.booking,
+          vacancies: it.vacancies,
+          status: it.status,
+          image: it.image,
+          image_1: it.image_1,
+          image_2: it.image_2,
+          rating: it.rating,
+          duration: it.duration,
+          category: it.category,
+          category_second: it.category_second,
+          category_third: it.category_third,
+          specialistId: it.specialistId,
+          description: it.description,
+          name: it.name,
+        });
+      }
+    });
+    console.log('arrE:', array);
+
+    setArrE(array);
+  }, [activeEvents]);
+  // const selectedEvent = activeEvents.find(ev => ev.eventId === article_event);
+  // const selectedEvent = activeEvents.find(ev => ev.eventId === article_event);
+
+  const [selectedEvent, setSelectedEvent] = useState([]);
+
+  useEffect(() => {
+    // const selectedEvent = activeEvents.find(ev => ev.eventId === article_event);
+
+    // const filteredEvent = arrE.filter(ev => {
+    //   articleEventID.filter(
+    //     eve =>ev.article_eventID ===eve.article_eventID
+    //   );
+    // });
+    console.log(activeEvents);
+    const filteredEvent = activeEvents.filter(ev =>
+      articleEventID.some(eve => ev.article_eventID === eve.article_eventID)
+    );
+    console.log('filteredEvent:', filteredEvent);
+    setSelectedEvent(filteredEvent);
+  }, [activeEvents, arrE]);
+
   return (
     <>
       <EventsSection>
@@ -214,18 +314,21 @@ export const EventDetails = ({ event }) => {
             <EventHeading>
               <HeadingItem>
                 <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
+                {selectedEvent.map((ev, idx) => (
                   <HeadingItemData key={idx + ev.date}>
                     {new Date(ev.date).toLocaleDateString()}
                   </HeadingItemData>
                 ))}
+                {/* {selectedEvent && (
+                  <HeadingItemData key={selectedEvent.date}>
+                    {new Date(selectedEvent.date).toLocaleDateString()}
+                  </HeadingItemData>
+                )} */}
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('час')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev.time}>
-                    {ev.time}
-                  </HeadingItemData>
+                {arrE.map((ev, idx) => (
+                  <HeadingItemData key={idx}>{ev.time}</HeadingItemData>
                 ))}
               </HeadingItem>
               <HeadingItem>
@@ -368,4 +471,5 @@ EventDetails.propTypes = {
     image_1: PropTypes.string,
     image_2: PropTypes.string,
   }),
+  articleEventID: PropTypes.arrayOf(PropTypes.shape({})),
 };
