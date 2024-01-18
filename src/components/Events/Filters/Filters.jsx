@@ -16,7 +16,7 @@ import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getFromStorage, saveToStorage } from 'services/localStorService';
 
-export const Filters = ({ events, activeEvents }) => {
+export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategories, setSelectedLocations, setSelectedPlaces, selectedLanguages, selectedCategories, selectedLocations, selectedPlaces }) => {
   const [isShown, setIsShown] = useState(false);
   const [isOpen, setIsOpen] = useState({});
   const { selectedLanguage } = useContext(StatusContext);
@@ -67,54 +67,57 @@ export const Filters = ({ events, activeEvents }) => {
   }, [selectedLanguage]);
 
   const handleLanguageSelect = language => {
-    const selectedLanguages = getFromStorage('filterSelectedLanguages') || [];
     const languageIndex = selectedLanguages.indexOf(language);
 
     if (languageIndex !== -1) {
       const updatedLanguages = [...selectedLanguages];
       updatedLanguages.splice(languageIndex, 1);
       saveToStorage('filterSelectedLanguages', updatedLanguages);
+      setSelectedLanguages(updatedLanguages);
     } else {
       const updatedLanguages = [...selectedLanguages, language];
       saveToStorage('filterSelectedLanguages', updatedLanguages);
+      setSelectedLanguages(updatedLanguages);
     }
   };
 
   const handleCategorySelect = category => {
-    const selectedCategories = getFromStorage('filterSelectedCategories') || [];
     const categoryIndex = selectedCategories.indexOf(category);
 
     if (categoryIndex !== -1) {
       const updatedCategories = [...selectedCategories];
       updatedCategories.splice(categoryIndex, 1);
       saveToStorage('filterSelectedCategories', updatedCategories);
+      setSelectedCategories(updatedCategories);
     } else {
       const updatedCategories = [...selectedCategories, category];
       saveToStorage('filterSelectedCategories', updatedCategories);
+      setSelectedCategories(updatedCategories);
     }
   };
 
   const handleLocationSelect = location => {
-    const selectedLocations = getFromStorage('filterSelectedLocation') || [];
-    const locationIndex = selectedLocations.indexOf(location);
+     const locationIndex = selectedLocations.indexOf(location);
 
     if (locationIndex !== -1) {
       const updatedLocations = [...selectedLocations];
       updatedLocations.splice(locationIndex, 1);
       saveToStorage('filterSelectedLocation', updatedLocations);
+      setSelectedLocations(updatedLocations);
     } else {
       const updatedLocations = [...selectedLocations, location];
       saveToStorage('filterSelectedLocation', updatedLocations);
+      setSelectedLocations(updatedLocations);
     }
   };
 
   const handlePlacesSelect = places => {
-    const selectedPlaces = getFromStorage('filterSelectedPlaces') || '';
-
     if (selectedPlaces === places) {
       saveToStorage('filterSelectedPlaces', '');
+      setSelectedPlaces('');
     } else {
       saveToStorage('filterSelectedPlaces', places);
+      setSelectedPlaces(places);
     }
   };
 
@@ -176,7 +179,7 @@ export const Filters = ({ events, activeEvents }) => {
 
             <div>
               <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
-                {t('Місце')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
+                {t('Локація')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
               {isOpen[3] && (
                 <FiltersMenuOpen>
@@ -228,6 +231,13 @@ export const Filters = ({ events, activeEvents }) => {
 };
 
 Filters.propTypes = {
-  events: PropTypes.arrayOf(PropTypes.shape({})),
   activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
+  setSelectedLanguages: PropTypes.func,
+  setSelectedCategories: PropTypes.func,
+  setSelectedLocations: PropTypes.func,
+  setSelectedPlaces: PropTypes.func,
+  selectedLanguages: PropTypes.any, 
+  selectedCategories: PropTypes.any, 
+  selectedLocations: PropTypes.any,
+  selectedPlaces: PropTypes.any 
 };
