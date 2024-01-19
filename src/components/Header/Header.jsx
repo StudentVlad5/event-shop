@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Logo } from './Logo/Logo';
@@ -15,26 +15,14 @@ import {
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const toggleModal = () => setShowMenu(state => !state);
+  const toggleModal = () => {
+    setShowMenu(state => !state);
+  };
 
-  const [isscrolled, setIsScrolled] = useState('false');
+  showMenu && (document.querySelector('body').style.overflow = 'hidden');
+  !showMenu && (document.querySelector('body').style.overflow = 'auto');
+
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled('true');
-      } else {
-        setIsScrolled('false');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <>

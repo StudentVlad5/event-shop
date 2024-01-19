@@ -4,6 +4,7 @@ import { theme } from 'components/baseStyles/Variables.styled';
 export const TeamList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 30px;
@@ -12,10 +13,13 @@ export const TeamList = styled.ul`
   margin-bottom: 50px;
   padding: 0 15px;
 
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+  @media screen and (min-width: ${theme.breakpoints.tablet_only}) {
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    flex-direction: row;
+    align-items: stretch;
+
     padding: 0;
     margin-top: 70px;
     margin-bottom: 100px;

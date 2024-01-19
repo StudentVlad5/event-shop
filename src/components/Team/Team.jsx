@@ -25,6 +25,20 @@ import {
 
 export const Team = () => {
   const [specialists, setSpecialists] = useState([]);
+  console.log(
+    'Team ~ specialists:',
+    specialists.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    })
+  );
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -79,40 +93,45 @@ export const Team = () => {
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (
           <TeamList>
-            {specialists.slice(0, limit).map(specialist => {
-              return (
-                <TeamListItem key={specialist.specialistId}>
-                  <ImgBox>
-                    <ItemImg
-                      src={
-                        specialist.image
-                          ? BASE_URL_IMG +
-                            'avatars/' +
-                            specialist.image.split('/')[
-                              specialist.image.split('/').length - 1
-                            ]
-                          : defaultImg
-                      }
-                      alt={specialist.name}
-                      width="221"
-                      height="221"
-                      loading="lazy"
-                    ></ItemImg>
-                  </ImgBox>
-                  <DetailsWrapper>
-                    <Name>{specialist.name}</Name>
-                    <Describe>
-                      {specialist.description.length > 100
-                        ? specialist.description.slice(0, 100) + ' ...'
-                        : specialist.description}
-                    </Describe>
-                    <BtnLink to={`/specialists/${specialist.specialistId}`}>
-                      <span>{t('Детальніше')}</span>
-                    </BtnLink>
-                  </DetailsWrapper>
-                </TeamListItem>
-              );
-            })}
+            {specialists
+              .sort((a, b) => {
+                a.name - b.name;
+              })
+              .slice(0, limit)
+              .map(specialist => {
+                return (
+                  <TeamListItem key={specialist.specialistId}>
+                    <ImgBox>
+                      <ItemImg
+                        src={
+                          specialist.image
+                            ? BASE_URL_IMG +
+                              'avatars/' +
+                              specialist.image.split('/')[
+                                specialist.image.split('/').length - 1
+                              ]
+                            : defaultImg
+                        }
+                        alt={specialist.name}
+                        width="221"
+                        height="221"
+                        loading="lazy"
+                      ></ItemImg>
+                    </ImgBox>
+                    <DetailsWrapper>
+                      <Name>{specialist.name}</Name>
+                      <Describe>
+                        {specialist.description.length > 100
+                          ? specialist.description.slice(0, 100) + ' ...'
+                          : specialist.description}
+                      </Describe>
+                      <BtnLink to={`/specialists/${specialist.specialistId}`}>
+                        <span>{t('Детальніше')}</span>
+                      </BtnLink>
+                    </DetailsWrapper>
+                  </TeamListItem>
+                );
+              })}
           </TeamList>
         )}
         {specialists.length > limit && (
