@@ -375,7 +375,7 @@ export const EventDetails = ({ activeEvents }) => {
 };
 
 EventDetails.propTypes = {
-  activeEvents: PropTypes.arrayOf(
+  activeEvents: PropTypes.objectOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       article_eventID: PropTypes.string,
