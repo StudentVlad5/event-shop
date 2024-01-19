@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createData } from 'services/APIservice';
 import { addMessages } from '../../redux/messages/operation';
-import { BtnAccent } from 'components/baseStyles/Button.styled';
 import {
   Error,
   FieldsWrapper,
+  FormBtn,
   FormInput,
   FormInputMessage,
   FormLabel,
@@ -129,9 +129,9 @@ export const FormMessage = ({ specialist }) => {
               ) : null}
             </FormLabel>
           </FieldsWrapper>
-          <BtnAccent type="submit" disabled={isSubmitting} aria-label="Submit">
+          <FormBtn type="submit" disabled={isSubmitting} aria-label="Submit">
             {t('Надіслати')}
-          </BtnAccent>
+          </FormBtn>
         </FormList>
       )}
     </Formik>
