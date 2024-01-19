@@ -30,14 +30,14 @@ export const EventsList = ({
   currentWeek,
   selectedDate,
   setSelectedDate,
-  selectedLanguages, 
-  selectedCategories, 
-  selectedLocations, 
+  selectedLanguages,
+  selectedCategories,
+  selectedLocations,
   selectedPlaces,
   setSelectedLanguages,
-  setSelectedCategories, 
-  setSelectedLocations, 
-  setSelectedPlaces, 
+  setSelectedCategories,
+  setSelectedLocations,
+  setSelectedPlaces,
 }) => {
   const { t } = useTranslation();
   const [isHovered, setHovered] = useState(null);
@@ -70,7 +70,7 @@ export const EventsList = ({
     setSelectedDate(null);
     setSelectedLanguages([]);
     setSelectedCategories([]);
-    setSelectedPlaces("");
+    setSelectedPlaces('');
     setSelectedLocations([]);
   };
 
@@ -133,86 +133,122 @@ export const EventsList = ({
     }
   }, [activeEvents, events, currentWeek, selectedDate]);
 
-useEffect(()=>{
-  let ARR_L = []; 
-    console.log("selectedLanguages", selectedLanguages);
-    if (selectedLanguages.length > 0){
+  useEffect(() => {
+    let ARR_L = [];
+    console.log('selectedLanguages', selectedLanguages);
+    if (selectedLanguages.length > 0) {
       let lab = [];
-      filteredEvents.map(it =>{
-      selectedLanguages.map(
-        activeEvent => {if(activeEvent === it.language || activeEvent === it.language_secondary || activeEvent === it.language_third){lab.push(it)}}
-          )})
-          const res = lab.reduce((o, i) => {
-            if (!o.find(v => v._id == i._id)) {
-              o.push(i);
-            }
-            return o;
-          }, []); 
-          ARR_L =  res.map(it=>it)
-        } else {ARR_L =  filteredEvents.map(it=>it)}
+      filteredEvents.map(it => {
+        selectedLanguages.map(activeEvent => {
+          if (
+            activeEvent === it.language ||
+            activeEvent === it.language_secondary ||
+            activeEvent === it.language_third
+          ) {
+            lab.push(it);
+          }
+        });
+      });
+      const res = lab.reduce((o, i) => {
+        if (!o.find(v => v._id == i._id)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      ARR_L = res.map(it => it);
+    } else {
+      ARR_L = filteredEvents.map(it => it);
+    }
 
-  let ARR_C = []; 
-  console.log("selectedCategories", selectedCategories);
-  if (selectedCategories.length > 0){
-    let lab = [];
-    ARR_L.map(it =>{
-        selectedCategories.map(
-          activeEvent => {if(activeEvent === it.category || activeEvent === it.category_secondary || activeEvent === it.category_third){lab.push(it)}}
-            )})
-            const res = lab.reduce((o, i) => {
-              if (!o.find(v => v._id == i._id)) {
-                o.push(i);
-              }
-              return o;
-            }, []);   
-            ARR_C =  res.map(it=>it)
-          } else {ARR_C =  ARR_L.map(it=>it)}
+    let ARR_C = [];
+    console.log('selectedCategories', selectedCategories);
+    if (selectedCategories.length > 0) {
+      let lab = [];
+      ARR_L.map(it => {
+        selectedCategories.map(activeEvent => {
+          if (
+            activeEvent === it.category ||
+            activeEvent === it.category_secondary ||
+            activeEvent === it.category_third
+          ) {
+            lab.push(it);
+          }
+        });
+      });
+      const res = lab.reduce((o, i) => {
+        if (!o.find(v => v._id == i._id)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      ARR_C = res.map(it => it);
+    } else {
+      ARR_C = ARR_L.map(it => it);
+    }
 
-  let ARR_Loc = []; 
-  console.log("selectedLocations", selectedLocations);
-  if (selectedLocations.length > 0){
-    let lab = [];
-    ARR_C.map(it =>{
-      selectedLocations.map(
-          activeEvent => {if(activeEvent === it.location){lab.push(it)}}
-            )})
-            const res = lab.reduce((o, i) => {
-              if (!o.find(v => v._id == i._id)) {
-                o.push(i);
-              }
-              return o;
-            }, []);   
-            ARR_Loc =  res.map(it=>it)
-          } else {ARR_Loc =  ARR_C.map(it=>it)}
+    let ARR_Loc = [];
+    console.log('selectedLocations', selectedLocations);
+    if (selectedLocations.length > 0) {
+      let lab = [];
+      ARR_C.map(it => {
+        selectedLocations.map(activeEvent => {
+          if (activeEvent === it.location) {
+            lab.push(it);
+          }
+        });
+      });
+      const res = lab.reduce((o, i) => {
+        if (!o.find(v => v._id == i._id)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      ARR_Loc = res.map(it => it);
+    } else {
+      ARR_Loc = ARR_C.map(it => it);
+    }
 
-  let ARR_P = []; 
-  console.log("selectedPlaces", selectedPlaces);
-  if (selectedPlaces === 'yes'){
-    let lab = [];
-    ARR_Loc.map(it =>{if(it.vacancies > 0){lab.push(it)}})
-            const res = lab.reduce((o, i) => {
-              if (!o.find(v => v._id == i._id)) {
-                o.push(i);
-              }
-              return o;
-            }, []);   
-            ARR_P =  res.map(it=>it)
-          } 
-  else if (selectedPlaces === 'no'){
-    let lab = [];
-    ARR_Loc.map(it =>{if(it.vacancies <= 0){lab.push(it)}})
-            const res = lab.reduce((o, i) => {
-              if (!o.find(v => v._id == i._id)) {
-                o.push(i);
-              }
-              return o;
-            }, []);   
-            ARR_P =  res.map(it=>it)
-          } 
-  else {ARR_P =  ARR_Loc.map(it=>it)}
+    let ARR_P = [];
+    console.log('selectedPlaces', selectedPlaces);
+    if (selectedPlaces === 'yes') {
+      let lab = [];
+      ARR_Loc.map(it => {
+        if (it.vacancies > 0) {
+          lab.push(it);
+        }
+      });
+      const res = lab.reduce((o, i) => {
+        if (!o.find(v => v._id == i._id)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      ARR_P = res.map(it => it);
+    } else if (selectedPlaces === 'no') {
+      let lab = [];
+      ARR_Loc.map(it => {
+        if (it.vacancies <= 0) {
+          lab.push(it);
+        }
+      });
+      const res = lab.reduce((o, i) => {
+        if (!o.find(v => v._id == i._id)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      ARR_P = res.map(it => it);
+    } else {
+      ARR_P = ARR_Loc.map(it => it);
+    }
 
-          setActiveFilteredEvents(ARR_P)
-},[selectedLanguages, selectedCategories, selectedLocations, selectedPlaces])
+    setActiveFilteredEvents(ARR_P);
+  }, [
+    selectedLanguages,
+    selectedCategories,
+    selectedLocations,
+    selectedPlaces,
+  ]);
 
   return (
     <>
@@ -290,7 +326,7 @@ useEffect(()=>{
                           : event.description}
                       </DetailsBoxDiscr>
 
-                      <BtnLink to={`/events/${event.article_event}`}>
+                      <BtnLink to={`/events/${event._id}`}>
                         <span>{t('Детальніше')}</span>
                       </BtnLink>
                     </EventDetailBox>
@@ -314,16 +350,13 @@ EventsList.propTypes = {
   currentWeek: PropTypes.any,
   selectedDate: PropTypes.any,
   setSelectedDate: PropTypes.any,
-  selectedLanguages: PropTypes.any, 
-  selectedCategories: PropTypes.any, 
-  selectedLocations: PropTypes.any, 
+  selectedLanguages: PropTypes.any,
+  selectedCategories: PropTypes.any,
+  selectedLocations: PropTypes.any,
   selectedPlaces: PropTypes.any,
   setSelectedLanguages: PropTypes.any,
-  setSelectedCategories: PropTypes.any, 
-  setSelectedLocations: PropTypes.any, 
-  setSelectedPlaces: PropTypes.any, 
-  activeEvents: PropTypes.arrayOf(
-    PropTypes.shape({
-    })
-  ),
+  setSelectedCategories: PropTypes.any,
+  setSelectedLocations: PropTypes.any,
+  setSelectedPlaces: PropTypes.any,
+  activeEvents: PropTypes.arrayOf(PropTypes.shape({})),
 };

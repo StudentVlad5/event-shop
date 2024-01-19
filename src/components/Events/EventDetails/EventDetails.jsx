@@ -7,7 +7,7 @@ import { BASE_URL_IMG } from 'helpers/constants';
 import { EventsSection } from '../Events.styled';
 import { RegisterModal } from '../RegisterModal/RegisterModal';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
-import { BtnLight } from 'components/baseStyles/Button.styled';
+import { BtnAccent, BtnLight } from 'components/baseStyles/Button.styled';
 import {
   BtnBack,
   EventDescr,
@@ -36,29 +36,34 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import 'swiper/css';
 import { HiArrowLeft } from 'react-icons/hi';
 
-export const EventDetails = ({ event }) => {
+export const EventDetails = ({ activeEvents }) => {
   const {
-    article_event,
-    specialistId,
-    name,
-    description,
-    duration,
-    rating,
-    category,
-    category_second,
-    category_third,
-    image,
-    image_1,
-    image_2,
-  } = event;
+    _id,
+    article_eventID,
+    eventId,
+    date,
+    time,
+    price,
+    seats,
+    booking,
+    vacancies,
+    language,
+    language_secondary,
+    language_third,
+    location,
+    address,
+    status,
+  } = activeEvents;
 
   const { t } = useTranslation();
   const { selectedLanguage } = useContext(StatusContext);
-  const [activeEvents, setActiveEvents] = useState([]);
+  // const [activeEvents, setActiveEvents] = useState([]);
   const [categories, setCategories] = useState([]);
   const [specialist, setSpecialist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [events, setEvents] = useState();
+  const [images, setImages] = useState([]);
 
   const dispatch = useDispatch();
   const openModal = e => {
@@ -78,37 +83,45 @@ export const EventDetails = ({ event }) => {
     (async function getData() {
       setIsLoading(true);
       try {
-        const { data } = await fetchData(`/active_events`);
+        const { data } = await fetchData(`/events`);
         if (!data) {
           return onFetchError('Whoops, something went wrong');
         }
 
         let langData = [];
         data
-          .filter(item => item.eventId === article_event)
+          .filter(item => item.article_event === eventId)
           .map(it => {
             let item = [
               {
                 _id: it._id,
-                article_eventID: it.article_eventID,
-                eventId: it.eventId,
-                date: it.date,
-                time: it.time,
-                price: it.price,
-                seats: it.seats,
-                booking: it.booking,
-                vacancies: it.vacancies,
-                language: it.language,
-                language_secondary: it.language_secondary,
-                language_third: it.language_third,
-                location: it.location,
-                address: it.address,
+                article_event: it.article_event,
+                name: it.name,
+                description: it.description,
+                duration: it.duration,
+                rating: it.rating,
+                category: it.category,
+                category_second: it.category_second,
+                category_third: it.category_third,
+                specialistId: it.specialistId,
+                image: it.image,
+                image_1: it.image_1,
+                image_2: it.image_2,
                 ...it[selectedLanguage],
               },
             ];
             langData.push(item[0]);
           });
-        setActiveEvents(langData);
+        setEvents(langData);
+
+        const imagesArray = [
+          langData[0].image,
+          langData[0].image_1,
+          langData[0].image_2,
+        ];
+        const isImages = imagesArray.filter(image => image !== '');
+
+        setImages(isImages);
       } catch (error) {
         setError(error);
       } finally {
@@ -127,24 +140,17 @@ export const EventDetails = ({ event }) => {
         }
 
         let langData = [];
-        data
-          .filter(
-            item =>
-              item.categoryId === category ||
-              item.categoryId === category_second ||
-              item.categoryId === category_third
-          )
-          .map(it => {
-            let item = [
-              {
-                _id: it._id,
-                categoryId: it.categoryId,
-                title: it.title,
-                ...it[selectedLanguage],
-              },
-            ];
-            langData.push(item[0]);
-          });
+        data.map(it => {
+          let item = [
+            {
+              _id: it._id,
+              categoryId: it.categoryId,
+              title: it.title,
+              ...it[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
         setCategories(langData);
       } catch (error) {
         setError(error);
@@ -165,7 +171,7 @@ export const EventDetails = ({ event }) => {
 
         let langData = [];
         data
-          .filter(item => item.specialistId === specialistId)
+          // .filter(item => item.specialistId === specialistId)
           .map(it => {
             let item = [
               {
@@ -190,7 +196,6 @@ export const EventDetails = ({ event }) => {
     window.history.back();
   };
 
-  const images = [image, image_1, image_2].filter(Boolean);
   const [currentImage, setCurrentImage] = useState(0);
 
   const handlePrev = () => {
@@ -205,7 +210,10 @@ export const EventDetails = ({ event }) => {
     <>
       <EventsSection>
         <Container>
-          <EventTitle>{name}</EventTitle>
+          {events &&
+            events.map((ev, idx) => (
+              <EventTitle key={idx + ev.name}>{ev.name}</EventTitle>
+            ))}
           <BtnBack type="button" onClick={goBack}>
             <HiArrowLeft size={16} />
             {t('Назад')}
@@ -214,37 +222,34 @@ export const EventDetails = ({ event }) => {
             <EventHeading>
               <HeadingItem>
                 <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev.date}>
-                    {new Date(ev.date).toLocaleDateString()}
-                  </HeadingItemData>
-                ))}
+                <HeadingItemData>
+                  {new Date(date).toLocaleDateString()}
+                </HeadingItemData>
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('час')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev.time}>
-                    {ev.time}
-                  </HeadingItemData>
-                ))}
+                <HeadingItemData>{time}</HeadingItemData>
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('тривалість')}</HeadingItemTitle>
-                <HeadingItemData>{duration}</HeadingItemData>
+                {events &&
+                  events.map((ev, idx) => (
+                    <HeadingItemData key={idx + ev.duration}>
+                      {ev.duration}
+                    </HeadingItemData>
+                  ))}
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('місце')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev.location + ev.address}>
-                    {ev.location} <br /> <br /> {ev.address}
-                  </HeadingItemData>
-                ))}
+                <HeadingItemData>
+                  {location} <br /> <br /> {address}
+                </HeadingItemData>
               </HeadingItem>
             </EventHeading>
 
             {images.map((image, idx) => (
               <EventImage
-                key={idx + event.name}
+                key={idx + idx}
                 src={
                   image
                     ? BASE_URL_IMG +
@@ -252,7 +257,7 @@ export const EventDetails = ({ event }) => {
                       image.split('/')[image.split('/').length - 1]
                     : defaultImg
                 }
-                alt={event.name}
+                alt={events.name}
                 loading="lazy"
                 style={{
                   display: idx === currentImage ? 'block' : 'none',
@@ -263,43 +268,55 @@ export const EventDetails = ({ event }) => {
             <EventHeading2>
               <HeadingItem>
                 <HeadingItemTitle>{t('категорія')}</HeadingItemTitle>
-                {categories.map((ct, idx) => (
-                  <>
+                {categories
+                  .filter(
+                    ct =>
+                      events &&
+                      events.some(
+                        event =>
+                          event.category === ct.categoryId ||
+                          event.category_second === ct.categoryId ||
+                          event.category_third === ct.categoryId
+                      )
+                  )
+                  .map((ct, idx) => (
                     <HeadingItemData key={idx + ct.title}>
                       {ct.title}
                     </HeadingItemData>
-                  </>
-                ))}
+                  ))}
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('Мова')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemDataBox key={idx + ev?.language}>
+                <HeadingItemDataBox>
+                  {language && (
                     <HeadingItemData style={{ marginRight: 5 }}>
-                      {ev?.language}
+                      {language}
                     </HeadingItemData>
-                    <HeadingItemData>{ev?.language_secondary}</HeadingItemData>
-                    <HeadingItemData>{ev?.language_third}</HeadingItemData>
-                  </HeadingItemDataBox>
-                ))}
+                  )}
+                  {language_secondary && (
+                    <HeadingItemData style={{ marginRight: 5 }}>
+                      {language_secondary}
+                    </HeadingItemData>
+                  )}
+                  {language_third && (
+                    <HeadingItemData>{language_third}</HeadingItemData>
+                  )}
+                </HeadingItemDataBox>
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>
                   {t('кількість вільних місць')}
                 </HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev?.vacancies + ev?.seats}>
-                    {ev?.vacancies}/{ev?.seats}
-                  </HeadingItemData>
-                ))}
+                <HeadingItemData>
+                  {vacancies}/{seats}
+                </HeadingItemData>
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
-                {activeEvents.map((ev, idx) => (
-                  <HeadingItemData key={idx + ev?.price}>
-                    {ev?.price}
-                  </HeadingItemData>
-                ))}
+                {/* {activeEvents.map((ev, idx) => ( */}
+                {/* key={idx + price} */}
+                <HeadingItemData>{price}</HeadingItemData>
+                {/* ))} */}
               </HeadingItem>
             </EventHeading2>
           </InfoBox>
@@ -318,23 +335,33 @@ export const EventDetails = ({ event }) => {
 
           <EventTextWrapper>
             <EventDescrBox>
-              <EventDescr>{description}</EventDescr>
+              {events &&
+                events.map((ev, idx) => (
+                  <EventDescr key={idx}>{ev.description}</EventDescr>
+                ))}
             </EventDescrBox>
 
             <EventDescrBox>
               <EventDescrBoxTitle>{t('Спеціаліст')}</EventDescrBoxTitle>
-              {specialist.map((sp, idx) => (
-                <NavLinkSpecialist
-                  to={`/specialists/${sp.specialistId}`}
-                  key={idx + sp.specialistId}
-                >
-                  <span>{sp.name}</span>
-                </NavLinkSpecialist>
-              ))}
+              {specialist
+                .filter(
+                  sp =>
+                    events &&
+                    events.some(event => event.specialistId === sp.specialistId)
+                )
+                .map((sp, idx) => (
+                  <NavLinkSpecialist
+                    to={`/specialists/${sp.specialistId}`}
+                    key={idx + sp.specialistId}
+                  >
+                    <span>{sp.name}</span>
+                  </NavLinkSpecialist>
+                ))}
             </EventDescrBox>
           </EventTextWrapper>
 
-          <BtnLight
+          <BtnAccent
+            style={{ display: 'flex', justifyContent: 'center' }}
             type="button"
             aria-label="Register"
             onClick={e => {
@@ -344,28 +371,49 @@ export const EventDetails = ({ event }) => {
             disabled={activeEvents.vacancies <= 0}
           >
             {t('Реєстрація')}
-          </BtnLight>
+          </BtnAccent>
         </Container>
       </EventsSection>
-      <RegisterModal event={event} activeEvents={activeEvents} />
+      {/* <RegisterModal event={event} activeEvents={activeEvents} /> */}
     </>
   );
 };
 
 EventDetails.propTypes = {
-  event: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    article_event: PropTypes.string,
-    specialistId: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    duration: PropTypes.string,
-    rating: PropTypes.number,
-    category: PropTypes.string,
-    category_second: PropTypes.string,
-    image: PropTypes.string,
-    category_third: PropTypes.string,
-    image_1: PropTypes.string,
-    image_2: PropTypes.string,
-  }),
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      article_event: PropTypes.string,
+      specialistId: PropTypes.string,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      duration: PropTypes.string,
+      rating: PropTypes.number,
+      category: PropTypes.string,
+      category_second: PropTypes.string,
+      category_third: PropTypes.string,
+      image: PropTypes.string,
+      image_1: PropTypes.string,
+      image_2: PropTypes.string,
+    })
+  ),
+  activeEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      article_eventID: PropTypes.string,
+      eventId: PropTypes.string,
+      date: PropTypes.string,
+      time: PropTypes.string,
+      price: PropTypes.number,
+      seats: PropTypes.string,
+      booking: PropTypes.string,
+      vacancies: PropTypes.string,
+      language: PropTypes.string,
+      language_secondary: PropTypes.string,
+      language_third: PropTypes.string,
+      location: PropTypes.string,
+      address: PropTypes.string,
+      status: PropTypes.string,
+    })
+  ),
 };

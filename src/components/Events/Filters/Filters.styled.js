@@ -85,6 +85,7 @@ export const FiltersMenuOpenText = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
+  text-align: center;
   /* ${({ isSelected }) =>
     isSelected &&
     `

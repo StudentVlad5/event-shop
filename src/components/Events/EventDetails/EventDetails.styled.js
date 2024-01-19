@@ -123,9 +123,9 @@ export const HeadingItemData = styled.span`
   line-height: 12.02px; /* 60.1% */
   text-transform: uppercase;
 
-  &:not(:last-child) {
+  /* &:not(:last-child) {
     margin-bottom: 10px;
-  }
+  } */
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: 16px;
