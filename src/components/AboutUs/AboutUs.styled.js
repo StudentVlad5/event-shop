@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
 import { Section } from 'components/baseStyles/CommonStyle.styled';
 
+import about_1_jpg from 'images/about/about_1.jpg';
+import about_1_webp from 'images/about/about_1.webp';
+import about_2_jpg from 'images/about/about_2.jpg';
+import about_2_webp from 'images/about/about_2.webp';
+
 export const AboutSection = styled(Section)`
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
   }
@@ -62,11 +67,37 @@ export const Description = styled.p`
   }
 `;
 
-export const ImgBox = styled.div`
+export const ImgBox1 = styled.div`
   width: 314px;
   height: 171px;
   overflow: hidden;
   border-radius: 29px;
+
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+
+  background-image: url(${about_1_jpg});
+  background-image: -webkit-image-set(url(${about_1_webp}) 1x);
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    width: 545px;
+    height: 350px;
+  }
+`;
+
+export const ImgBox2 = styled.div`
+  width: 314px;
+  height: 171px;
+  overflow: hidden;
+  border-radius: 29px;
+
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+
+  background-image: url(${about_2_jpg});
+  background-image: -webkit-image-set(url(${about_2_webp}) 1x);
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 545px;

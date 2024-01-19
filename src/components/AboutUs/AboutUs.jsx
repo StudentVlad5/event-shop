@@ -7,17 +7,19 @@ import {
   Description,
   ImgBox,
   MessageSection,
+  ImgBox1,
+  ImgBox2,
 } from './AboutUs.styled';
 
-import about_mob_png from 'images/about/about_mob.png';
-import about_mob_png_2x from 'images/about/about_mob@2x.png';
-import about_mob_webp from 'images/about/about_mob.webp';
-import about_mob_webp_2x from 'images/about/about_mob@2x.webp';
+// import about_mob_png from 'images/about/about_mob.png';
+// import about_mob_png_2x from 'images/about/about_mob@2x.png';
+// import about_mob_webp from 'images/about/about_mob.webp';
+// import about_mob_webp_2x from 'images/about/about_mob@2x.webp';
 
-import about_desk_png from 'images/about/about_desk.png';
-import about_desk_png_2x from 'images/about/about_desk@2x.png';
-import about_desk_webp from 'images/about/about_desk.webp';
-import about_desk_webp_2x from 'images/about/about_desk@2x.webp';
+// import about_desk_png from 'images/about/about_desk.png';
+// import about_desk_png_2x from 'images/about/about_desk@2x.png';
+// import about_desk_webp from 'images/about/about_desk.webp';
+// import about_desk_webp_2x from 'images/about/about_desk@2x.webp';
 
 export const AboutUs = () => {
   const { t } = useTranslation();
@@ -33,11 +35,11 @@ export const AboutUs = () => {
           >
             <Description>
               {t(
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odio voluptatibus aspernatur magni optio nobis nisi quibusdam reiciendis explicabo voluptatum molestias eveniet fuga, in unde cupiditate laboriosam quaerat, velit accusamus. Qui alias blanditiis accusamus adipisci? Nobis porro ducimus laboriosam quam alias odit ut a sequi aliquid aut error, aliquam, dicta enim quos tempora illum doloremque eaque minus quas culpa soluta'
+                "Bienvenue sur BloomSkill - une oasis créative unique pour ceux qui aspirent à l'auto-développement et à l'épanouissement de leur potentiel créatif. Chez BloomSkill, nous croyons profondément en la puissance du développement des compétences créatives et de la croissance personnelle. Notre plateforme est un espace numérique où vous pouvez acquérir de nouvelles compétences et libérer votre potentiel créatif. Explorez une variété de cours, des ateliers, des sessions individuelles et des consultations de groupe couvrant un large éventail de domaines - de l'art de la photographie à la maîtrise du tricot."
               )}
             </Description>
-            <ImgBox>
-              <picture>
+            <ImgBox1>
+              {/* <picture>
                 <source
                   media="(min-width:1440px)"
                   srcSet={`${about_desk_webp} 1x, ${about_desk_webp_2x} 2x`}
@@ -57,8 +59,8 @@ export const AboutUs = () => {
                   alt="Girls in a car"
                   loading="lazy"
                 />
-              </picture>
-            </ImgBox>
+              </picture> */}
+            </ImgBox1>
           </li>
           <li
             data-aos="fade-left"
@@ -67,11 +69,11 @@ export const AboutUs = () => {
           >
             <Description>
               {t(
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odio voluptatibus aspernatur magni optio nobis nisi quibusdam reiciendis explicabo voluptatum molestias eveniet fuga, in unde cupiditate laboriosam quaerat, velit accusamus. Qui alias blanditiis accusamus adipisci? Nobis porro ducimus laboriosam quam alias odit ut a sequi aliquid aut error, aliquam, dicta enim quos tempora illum doloremque eaque minus quas culpa soluta'
+                "Notre objectif est de devenir votre guide dans le monde de la créativité, où chacun peut trouver ce qui l'inspire et le fait progresser. Rejoignez notre communauté unique de participants à des rencontres créatives et d'experts. Ici, vous pourrez échanger des idées, trouver de l'inspiration et établir des liens précieux tout au long de votre apprentissage. Nous sommes prêts à vous soutenir à chaque étape de ce voyage captivant. Bienvenue dans notre monde créatif!"
               )}
             </Description>
-            <ImgBox>
-              <picture>
+            <ImgBox2>
+              {/* <picture>
                 <source
                   media="(min-width:1440px)"
                   srcSet={`${about_desk_webp} 1x, ${about_desk_webp_2x} 2x`}
@@ -91,8 +93,8 @@ export const AboutUs = () => {
                   alt="Girls in a car"
                   loading="lazy"
                 />
-              </picture>
-            </ImgBox>
+              </picture> */}
+            </ImgBox2>
           </li>
         </Wrapper>
       </AboutSection>

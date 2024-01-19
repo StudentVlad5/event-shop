@@ -1,12 +1,12 @@
 import { Form, Field } from 'formik';
 import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
-import { Section } from 'components/baseStyles/CommonStyle.styled';
+import { BtnAccent } from 'components/baseStyles/Button.styled';
 
 export const FormList = styled(Form)`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  /* gap: 30px; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     gap: 45px;
@@ -119,39 +119,10 @@ export const Error = styled.span`
   }
 `;
 
-export const FormBtn = styled.button`
-  position: absolute;
-  bottom: 1px;
-  right: 5px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-
-  border: none;
-  border-radius: 50%;
-  background-color: transparent;
-
-  cursor: pointer;
-  transform: ${theme.transition};
-  transition: ${theme.transition};
-
-  &:hover,
-  &:focus {
-    background-color: ${theme.colors.fon};
-  }
-  &:disabled {
-    svg {
-      fill: ${theme.colors.grey1};
-    }
-  }
-
-  @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    width: 32px;
-    height: 32px;
-    margin-left: 24px;
+export const FormBtn = styled(BtnAccent)`
+  margin-top: 30px;
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    margin-top: 0;
   }
 `;
 

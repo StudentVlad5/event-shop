@@ -44,6 +44,18 @@ export const BtnLinkText = styled(NavLink)`
   }
 `;
 
+export const EventList = styled.ul`
+  display: none;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+`;
+
 export const EventListItem = styled.li`
   position: relative;
   display: flex;

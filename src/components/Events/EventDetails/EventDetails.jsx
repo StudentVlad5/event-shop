@@ -341,7 +341,7 @@ export const EventDetails = ({ event }) => {
               openModal(e);
             }}
             data-modal="event"
-            disabled={activeEvents.map(ev => ev?.vacancies <= 0)}
+            disabled={activeEvents.vacancies <= 0}
           >
             {t('Реєстрація')}
           </BtnLight>

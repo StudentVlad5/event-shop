@@ -27,7 +27,6 @@ export const HeaderContainer = styled(Container)`
   justify-content: space-between;
   align-content: center;
   text-align: left;
-  padding: 0;
 `;
 
 export const Navigation = styled.nav`
