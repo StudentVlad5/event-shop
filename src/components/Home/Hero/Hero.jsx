@@ -40,8 +40,10 @@ export const Hero = () => {
             data-aos-easing="linear"
             data-aos-duration="1500"
           >
+            {t('- une oasis créative unique pour les esprits créatifs.')}
+            <br />
             {t(
-              "une oasis créative unique pour les esprits créatifs. Chez BloomSkill, nous croyons profondément en la puissance du développement des compétences créatives et de la croissance personnelle. Notre plateforme est un espace numérique où vous pouvez acquérir de nouvelles compétences et libérer votre potentiel créatif. Vous trouverez ici une variété de cours, des ateliers, des sessions et des consultations de groupe couvrant un large éventail de domaines - de l'art de la photographie à la maîtrise du tricot. Notre objectif est de devenir votre guide dans le monde de la créativité, où chacun peut trouver ce qui l'inspire et le fait progresser. Rejoignez notre communauté unique de participants à des rencontres créatives et d'experts. Ici, vous pourrez échanger des idées, trouver de l'inspiration et établir des liens précieux tout au long de votre apprentissage. Nous sommes prêts à vous soutenir à chaque étape de ce voyage captivant"
+              "Vous trouverez ici une variété de cours, des ateliers, des sessions et des consultations de groupe couvrant un large éventail de domaines - de l'art de la photographie à la maîtrise du tricot. Notre objectif est de devenir votre guide dans le monde de la créativité, où chacun peut trouver ce qui l'inspire et le fait progresser."
             )}
           </Subtitle>
         </TextWrapper>
