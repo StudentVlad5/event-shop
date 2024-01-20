@@ -127,7 +127,7 @@ export const FormBtn = styled(BtnAccent)`
 `;
 
 export const FormInputMessage = styled.textarea`
-  /* height: 100%; */
+  height: 158px;
   padding: 15px;
 
   font-family: ${theme.fonts[0]};
