@@ -78,6 +78,12 @@ export const BtnAccent = styled.button`
     background-color: transparent;
     border: 1px solid ${theme.colors.grey2};
   }
+  &:disabled,
+  &[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
 `;
 
 export const BtnLink = styled(NavLink)`

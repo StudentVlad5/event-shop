@@ -27,18 +27,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-export const RegisterModal = ({ event, activeEvents }) => {
+export const RegisterModal = ({ activeEvents }) => {
   const { t } = useTranslation();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const bookingEvent = [];
-  activeEvents.forEach(it => {
-    if (it.eventId === event.article_event) {
-      bookingEvent.push(it);
-    }
-  });
-  // console.log("bookingEvent", bookingEvent)
   const modal = useSelector(modalComponent);
   const dispatch = useDispatch();
 
@@ -47,7 +39,7 @@ export const RegisterModal = ({ event, activeEvents }) => {
       .positive()
       .integer()
       .max(
-        bookingEvent[0]?.vacancies ? bookingEvent[0]?.vacancies : 50,
+        activeEvents?.vacancies ? activeEvents?.vacancies : 50,
         'Not enough free places to book'
       )
       .required('Required'),
@@ -59,14 +51,14 @@ export const RegisterModal = ({ event, activeEvents }) => {
   });
 
   async function createOrder(values) {
-    values.activeEventID = bookingEvent[0]['article_eventID'];
-    values.eventId = bookingEvent[0]['eventId'];
-    values.date = bookingEvent[0]['date'];
-    values.time = bookingEvent[0]['time'];
+    values.activeEventID = activeEvents.article_eventID;
+    values.eventId = activeEvents.eventId;
+    values.date = activeEvents.date;
+    values.time = activeEvents.time;
     values.userName = values.name;
     values.userEmail = values.email;
     values.bookingSeats = values.seats;
-    values.priceTotal = values.seats * bookingEvent[0]['price'];
+    values.priceTotal = values.seats * activeEvents.price;
     setIsLoading(true);
     try {
       const { data } = await createData(`/orders`, values);
@@ -199,7 +191,7 @@ export const RegisterModal = ({ event, activeEvents }) => {
 };
 
 RegisterModal.propTypes = {
-  event: PropTypes.shape({
+  activeEvents: PropTypes.shape({
     _id: PropTypes.string.isRequired,
   }),
 };

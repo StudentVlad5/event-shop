@@ -7,7 +7,7 @@ import { BASE_URL_IMG } from 'helpers/constants';
 import { EventsSection } from '../Events.styled';
 import { RegisterModal } from '../RegisterModal/RegisterModal';
 import { Container } from 'components/baseStyles/CommonStyle.styled';
-import { BtnAccent, BtnLight } from 'components/baseStyles/Button.styled';
+import { BtnAccent } from 'components/baseStyles/Button.styled';
 import {
   BtnBack,
   EventDescr,
@@ -57,7 +57,6 @@ export const EventDetails = ({ activeEvents }) => {
 
   const { t } = useTranslation();
   const { selectedLanguage } = useContext(StatusContext);
-  // const [activeEvents, setActiveEvents] = useState([]);
   const [categories, setCategories] = useState([]);
   const [specialist, setSpecialist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -171,7 +170,6 @@ export const EventDetails = ({ activeEvents }) => {
 
         let langData = [];
         data
-          // .filter(item => item.specialistId === specialistId)
           .map(it => {
             let item = [
               {
@@ -313,10 +311,7 @@ export const EventDetails = ({ activeEvents }) => {
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
-                {/* {activeEvents.map((ev, idx) => ( */}
-                {/* key={idx + price} */}
                 <HeadingItemData>{price}</HeadingItemData>
-                {/* ))} */}
               </HeadingItem>
             </EventHeading2>
           </InfoBox>
@@ -374,30 +369,13 @@ export const EventDetails = ({ activeEvents }) => {
           </BtnAccent>
         </Container>
       </EventsSection>
-      {/* <RegisterModal event={event} activeEvents={activeEvents} /> */}
+      <RegisterModal activeEvents={activeEvents} />
     </>
   );
 };
 
 EventDetails.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      article_event: PropTypes.string,
-      specialistId: PropTypes.string,
-      name: PropTypes.string,
-      description: PropTypes.string,
-      duration: PropTypes.string,
-      rating: PropTypes.number,
-      category: PropTypes.string,
-      category_second: PropTypes.string,
-      category_third: PropTypes.string,
-      image: PropTypes.string,
-      image_1: PropTypes.string,
-      image_2: PropTypes.string,
-    })
-  ),
-  activeEvents: PropTypes.arrayOf(
+  activeEvents: PropTypes.objectOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       article_eventID: PropTypes.string,
