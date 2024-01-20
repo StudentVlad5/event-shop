@@ -25,20 +25,6 @@ import {
 
 export const Team = () => {
   const [specialists, setSpecialists] = useState([]);
-  console.log(
-    'Team ~ specialists:',
-    specialists.sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    })
-  );
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,7 +81,15 @@ export const Team = () => {
           <TeamList>
             {specialists
               .sort((a, b) => {
-                a.name - b.name;
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+                return 0;
               })
               .slice(0, limit)
               .map(specialist => {

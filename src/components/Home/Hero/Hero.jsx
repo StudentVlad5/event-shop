@@ -2,21 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { HeroSection, HeroContainer, TextWrapper } from './Hero.styled';
 import { Subtitle, Title } from 'components/baseStyles/CommonStyle.styled';
 
-import hero_mob_png from 'images/hero/hero_mob.png';
-import hero_mob_png_2x from 'images/hero/hero_mob@2x.png';
-import hero_mob_webp from 'images/hero/hero_mob.webp';
-import hero_mob_webp_2x from 'images/hero/hero_mob@2x.webp';
-
-import hero_tab_png from 'images/hero/hero_tab.png';
-import hero_tab_png_2x from 'images/hero/hero_tab@2x.png';
-import hero_tab_webp from 'images/hero/hero_tab.webp';
-import hero_tab_webp_2x from 'images/hero/hero_tab@2x.webp';
-
-import hero_desk_png from 'images/hero/hero_desk.png';
-import hero_desk_png_2x from 'images/hero/hero_desk@2x.png';
-import hero_desk_webp from 'images/hero/hero_desk.webp';
-import hero_desk_webp_2x from 'images/hero/hero_desk@2x.webp';
-
 export const Hero = () => {
   const { t } = useTranslation();
 

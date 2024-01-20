@@ -22,7 +22,6 @@ import defaultImg from 'images/No-image-available.webp';
 import { useEffect, useState } from 'react';
 import { BtnLink } from 'components/baseStyles/Button.styled';
 import { removeItem } from 'services/localStorService';
-import { use } from 'i18next';
 
 export const EventsList = ({
   events,
@@ -135,7 +134,6 @@ export const EventsList = ({
 
   useEffect(() => {
     let ARR_L = [];
-    console.log('selectedLanguages', selectedLanguages);
     if (selectedLanguages.length > 0) {
       let lab = [];
       filteredEvents.map(it => {
@@ -161,7 +159,6 @@ export const EventsList = ({
     }
 
     let ARR_C = [];
-    console.log('selectedCategories', selectedCategories);
     if (selectedCategories.length > 0) {
       let lab = [];
       ARR_L.map(it => {
@@ -187,7 +184,6 @@ export const EventsList = ({
     }
 
     let ARR_Loc = [];
-    console.log('selectedLocations', selectedLocations);
     if (selectedLocations.length > 0) {
       let lab = [];
       ARR_C.map(it => {
@@ -209,7 +205,6 @@ export const EventsList = ({
     }
 
     let ARR_P = [];
-    console.log('selectedPlaces', selectedPlaces);
     if (selectedPlaces === 'yes') {
       let lab = [];
       ARR_Loc.map(it => {
