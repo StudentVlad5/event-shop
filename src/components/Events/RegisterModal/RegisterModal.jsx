@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 import { MdClose } from 'react-icons/md';
@@ -190,8 +190,8 @@ export const RegisterModal = ({ activeEvents }) => {
   );
 };
 
-RegisterModal.propTypes = {
-  activeEvents: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-  }),
-};
+// RegisterModal.propTypes = {
+//   activeEvents: PropTypes.shape({
+//     _id: PropTypes.string.isRequired,
+//   }),
+// };

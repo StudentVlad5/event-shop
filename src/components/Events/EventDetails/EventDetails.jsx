@@ -169,18 +169,17 @@ export const EventDetails = ({ activeEvents }) => {
         }
 
         let langData = [];
-        data
-          .map(it => {
-            let item = [
-              {
-                _id: it._id,
-                specialistId: it.specialistId,
-                name: it.name,
-                ...it[selectedLanguage],
-              },
-            ];
-            langData.push(item[0]);
-          });
+        data.map(it => {
+          let item = [
+            {
+              _id: it._id,
+              specialistId: it.specialistId,
+              name: it.name,
+              ...it[selectedLanguage],
+            },
+          ];
+          langData.push(item[0]);
+        });
         setSpecialist(langData);
       } catch (error) {
         setError(error);
@@ -375,23 +374,24 @@ export const EventDetails = ({ activeEvents }) => {
 };
 
 EventDetails.propTypes = {
-  activeEvents: PropTypes.objectOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      article_eventID: PropTypes.string,
-      eventId: PropTypes.string,
-      date: PropTypes.string,
-      time: PropTypes.string,
-      price: PropTypes.number,
-      seats: PropTypes.string,
-      booking: PropTypes.string,
-      vacancies: PropTypes.string,
-      language: PropTypes.string,
-      language_secondary: PropTypes.string,
-      language_third: PropTypes.string,
-      location: PropTypes.string,
-      address: PropTypes.string,
-      status: PropTypes.string,
-    })
-  ),
+  activeEvents: PropTypes.any,
+  // activeEvents: PropTypes.objectOf(
+  // PropTypes.shape({
+  // _id: PropTypes.string.isRequired,
+  // article_eventID: PropTypes.string,
+  // eventId: PropTypes.string,
+  // date: PropTypes.string,
+  // time: PropTypes.string,
+  // price: PropTypes.number,
+  // seats: PropTypes.string,
+  // booking: PropTypes.string,
+  // vacancies: PropTypes.string,
+  // language: PropTypes.string,
+  // language_secondary: PropTypes.string,
+  // language_third: PropTypes.string,
+  // location: PropTypes.string,
+  // address: PropTypes.string,
+  // status: PropTypes.string,
+  // })
+  // ),
 };

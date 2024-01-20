@@ -156,8 +156,8 @@ export const Specialist = ({ specialist }) => {
 
   const [isHovered, setHovered] = useState(null);
 
-  const handleMouseEnter = eventId => {
-    setHovered(eventId);
+  const handleMouseEnter = i => {
+    setHovered(i);
   };
 
   const handleMouseLeave = () => {
@@ -233,7 +233,7 @@ export const Specialist = ({ specialist }) => {
                         onMouseEnter={() => handleMouseEnter(i)}
                         onMouseLeave={handleMouseLeave}
                         onTouchStart={() => handleMouseEnter(i)}
-                        onTouchEnd={handleMouseLeave}
+                        // onTouchEnd={handleMouseLeave}
                       >
                         <ItemImg
                           key={event._id}
@@ -310,7 +310,7 @@ export const Specialist = ({ specialist }) => {
                             onMouseEnter={() => handleMouseEnter(i)}
                             onMouseLeave={handleMouseLeave}
                             onTouchStart={() => handleMouseEnter(i)}
-                            onTouchEnd={handleMouseLeave}
+                            // onTouchEnd={handleMouseLeave}
                           >
                             <ItemImg
                               key={event._id}
@@ -405,7 +405,7 @@ export const Specialist = ({ specialist }) => {
                             onMouseEnter={() => handleMouseEnter(i)}
                             onMouseLeave={handleMouseLeave}
                             onTouchStart={() => handleMouseEnter(i)}
-                            onTouchEnd={handleMouseLeave}
+                            // onTouchEnd={handleMouseLeave}
                           >
                             <ItemImg
                               key={event._id}
@@ -496,7 +496,7 @@ export const Specialist = ({ specialist }) => {
                             onMouseEnter={() => handleMouseEnter(i)}
                             onMouseLeave={handleMouseLeave}
                             onTouchStart={() => handleMouseEnter(i)}
-                            onTouchEnd={handleMouseLeave}
+                            // onTouchEnd={handleMouseLeave}
                           >
                             <ItemImg
                               key={event._id}
