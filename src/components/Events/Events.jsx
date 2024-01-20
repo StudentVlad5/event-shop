@@ -131,7 +131,7 @@ export const Events = () => {
   return (
     <EventsSection>
       <Container>
-        <Title>{t('Events calendar')}</Title>
+        <Title>{t('Календар подій')}</Title>
         <Calendar
           showDetailsHandle={showDetailsHandle}
           currentWeek={currentWeek}

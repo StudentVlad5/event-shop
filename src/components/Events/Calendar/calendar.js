@@ -10,6 +10,7 @@ import {
   getWeek,
   addWeeks,
   subWeeks,
+  isSameMonth,
 } from "date-fns";
 import PropTypes from "prop-types";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -89,6 +90,29 @@ const Calendar = ({
       </div>
     );
   };
+
+  // const renderHeader = () => {
+  //   const dateFormat = "MMMMMMMMM yyyy";
+  //   const currentMonthFormat = "MMMMMMMMM";
+  //   const nextMonthFormat = "MMMMMMMMM";
+    
+  //   const currentMonthName = format(currentMonth, currentMonthFormat);
+  //   const nextMonthName = format(addMonths(currentMonth, 1), nextMonthFormat);
+  
+  //   return (
+  //     <div className="header row flex-middle">
+  //       <div className="col col-center">
+  //         {currentMonthName !== nextMonthName ? (
+  //           <span>
+  //             {currentMonthName} - {nextMonthName}
+  //           </span>
+  //         ) : (
+  //           <span>{currentMonthName}</span>
+  //         )}
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   const renderDays = () => {
     const dateFormat = "EEE";

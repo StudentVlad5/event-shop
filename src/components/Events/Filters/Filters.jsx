@@ -3,12 +3,22 @@ import { useContext, useEffect, useState } from 'react';
 import {
   ArrowIcon,
   ArrowIconUp,
+  ChairIcon,
   FiltersBox,
   FiltersBtn,
   FiltersBtnMenu,
   FiltersMenu,
+  FiltersMenuDesktop,
+  FiltersMenuDesktopBox,
+  FiltersMenuMobileBox,
   FiltersMenuOpen,
+  FiltersMenuOpenInput,
+  FiltersMenuOpenLabel,
+  FiltersMenuOpenLable,
   FiltersMenuOpenText,
+  LanguageIcon,
+  ListIcon,
+  LocationIcon,
 } from './Filters.styled';
 import { useTranslation } from 'react-i18next';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
@@ -16,7 +26,17 @@ import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getFromStorage, saveToStorage } from 'services/localStorService';
 
-export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategories, setSelectedLocations, setSelectedPlaces, selectedLanguages, selectedCategories, selectedLocations, selectedPlaces }) => {
+export const Filters = ({
+  activeEvents,
+  setSelectedLanguages,
+  setSelectedCategories,
+  setSelectedLocations,
+  setSelectedPlaces,
+  selectedLanguages,
+  selectedCategories,
+  selectedLocations,
+  selectedPlaces,
+}) => {
   const [isShown, setIsShown] = useState(false);
   const [isOpen, setIsOpen] = useState({});
   const { selectedLanguage } = useContext(StatusContext);
@@ -97,7 +117,7 @@ export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategori
   };
 
   const handleLocationSelect = location => {
-     const locationIndex = selectedLocations.indexOf(location);
+    const locationIndex = selectedLocations.indexOf(location);
 
     if (locationIndex !== -1) {
       const updatedLocations = [...selectedLocations];
@@ -123,6 +143,13 @@ export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategori
 
   const uniqueLocations = [];
 
+  // useEffect(() => {
+  //   const filtersMenuOpen = document.querySelector('.filters-menu-open');
+
+  //     const menuWidth = filtersMenuOpen.clientWidth;
+  //     document.documentElement.style.setProperty('--menu-width', `${menuWidth}px`);
+  // }, []);
+
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
@@ -132,52 +159,107 @@ export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategori
 
         {isShown && (
           <FiltersMenu>
-            <div>
+            <FiltersMenuMobileBox>
               <FiltersBtnMenu onClick={() => toggleVisibility(1)}>
                 {t('Мова')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
               {isOpen[1] && (
                 <FiltersMenuOpen>
-                  <li onClick={() => handleLanguageSelect('Fr')}>
-                    <FiltersMenuOpenText>{t('Французька')}</FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedLanguages.includes('Fr')}
+                        onChange={() => handleLanguageSelect('Fr')}
+                      />
+                      <FiltersMenuOpenText
+                        checked={selectedLanguages.includes('Fr')}
+                      >
+                        {t('Французька')}
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
-                  <li onClick={() => handleLanguageSelect('En')}>
-                    <FiltersMenuOpenText>{t('Англійська')}</FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedLanguages.includes('En')}
+                        onChange={() => handleLanguageSelect('En')}
+                      />
+                      <FiltersMenuOpenText
+                        checked={selectedLanguages.includes('En')}
+                      >
+                        {t('Англійська')}
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
-                  <li onClick={() => handleLanguageSelect('Uk')}>
-                    <FiltersMenuOpenText>{t('Українська')}</FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedLanguages.includes('Uk')}
+                        onChange={() => handleLanguageSelect('Uk')}
+                      />
+                      <FiltersMenuOpenText
+                        checked={selectedLanguages.includes('Uk')}
+                      >
+                        {t('Українська')}
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
-                  <li onClick={() => handleLanguageSelect('Ru')}>
-                    <FiltersMenuOpenText>{t('Російська')}</FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedLanguages.includes('Ru')}
+                        onChange={() => handleLanguageSelect('Ru')}
+                      />
+                      <FiltersMenuOpenText
+                        checked={selectedLanguages.includes('Ru')}
+                      >
+                        {t('Російська')}
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
                 </FiltersMenuOpen>
               )}
-            </div>
+            </FiltersMenuMobileBox>
 
-            <div>
+            <FiltersMenuMobileBox>
               <FiltersBtnMenu onClick={() => toggleVisibility(2)}>
                 {t('Категорія заходу')}
                 {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
-
               {isOpen[2] && (
                 <FiltersMenuOpen>
                   {categories.map(category => (
-                    <li
-                      key={category._id}
-                      onClick={() => handleCategorySelect(category.categoryId)}
-                    >
-                      <FiltersMenuOpenText>
-                        {category.title}
-                      </FiltersMenuOpenText>
+                    <li key={category._id}>
+                      <FiltersMenuOpenLabel>
+                        <FiltersMenuOpenInput
+                          type="checkbox"
+                          checked={selectedCategories.includes(
+                            category.categoryId
+                          )}
+                          onChange={() =>
+                            handleCategorySelect(category.categoryId)
+                          }
+                        />
+                        <FiltersMenuOpenText
+                          checked={selectedCategories.includes(
+                            category.categoryId
+                          )}
+                        >
+                          {category.title}
+                        </FiltersMenuOpenText>
+                      </FiltersMenuOpenLabel>
                     </li>
                   ))}
                 </FiltersMenuOpen>
               )}
-            </div>
+            </FiltersMenuMobileBox>
 
-            <div>
+            <FiltersMenuMobileBox>
               <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
                 {t('Локація')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
@@ -189,22 +271,34 @@ export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategori
                       if (!uniqueLocations.includes(event.location)) {
                         uniqueLocations.push(event.location);
                         return (
-                          <li
-                            key={idx}
-                            onClick={() => handleLocationSelect(event.location)}
-                          >
-                            <FiltersMenuOpenText>
-                              {event.location}
-                            </FiltersMenuOpenText>
+                          <li key={idx}>
+                            <FiltersMenuOpenLabel>
+                              <FiltersMenuOpenInput
+                                type="checkbox"
+                                checked={selectedLocations.includes(
+                                  event.location
+                                )}
+                                onChange={() =>
+                                  handleLocationSelect(event.location)
+                                }
+                              />
+                              <FiltersMenuOpenText
+                                checked={selectedLocations.includes(
+                                  event.location
+                                )}
+                              >
+                                {event.location}
+                              </FiltersMenuOpenText>
+                            </FiltersMenuOpenLabel>
                           </li>
                         );
                       }
                     })}
                 </FiltersMenuOpen>
               )}
-            </div>
+            </FiltersMenuMobileBox>
 
-            <div>
+            <FiltersMenuMobileBox>
               <FiltersBtnMenu onClick={() => toggleVisibility(4)}>
                 {t('Вільні місця')}
                 {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
@@ -212,19 +306,215 @@ export const Filters = ({ activeEvents, setSelectedLanguages,setSelectedCategori
 
               {isOpen[4] && (
                 <FiltersMenuOpen>
-                  <li onClick={() => handlePlacesSelect('yes')}>
-                    <FiltersMenuOpenText>Вільні місця є</FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedPlaces === 'yes'}
+                        onChange={() => handlePlacesSelect('yes')}
+                      />
+                      <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
+                        Вільні місця є
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
-                  <li onClick={() => handlePlacesSelect('no')}>
-                    <FiltersMenuOpenText>
-                      Вільних місць немає
-                    </FiltersMenuOpenText>
+                  <li>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedPlaces === 'no'}
+                        onChange={() => handlePlacesSelect('no')}
+                      />
+                      <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
+                        Вільних місць немає
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
                   </li>
                 </FiltersMenuOpen>
               )}
-            </div>
+            </FiltersMenuMobileBox>
           </FiltersMenu>
         )}
+
+        <FiltersMenuDesktop>
+          <FiltersMenuDesktopBox>
+            <FiltersBtnMenu onClick={() => toggleVisibility(1)}>
+              <LanguageIcon /> {t('Мова')}
+              {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
+            </FiltersBtnMenu>
+
+            {isOpen[1] && (
+              <FiltersMenuOpen>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedLanguages.includes('Fr')}
+                      onChange={() => handleLanguageSelect('Fr')}
+                    />
+                    <FiltersMenuOpenText
+                      checked={selectedLanguages.includes('Fr')}
+                    >
+                      {t('Французька')}
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedLanguages.includes('En')}
+                      onChange={() => handleLanguageSelect('En')}
+                    />
+                    <FiltersMenuOpenText
+                      checked={selectedLanguages.includes('En')}
+                    >
+                      {t('Англійська')}
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedLanguages.includes('Uk')}
+                      onChange={() => handleLanguageSelect('Uk')}
+                    />
+                    <FiltersMenuOpenText
+                      checked={selectedLanguages.includes('Uk')}
+                    >
+                      {t('Українська')}
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedLanguages.includes('Ru')}
+                      onChange={() => handleLanguageSelect('Ru')}
+                    />
+                    <FiltersMenuOpenText
+                      checked={selectedLanguages.includes('Ru')}
+                    >
+                      {t('Російська')}
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+              </FiltersMenuOpen>
+            )}
+          </FiltersMenuDesktopBox>
+
+          <FiltersMenuDesktopBox>
+            <FiltersBtnMenu onClick={() => toggleVisibility(2)}>
+              <ListIcon /> {t('Категорія заходу')}
+              {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
+            </FiltersBtnMenu>
+
+            {isOpen[2] && (
+              <FiltersMenuOpen>
+                {categories.map(category => (
+                  <li key={category._id}>
+                    <FiltersMenuOpenLabel>
+                      <FiltersMenuOpenInput
+                        type="checkbox"
+                        checked={selectedCategories.includes(
+                          category.categoryId
+                        )}
+                        onChange={() =>
+                          handleCategorySelect(category.categoryId)
+                        }
+                      />
+                      <FiltersMenuOpenText
+                        checked={selectedCategories.includes(
+                          category.categoryId
+                        )}
+                      >
+                        {category.title}
+                      </FiltersMenuOpenText>
+                    </FiltersMenuOpenLabel>
+                  </li>
+                ))}
+              </FiltersMenuOpen>
+            )}
+          </FiltersMenuDesktopBox>
+
+          <FiltersMenuDesktopBox>
+            <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
+              <LocationIcon /> {t('Локація')}
+              {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
+            </FiltersBtnMenu>
+            {isOpen[3] && (
+              <FiltersMenuOpen>
+                {activeEvents
+                  .filter(event => event.status === 'active')
+                  .map((event, idx) => {
+                    if (!uniqueLocations.includes(event.location)) {
+                      uniqueLocations.push(event.location);
+                      return (
+                        <li key={idx}>
+                          <FiltersMenuOpenLabel>
+                            <FiltersMenuOpenInput
+                              type="checkbox"
+                              checked={selectedLocations.includes(
+                                event.location
+                              )}
+                              onChange={() =>
+                                handleLocationSelect(event.location)
+                              }
+                            />
+                            <FiltersMenuOpenText
+                              checked={selectedLocations.includes(
+                                event.location
+                              )}
+                            >
+                              {event.location}
+                            </FiltersMenuOpenText>
+                          </FiltersMenuOpenLabel>
+                        </li>
+                      );
+                    }
+                  })}
+              </FiltersMenuOpen>
+            )}
+          </FiltersMenuDesktopBox>
+
+          <FiltersMenuDesktopBox>
+            <FiltersBtnMenu onClick={() => toggleVisibility(4)}>
+              <ChairIcon /> {t('Вільні місця')}
+              {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
+            </FiltersBtnMenu>
+
+            {isOpen[4] && (
+              <FiltersMenuOpen>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedPlaces === 'yes'}
+                      onChange={() => handlePlacesSelect('yes')}
+                    />
+                    <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
+                      Вільні місця є
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+                <li>
+                  <FiltersMenuOpenLabel>
+                    <FiltersMenuOpenInput
+                      type="checkbox"
+                      checked={selectedPlaces === 'no'}
+                      onChange={() => handlePlacesSelect('no')}
+                    />
+                    <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
+                      Вільних місць немає
+                    </FiltersMenuOpenText>
+                  </FiltersMenuOpenLabel>
+                </li>
+              </FiltersMenuOpen>
+            )}
+          </FiltersMenuDesktopBox>
+        </FiltersMenuDesktop>
       </div>
     </FiltersBox>
   );
@@ -236,8 +526,8 @@ Filters.propTypes = {
   setSelectedCategories: PropTypes.func,
   setSelectedLocations: PropTypes.func,
   setSelectedPlaces: PropTypes.func,
-  selectedLanguages: PropTypes.any, 
-  selectedCategories: PropTypes.any, 
+  selectedLanguages: PropTypes.any,
+  selectedCategories: PropTypes.any,
   selectedLocations: PropTypes.any,
-  selectedPlaces: PropTypes.any 
+  selectedPlaces: PropTypes.any,
 };
