@@ -127,7 +127,7 @@ export const FormBtn = styled(BtnAccent)`
 `;
 
 export const FormInputMessage = styled.textarea`
-  height: 100%;
+  /* height: 100%; */
   padding: 15px;
 
   font-family: ${theme.fonts[0]};
@@ -145,6 +145,7 @@ export const FormInputMessage = styled.textarea`
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    height: 100%;
     max-width: 530px;
     padding: 25px 30px;
   }
