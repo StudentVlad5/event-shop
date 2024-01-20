@@ -197,7 +197,7 @@ border-radius: 50%;
 .calendar-box{
   display: flex;
   justify-content: center;
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   position: relative;
 }
 

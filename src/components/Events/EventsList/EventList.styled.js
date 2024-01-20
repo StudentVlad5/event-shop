@@ -152,13 +152,17 @@ export const CleanFilterBtn = styled.button`
   cursor: pointer;
   transition: ${theme.transition};
   margin-bottom: 30px;
-  &:hover, &:focus{
+  margin-top: 15px;
+
+  &:hover,
+  &:focus {
     color: ${theme.colors.accent};
-  border-bottom: 1px solid ${theme.colors.accent};
+    border-bottom: 1px solid ${theme.colors.accent};
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 20px;
+  margin-top: 30px;
   }
 `;
 
