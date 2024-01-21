@@ -21,4 +21,4 @@ if (!storedToken) {
 }
 
 const temporaryToken = getTemporaryToken();
-// console.log('Тимчасовий токен з локального сховища:', temporaryToken);
+

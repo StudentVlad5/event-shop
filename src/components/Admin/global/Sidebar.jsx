@@ -18,7 +18,7 @@ import { getUser, getUserAvatar } from "../../../redux/auth/selectors";
 import { BASE_URL_IMG } from "helpers/constants";
 
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected, setSelected, className }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -30,7 +30,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       onClick={() => setSelected(title)}
       icon={icon}
     >
-      <Typography>{title}</Typography>
+      <Typography className={className}>{title}</Typography>
       <Link to={to} />
     </MenuItem>
   );
@@ -136,6 +136,7 @@ const Sidebar = () => {
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              className="messages"
             />
 
             <Typography
@@ -147,38 +148,43 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Manage Team"
-              to="/admin/specialists"
+              to="specialists"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              className="specialists"
             />
             <Item
               title="Manage Category"
-              to="/admin/categories"
+              to="categories"
               icon={<BallotOutlined />}
               selected={selected}
               setSelected={setSelected}
+              className="categories"
             />
             <Item
               title="Events Information"
-              to="/admin/events"
+              to="events"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              className="events"
             />
             <Item
               title="Activate event"
-              to="/admin/activate_events"
+              to="activate_events"
               icon={<PlaylistAddOutlined />}
               selected={selected}
               setSelected={setSelected}
+              className="activate_events"
             />
             <Item
               title="Orders"
-              to="/admin/orders"
+              to="orders"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              className="orders"
             />
           </Box>
         </Menu>
@@ -191,6 +197,7 @@ export default Sidebar;
 
 Item.propTypes = {
   title: PropTypes.any.isRequired,
+  className: PropTypes.any,
   to: PropTypes.any.isRequired,
   icon: PropTypes.any.isRequired,
   selected: PropTypes.any.isRequired,

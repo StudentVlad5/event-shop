@@ -29,12 +29,10 @@ const Messages = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const specialists = useSelector(specialistsComponent);
-  console.log(specialists)
   const listOfSpecialistsNames = {};
   for (const it in specialists) {
     listOfSpecialistsNames[specialists[it].specialistId] = specialists[it].ua.name;
   };
-console.log(listOfSpecialistsNames)
   const objectMessages = useSelector(messagesComponent);
   const listOfMessages = []
   for(const it in objectMessages) {

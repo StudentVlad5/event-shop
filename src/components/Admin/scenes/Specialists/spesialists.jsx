@@ -303,7 +303,6 @@ const Specialists = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    console.log("newRow",newRow);
     if(newRow.isNew){createData(newRow)} else {updateData(newRow)};
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));

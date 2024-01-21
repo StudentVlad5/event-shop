@@ -66,7 +66,6 @@ const Orders = () => {
         eventsNames.push(events[it].ua.name);
         eventsIdForNames[events[it].article_event]=events[it].ua.name;
     }
-    console.log("eventsIdForNames", eventsIdForNames)
   // =========
 
   const listOfOrders = [];
