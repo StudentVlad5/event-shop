@@ -14,7 +14,6 @@ import {
   FiltersMenuOpen,
   FiltersMenuOpenInput,
   FiltersMenuOpenLabel,
-  FiltersMenuOpenLable,
   FiltersMenuOpenText,
   LanguageIcon,
   ListIcon,
@@ -25,6 +24,7 @@ import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getFromStorage, saveToStorage } from 'services/localStorService';
+import { theme } from 'components/baseStyles/Variables.styled';
 
 export const Filters = ({
   activeEvents,
@@ -143,24 +143,18 @@ export const Filters = ({
 
   const uniqueLocations = [];
 
-  // useEffect(() => {
-  //   const filtersMenuOpen = document.querySelector('.filters-menu-open');
-
-  //     const menuWidth = filtersMenuOpen.clientWidth;
-  //     document.documentElement.style.setProperty('--menu-width', `${menuWidth}px`);
-  // }, []);
 
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
-        <FiltersBtn onClick={toggleFilters}>
+        <FiltersBtn onClick={toggleFilters} $props={(selectedLanguages?.length > 0 || selectedCategories?.length > 0 || selectedLocations?.length > 0 || selectedPlaces === "yes" || selectedPlaces === "no")? theme.colors.accent : theme.colors.grey1}>
           {t('Фільтрувати за')} {isShown ? <ArrowIconUp /> : <ArrowIcon />}
         </FiltersBtn>
 
         {isShown && (
           <FiltersMenu>
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(1)}>
+              <FiltersBtnMenu onClick={() => toggleVisibility(1)} $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
                 {t('Мова')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
@@ -227,7 +221,7 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(2)}>
+              <FiltersBtnMenu onClick={() => toggleVisibility(2)} $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
                 {t('Категорія заходу')}
                 {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
@@ -260,7 +254,7 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
+              <FiltersBtnMenu onClick={() => toggleVisibility(3)} $props={selectedLocations?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
                 {t('Локація')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
               {isOpen[3] && (
@@ -299,7 +293,7 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(4)}>
+              <FiltersBtnMenu onClick={() => toggleVisibility(4)} $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}>
                 {t('Вільні місця')}
                 {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
@@ -338,8 +332,8 @@ export const Filters = ({
 
         <FiltersMenuDesktop>
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(1)}>
-              <LanguageIcon /> {t('Мова')}
+            <FiltersBtnMenu onClick={() => toggleVisibility(1)} $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
+              <LanguageIcon $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}/> {t('Мова')}
               {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
@@ -406,8 +400,8 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(2)}>
-              <ListIcon /> {t('Категорія заходу')}
+            <FiltersBtnMenu onClick={() => toggleVisibility(2)} $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
+              <ListIcon $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}/> {t('Категорія заходу')}
               {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
@@ -440,8 +434,8 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(3)}>
-              <LocationIcon /> {t('Локація')}
+            <FiltersBtnMenu onClick={() => toggleVisibility(3)} $props={selectedLocations?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
+              <LocationIcon $props={selectedLocations?.length > 0? theme.colors.accent : theme.colors.grey1}/> {t('Локація')}
               {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
             {isOpen[3] && (
@@ -480,8 +474,8 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(4)}>
-              <ChairIcon /> {t('Вільні місця')}
+            <FiltersBtnMenu onClick={() => toggleVisibility(4)} $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}>
+              <ChairIcon $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}/> {t('Вільні місця')}
               {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 

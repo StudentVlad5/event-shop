@@ -17,6 +17,8 @@ import {
   TitleMes,
   FormInputSeats,
   QuantityWrapper,
+  ArrowUpHandle,
+  ArrowDownHandle,
 } from './RegisterModal.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +28,7 @@ import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+
 
 export const RegisterModal = ({ activeEvents }) => {
   const { t } = useTranslation();
@@ -138,6 +141,8 @@ export const RegisterModal = ({ activeEvents }) => {
                           value={values.seats}
                           required
                         />
+                        <ArrowUpHandle onClick={(e)=>{e.preventDefault; values.seats = (Number(values.seats) + 1).toString()}}/>
+                        <ArrowDownHandle onClick={(e)=>{e.preventDefault; values.seats = (Number(values.seats) - 1).toString()}}/>
                       </QuantityWrapper>
                       {errors.seats && touched.seats ? (
                         <Error>{errors.seats}</Error>
@@ -189,9 +194,3 @@ export const RegisterModal = ({ activeEvents }) => {
     document.querySelector('#popup-root')
   );
 };
-
-// RegisterModal.propTypes = {
-//   activeEvents: PropTypes.shape({
-//     _id: PropTypes.string.isRequired,
-//   }),
-// };
