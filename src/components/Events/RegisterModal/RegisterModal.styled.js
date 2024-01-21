@@ -65,9 +65,6 @@ export const FormLabel = styled.label`
   height: 100%;
 `;
 
-// export const SEventDate = styled.span`
-//   line-height: normal;
-//   color: ${theme.colors.grey1};
 export const FormName = styled.span`
   margin-bottom: 15px;
   font-family: ${theme.fonts[0]};
@@ -103,8 +100,8 @@ export const FormInput = styled(Field)`
   }
 
   &:focus::placeholder {
-  color: transparent;
-}
+    color: transparent;
+  }
   &:focus-visible {
     border: 0.5px solid ${theme.colors.accent};
     outline: none;
@@ -197,50 +194,50 @@ export const FormBtn = styled.button`
 `;
 export const QuantityWrapper = styled.div`
   position: relative;
-  &:after {
-    content: "";
-    position: absolute;
-    right: 12px;
+`;
+
+export const ArrowUpHandle = styled.div`
+  position: absolute;
+  right: 12px;
+  height: 30px;
+  width: 30px;
+  top: 8px;
+  background-image: url(${ArrowUp});
+  background-size: 30px 30px;
+  cursor: pointer;
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 30px;
     width: 30px;
-    top: 8px;
-    background-image: url(${ArrowUp});
+    right: 15px;
     background-size: 30px 30px;
-    cursor: pointer;
-    @media screen and (min-width: ${theme.breakpoints.tablet}) {
-      height: 30px;
-      width: 30px;
-      right: 15px;
-      background-size: 30px 30px;
-    }
-    @media screen and (min-width: ${theme.breakpoints.desktop}) {
-      height: 30px;
-      width: 30px;
-      right: 17px;
-      background-size: 30px 30px;
-    }
   }
-  &:before {
-    content: "";
-    position: absolute;
-    right: 12px;
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
     height: 30px;
     width: 30px;
-    bottom: 8px;
-    background-image: url(${ArrowDown});
+    right: 17px;
     background-size: 30px 30px;
-    cursor: pointer;
-    @media screen and (min-width: ${theme.breakpoints.tablet}) {
-      height: 30px;
-      width: 30px;
-      right: 15px;
-      background-size: 30px 30px;
-    }
-    @media screen and (min-width: ${theme.breakpoints.desktop}) {
-      height: 30px;
-      width: 30px;
-      right: 17px;
-      background-size: 30px 30px;
-    }
+  }
+`;
+
+export const ArrowDownHandle = styled.div`
+  position: absolute;
+  right: 12px;
+  height: 30px;
+  width: 30px;
+  bottom: 8px;
+  background-image: url(${ArrowDown});
+  background-size: 30px 30px;
+  cursor: pointer;
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    height: 30px;
+    width: 30px;
+    right: 15px;
+    background-size: 30px 30px;
+  }
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    height: 30px;
+    width: 30px;
+    right: 17px;
+    background-size: 30px 30px;
   }
 `;
