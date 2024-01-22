@@ -207,14 +207,15 @@ export const EventDetails = ({ activeEvents }) => {
     <>
       <EventsSection>
         <Container>
-          {events &&
-            events.map((ev, idx) => (
-              <EventTitle key={idx + ev.name}>{ev.name}</EventTitle>
-            ))}
+    
           <BtnBack type="button" onClick={goBack}>
             <HiArrowLeft size={16} />
             {t('Retour')}
           </BtnBack>
+          {events &&
+            events.map((ev, idx) => (
+              <EventTitle key={idx + ev.name}>{ev.name}</EventTitle>
+            ))}
           <InfoBox>
             <EventHeading>
               <HeadingItem>
@@ -302,7 +303,7 @@ export const EventDetails = ({ activeEvents }) => {
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>
-                  {t('Nombres des places disponibles')}
+                  {t('Places disponibles')}
                 </HeadingItemTitle>
                 <HeadingItemData>
                   {vacancies}/{seats}

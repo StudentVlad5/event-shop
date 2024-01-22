@@ -21,9 +21,10 @@ export const TitleMes = styled(Title)`
   font-weight: 400;
   line-height: 120%; /* 57.6px */
   margin-bottom: 15px;
-  width: 245px;
+  /* width: 245px; */
+  padding-top: 20px;
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-    width: 100%;
+    padding-top: 0;
   }
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 48px;

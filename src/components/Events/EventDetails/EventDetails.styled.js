@@ -3,8 +3,6 @@ import { theme } from 'components/baseStyles/Variables.styled';
 import { NavLink } from 'react-router-dom';
 
 export const EventTitle = styled.h1`
-  margin-bottom: 20px;
-
   color: ${props => props.theme.white_text};
   font-family: ${theme.fonts[0]};
   font-size: 24px;
@@ -17,7 +15,7 @@ export const EventTitle = styled.h1`
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
 
     font-size: 36px;
     line-height: 45.992px;
@@ -204,6 +202,7 @@ export const EventDescr = styled.p`
 
 export const BtnBack = styled.button`
   all: unset;
+  margin-bottom: 20px;
 
   display: inline-flex;
   align-items: center;
@@ -229,6 +228,7 @@ export const BtnBack = styled.button`
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 24px;
+    margin-bottom: 30px;
   }
 `;
 
@@ -259,7 +259,7 @@ export const NavLinkSpecialist = styled(NavLink)`
   &:focus {
     color: ${theme.colors.accent};
   }
-/* 
+  /* 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: ${props => (props.$small ? '12px' : '14px')};
   } */
