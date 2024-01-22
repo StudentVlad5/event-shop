@@ -18,16 +18,16 @@ export const FieldsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  gap: 20px;
+  grid-gap: 20px;
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-gap: 20px;
   }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    gap: 70px;
+    grid-gap: 70px;
   }
 
   & > div {
@@ -45,6 +45,12 @@ export const FormLabel = styled.label`
 
   width: 100%;
   height: 100%;
+
+  @supports (-webkit-touch-callout: none) and (not (translate: none)) {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 export const FormName = styled.span`
@@ -154,6 +160,8 @@ export const FormInputMessage = styled.textarea`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
+  text-indent: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 100%;
