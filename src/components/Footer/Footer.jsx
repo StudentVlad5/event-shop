@@ -37,6 +37,7 @@ export const Footer = () => {
                   href="https://www.facebook.com/"
                   target="_blank"
                   rel="noreferrer noopener"
+                  aria-label="facebook"
                 >
                   <svg width="24" height="24">
                     <use href={sprite + '#facebook'}></use>
@@ -46,6 +47,7 @@ export const Footer = () => {
                   href="https://www.instagram.com/"
                   target="_blank"
                   rel="noreferrer noopener"
+                  aria-label="instagram"
                 >
                   <svg width="24" height="24">
                     <use href={sprite + '#instagram'}></use>
