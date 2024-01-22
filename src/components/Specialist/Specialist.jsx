@@ -167,7 +167,7 @@ export const Specialist = ({ specialist }) => {
   return (
     <Container>
       <DescriptionSection>
-        <BackButton to="/specialists">{t('Назад')}</BackButton>
+        <BackButton to="/specialists">{t('Retour')}</BackButton>
         <Image
           src={
             image
@@ -201,7 +201,7 @@ export const Specialist = ({ specialist }) => {
       </DescriptionSection>
       <EventsSection>
         <Title>
-          {t('Найближчі заходи')} {firstName(name)}
+          {t('Les prochains evenements')} {firstName(name)}
         </Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
@@ -210,7 +210,7 @@ export const Specialist = ({ specialist }) => {
           !error && (
             <Subtitle>
               {t(
-                'Вибачте, найближчим часом спеціаліст не проводить майстер-класи'
+                'Nous sommes désolés, le spécialiste ne fait pas les ateliers ces prochains jours'
               )}
             </Subtitle>
           )}
@@ -256,13 +256,13 @@ export const Specialist = ({ specialist }) => {
                             <Name>{event.name}</Name>
                             <DateTimeWrapper>
                               <li>
-                                <Head>{t('дата')}</Head>
+                                <Head>{t('Date')}</Head>
                                 <DateTime>
                                   {new Date(event.date).toLocaleDateString()}
                                 </DateTime>
                               </li>
                               <li>
-                                <Head>{t('час')}</Head>
+                                <Head>{t('Heure')}</Head>
                                 <DateTime>{event.time}</DateTime>
                               </li>
                             </DateTimeWrapper>
@@ -272,7 +272,7 @@ export const Specialist = ({ specialist }) => {
                                 : event.description}
                             </Describe>
                             <BtnLink to={`/events/${event._id}`}>
-                              <span>{t('Детальніше')}</span>
+                              <span>{t('Suivant')}</span>
                             </BtnLink>
                           </DetailsWrapper>
                         )}
@@ -333,7 +333,7 @@ export const Specialist = ({ specialist }) => {
                                 <Name>{event.name}</Name>
                                 <DateTimeWrapper>
                                   <li>
-                                    <Head>{t('дата')}</Head>
+                                    <Head>{t('Date')}</Head>
                                     <DateTime>
                                       {new Date(
                                         event.date
@@ -341,7 +341,7 @@ export const Specialist = ({ specialist }) => {
                                     </DateTime>
                                   </li>
                                   <li>
-                                    <Head>{t('час')}</Head>
+                                    <Head>{t('Heure')}</Head>
                                     <DateTime>{event.time}</DateTime>
                                   </li>
                                 </DateTimeWrapper>
@@ -351,7 +351,7 @@ export const Specialist = ({ specialist }) => {
                                     : event.description}
                                 </Describe>
                                 <BtnLink to={`/events/${event._id}`}>
-                                  <span>{t('Детальніше')}</span>
+                                  <span>{t('Suivant')}</span>
                                 </BtnLink>
                               </DetailsWrapper>
                             )}
@@ -428,7 +428,7 @@ export const Specialist = ({ specialist }) => {
                                 <Name>{event.name}</Name>
                                 <DateTimeWrapper>
                                   <li>
-                                    <Head>{t('дата')}</Head>
+                                    <Head>{t('Date')}</Head>
                                     <DateTime>
                                       {new Date(
                                         event.date
@@ -436,7 +436,7 @@ export const Specialist = ({ specialist }) => {
                                     </DateTime>
                                   </li>
                                   <li>
-                                    <Head>{t('час')}</Head>
+                                    <Head>{t('Heure')}</Head>
                                     <DateTime>{event.time}</DateTime>
                                   </li>
                                 </DateTimeWrapper>
@@ -446,7 +446,7 @@ export const Specialist = ({ specialist }) => {
                                     : event.description}
                                 </Describe>
                                 <BtnLink to={`/events/${event._id}`}>
-                                  <span>{t('Детальніше')}</span>
+                                  <span>{t('Suivant')}</span>
                                 </BtnLink>
                               </DetailsWrapper>
                             )}
@@ -519,7 +519,7 @@ export const Specialist = ({ specialist }) => {
                                 <Name>{event.name}</Name>
                                 <DateTimeWrapper>
                                   <li>
-                                    <Head>{t('дата')}</Head>
+                                    <Head>{t('Date')}</Head>
                                     <DateTime>
                                       {new Date(
                                         event.date
@@ -527,7 +527,7 @@ export const Specialist = ({ specialist }) => {
                                     </DateTime>
                                   </li>
                                   <li>
-                                    <Head>{t('час')}</Head>
+                                    <Head>{t('Heure')}</Head>
                                     <DateTime>{event.time}</DateTime>
                                   </li>
                                 </DateTimeWrapper>
@@ -537,7 +537,7 @@ export const Specialist = ({ specialist }) => {
                                     : event.description}
                                 </Describe>
                                 <BtnLink to={`/events/${event._id}`}>
-                                  <span>{t('Детальніше')}</span>
+                                  <span>{t('Suivant')}</span>
                                 </BtnLink>
                               </DetailsWrapper>
                             )}
@@ -561,7 +561,7 @@ export const Specialist = ({ specialist }) => {
           )}
       </EventsSection>
       <MessageSection>
-        <Title>{t('Є питання до спеціаліста')}?</Title>
+        <Title>{t('Vous avez des question au spécialiste')}?</Title>
         <FormMessage specialist={specialist} />
       </MessageSection>
     </Container>

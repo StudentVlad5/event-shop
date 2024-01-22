@@ -154,9 +154,9 @@ export const TopEvents = () => {
   return (
     <EventsSection>
       <Container>
-        <Title>{t('Найближчі заходи')}</Title>
+        <Title>{t('Les prochains evenements')}</Title>
         <BtnLinkText to={`/events`}>
-          <span>{t('Інші події')}</span>
+          <span>{t('Autres evenements')}</span>
         </BtnLinkText>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
@@ -228,13 +228,13 @@ export const TopEvents = () => {
                             <Name>{event.name}</Name>
                             <DateTimeWrapper>
                               <li>
-                                <Head>{t('дата')}</Head>
+                                <Head>{t('Date')}</Head>
                                 <DateTime>
                                   {new Date(event.date).toLocaleDateString()}
                                 </DateTime>
                               </li>
                               <li>
-                                <Head>{t('час')}</Head>
+                                <Head>{t('Heure')}</Head>
                                 <DateTime>{event.time}</DateTime>
                               </li>
                             </DateTimeWrapper>
@@ -244,7 +244,7 @@ export const TopEvents = () => {
                                 : event.description}
                             </Describe>
                             <BtnLink to={`/events/${event._id}`}>
-                              <span>{t('Детальніше')}</span>
+                              <span>{t('Suivant')}</span>
                             </BtnLink>
                           </DetailsWrapper>
                         </EventListItem>
@@ -299,13 +299,13 @@ export const TopEvents = () => {
                             <Name>{event.name}</Name>
                             <DateTimeWrapper>
                               <li>
-                                <Head>{t('дата')}</Head>
+                                <Head>{t('Date')}</Head>
                                 <DateTime>
                                   {new Date(event.date).toLocaleDateString()}
                                 </DateTime>
                               </li>
                               <li>
-                                <Head>{t('час')}</Head>
+                                <Head>{t('Heure')}</Head>
                                 <DateTime>{event.time}</DateTime>
                               </li>
                             </DateTimeWrapper>
@@ -315,7 +315,7 @@ export const TopEvents = () => {
                                 : event.description}
                             </Describe>
                             <BtnLink to={`/events/${event._id}`}>
-                              <span>{t('Детальніше')}</span>
+                              <span>{t('Suivant')}</span>
                             </BtnLink>
                           </DetailsWrapper>
                         </EventListItem>

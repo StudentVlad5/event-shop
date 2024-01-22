@@ -143,19 +143,36 @@ export const Filters = ({
 
   const uniqueLocations = [];
 
-
   return (
     <FiltersBox>
       <div style={{ position: 'relative' }}>
-        <FiltersBtn onClick={toggleFilters} $props={(selectedLanguages?.length > 0 || selectedCategories?.length > 0 || selectedLocations?.length > 0 || selectedPlaces === "yes" || selectedPlaces === "no")? theme.colors.accent : theme.colors.grey1}>
-          {t('Фільтрувати за')} {isShown ? <ArrowIconUp /> : <ArrowIcon />}
+        <FiltersBtn
+          onClick={toggleFilters}
+          $props={
+            selectedLanguages?.length > 0 ||
+            selectedCategories?.length > 0 ||
+            selectedLocations?.length > 0 ||
+            selectedPlaces === 'yes' ||
+            selectedPlaces === 'no'
+              ? theme.colors.accent
+              : theme.colors.grey1
+          }
+        >
+          {t('Filtrer par')} {isShown ? <ArrowIconUp /> : <ArrowIcon />}
         </FiltersBtn>
 
         {isShown && (
           <FiltersMenu>
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(1)} $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-                {t('Мова')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
+              <FiltersBtnMenu
+                onClick={() => toggleVisibility(1)}
+                $props={
+                  selectedLanguages?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              >
+                {t('Langue')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
               {isOpen[1] && (
@@ -170,7 +187,7 @@ export const Filters = ({
                       <FiltersMenuOpenText
                         checked={selectedLanguages.includes('Fr')}
                       >
-                        {t('Французька')}
+                        {t('Francaise')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -184,7 +201,7 @@ export const Filters = ({
                       <FiltersMenuOpenText
                         checked={selectedLanguages.includes('En')}
                       >
-                        {t('Англійська')}
+                        {t('Anglaise')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -198,7 +215,7 @@ export const Filters = ({
                       <FiltersMenuOpenText
                         checked={selectedLanguages.includes('Uk')}
                       >
-                        {t('Українська')}
+                        {t('Ukrainien')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -212,7 +229,7 @@ export const Filters = ({
                       <FiltersMenuOpenText
                         checked={selectedLanguages.includes('Ru')}
                       >
-                        {t('Російська')}
+                        {t('Russe')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -221,8 +238,15 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(2)} $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-                {t('Категорія заходу')}
+              <FiltersBtnMenu
+                onClick={() => toggleVisibility(2)}
+                $props={
+                  selectedCategories?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              >
+                {t('Catégories des evenements')}
                 {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
               {isOpen[2] && (
@@ -254,8 +278,16 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(3)} $props={selectedLocations?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-                {t('Локація')} {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
+              <FiltersBtnMenu
+                onClick={() => toggleVisibility(3)}
+                $props={
+                  selectedLocations?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              >
+                {t('Localisation')}
+                {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
               {isOpen[3] && (
                 <FiltersMenuOpen>
@@ -293,8 +325,15 @@ export const Filters = ({
             </FiltersMenuMobileBox>
 
             <FiltersMenuMobileBox>
-              <FiltersBtnMenu onClick={() => toggleVisibility(4)} $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}>
-                {t('Вільні місця')}
+              <FiltersBtnMenu
+                onClick={() => toggleVisibility(4)}
+                $props={
+                  selectedPlaces === 'yes' || selectedPlaces === 'no'
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              >
+                {t('Places disponibles')}
                 {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
@@ -308,7 +347,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('yes')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                        Вільні місця є
+                        {t('Il y a des places libres')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -320,7 +359,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('no')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                        Вільних місць немає
+                        {t("Il n'y a pas de places libres")}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -332,8 +371,22 @@ export const Filters = ({
 
         <FiltersMenuDesktop>
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(1)} $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-              <LanguageIcon $props={selectedLanguages?.length > 0 ? theme.colors.accent : theme.colors.grey1}/> {t('Мова')}
+            <FiltersBtnMenu
+              onClick={() => toggleVisibility(1)}
+              $props={
+                selectedLanguages?.length > 0
+                  ? theme.colors.accent
+                  : theme.colors.grey1
+              }
+            >
+              <LanguageIcon
+                $props={
+                  selectedLanguages?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              />
+              {t('Langue')}
               {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
@@ -349,7 +402,7 @@ export const Filters = ({
                     <FiltersMenuOpenText
                       checked={selectedLanguages.includes('Fr')}
                     >
-                      {t('Французька')}
+                      {t('Francaise')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -363,7 +416,7 @@ export const Filters = ({
                     <FiltersMenuOpenText
                       checked={selectedLanguages.includes('En')}
                     >
-                      {t('Англійська')}
+                      {t('Anglaise')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -377,7 +430,7 @@ export const Filters = ({
                     <FiltersMenuOpenText
                       checked={selectedLanguages.includes('Uk')}
                     >
-                      {t('Українська')}
+                      {t('Ukrainien')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -391,7 +444,7 @@ export const Filters = ({
                     <FiltersMenuOpenText
                       checked={selectedLanguages.includes('Ru')}
                     >
-                      {t('Російська')}
+                      {t('Russe')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -400,8 +453,22 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(2)} $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-              <ListIcon $props={selectedCategories?.length > 0 ? theme.colors.accent : theme.colors.grey1}/> {t('Категорія заходу')}
+            <FiltersBtnMenu
+              onClick={() => toggleVisibility(2)}
+              $props={
+                selectedCategories?.length > 0
+                  ? theme.colors.accent
+                  : theme.colors.grey1
+              }
+            >
+              <ListIcon
+                $props={
+                  selectedCategories?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              />
+              {t('Catégories des evenements')}
               {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
@@ -434,8 +501,22 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(3)} $props={selectedLocations?.length > 0 ? theme.colors.accent : theme.colors.grey1}>
-              <LocationIcon $props={selectedLocations?.length > 0? theme.colors.accent : theme.colors.grey1}/> {t('Локація')}
+            <FiltersBtnMenu
+              onClick={() => toggleVisibility(3)}
+              $props={
+                selectedLocations?.length > 0
+                  ? theme.colors.accent
+                  : theme.colors.grey1
+              }
+            >
+              <LocationIcon
+                $props={
+                  selectedLocations?.length > 0
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              />
+              {t('Localisation')}
               {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
             {isOpen[3] && (
@@ -474,8 +555,22 @@ export const Filters = ({
           </FiltersMenuDesktopBox>
 
           <FiltersMenuDesktopBox>
-            <FiltersBtnMenu onClick={() => toggleVisibility(4)} $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}>
-              <ChairIcon $props={(selectedPlaces === "yes" || selectedPlaces === "no") ? theme.colors.accent : theme.colors.grey1}/> {t('Вільні місця')}
+            <FiltersBtnMenu
+              onClick={() => toggleVisibility(4)}
+              $props={
+                selectedPlaces === 'yes' || selectedPlaces === 'no'
+                  ? theme.colors.accent
+                  : theme.colors.grey1
+              }
+            >
+              <ChairIcon
+                $props={
+                  selectedPlaces === 'yes' || selectedPlaces === 'no'
+                    ? theme.colors.accent
+                    : theme.colors.grey1
+                }
+              />
+              {t('Places disponibles')}
               {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
@@ -489,7 +584,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('yes')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                      Вільні місця є
+                      {t('Il y a des places libres')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -501,7 +596,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('no')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                      Вільних місць немає
+                      {t("Il n'y a pas de places libres")}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>

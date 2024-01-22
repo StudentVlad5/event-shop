@@ -15,7 +15,7 @@ export const Menu = ({ onClose }) => {
         <ul>
           <li>
             <NavLink to="/" aria-label="Home" data-info="Home">
-              {t('Головна')}
+              {t('Accueil')}
             </NavLink>
           </li>
           <li>
@@ -24,7 +24,7 @@ export const Menu = ({ onClose }) => {
               aria-label="The team of specialists"
               data-info="Team"
             >
-              {t('Спеціалісти')}
+              {t('Les spécialistes')}
             </NavLink>
           </li>
           <li>
@@ -33,7 +33,7 @@ export const Menu = ({ onClose }) => {
               aria-label="Events calendar"
               data-info="Events calendar"
             >
-              {t('Календар подій')}
+              {t('Caléndrier des evenements')}
             </NavLink>
           </li>
           <li>
@@ -42,7 +42,7 @@ export const Menu = ({ onClose }) => {
               aria-label="More information about us"
               data-info="About"
             >
-              {t('Про нас')}
+              {t('A propos')}
             </NavLink>
           </li>
         </ul>

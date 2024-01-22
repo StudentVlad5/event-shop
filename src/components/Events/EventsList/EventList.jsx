@@ -248,15 +248,12 @@ export const EventsList = ({
   return (
     <>
       <CleanFilterBtn onClick={handleCleanFilter}>
-        {t('Очистити фільтри')}
+        {t('Enlever les filtres')}
       </CleanFilterBtn>
       {noEvents && (
         <NoEvents>
-          {t('На дату')}{' '}
-          <span style={{ marginRight: 8 }}>
-            {new Date(selectedDate).toLocaleDateString()}
-          </span>
-          {t('подій немає')}
+          {t('Pour cette date')} {new Date(selectedDate).toLocaleDateString()}
+          {t("Il n'y a pas des evenements")}
         </NoEvents>
       )}
       <List>
@@ -294,7 +291,7 @@ export const EventsList = ({
                         <EventDetailDate>
                           <EventDetailDateLi>
                             <EventDetailDateText>
-                              {t('Дата')}
+                              {t('Date')}
                             </EventDetailDateText>
                           </EventDetailDateLi>
                           <EventDetailDateLi>
@@ -307,7 +304,7 @@ export const EventsList = ({
                         <ul>
                           <li>
                             <EventDetailDateText>
-                              {t('Час')}
+                              {t('Heure')}
                             </EventDetailDateText>
                           </li>
                           <li>
@@ -325,7 +322,7 @@ export const EventsList = ({
                       </DetailsBoxDiscr>
 
                       <BtnLink to={`/events/${event._id}`}>
-                        <span>{t('Детальніше')}</span>
+                        <span>{t('Suivant')}</span>
                       </BtnLink>
                     </EventDetailBox>
                   )}
@@ -336,7 +333,7 @@ export const EventsList = ({
       </List>
       {eventsNumber < activeFilteredEvents.length && (
         <BtnLightEvents onClick={handleEventsNumber}>
-          <span> {t('Показати більше')} </span>
+          <span> {t('Voir plus')} </span>
         </BtnLightEvents>
       )}
     </>

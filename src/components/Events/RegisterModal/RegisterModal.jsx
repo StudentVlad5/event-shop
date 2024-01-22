@@ -101,9 +101,7 @@ export const RegisterModal = ({ activeEvents }) => {
             <MdClose />
           </CloseBtn>
           <MessageSection>
-            <TitleMesBox>
-              <TitleMes>{t('Реєстрація на подію')}</TitleMes>
-            </TitleMesBox>
+            <TitleMes>{t("S'inscrire à l'evenement")}</TitleMes>
             <Formik
               initialValues={{
                 name: '',
@@ -133,7 +131,7 @@ export const RegisterModal = ({ activeEvents }) => {
                 >
                   <FieldsWrapper>
                     <FormLabel htmlFor="seats">
-                      <FormName>{t('Місць')}</FormName>
+                      <FormName>{t('Places')}</FormName>
                       <QuantityWrapper className="quantity-wrapper">
                         <FormInputSeats
                           type="number"
@@ -165,12 +163,12 @@ export const RegisterModal = ({ activeEvents }) => {
                       ) : null}
                     </FormLabel>
                     <FormLabel htmlFor="name">
-                      <FormName>{t('Ім’я')}</FormName>
+                      <FormName>{t('Le nom')}</FormName>
                       <FormInput
                         type="text"
                         name="name"
                         id="name"
-                        placeholder={t('Джеймс')}
+                        placeholder={t('James')}
                         value={values.name}
                         required
                       />
@@ -179,7 +177,7 @@ export const RegisterModal = ({ activeEvents }) => {
                       ) : null}
                     </FormLabel>
                     <FormLabel htmlFor="email">
-                      <FormName>{t('E-mail')}</FormName>
+                      <FormName>E-mail</FormName>
                       <FormInput
                         type="email"
                         name="email"
@@ -198,7 +196,7 @@ export const RegisterModal = ({ activeEvents }) => {
                     disabled={isSubmitting}
                     aria-label="Submit"
                   >
-                    {t('Надіслати')}
+                    {t('Envoyer')}
                   </BtnAccent>
                 </FormList>
               )}

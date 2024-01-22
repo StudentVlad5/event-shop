@@ -213,22 +213,22 @@ export const EventDetails = ({ activeEvents }) => {
             ))}
           <BtnBack type="button" onClick={goBack}>
             <HiArrowLeft size={16} />
-            {t('Назад')}
+            {t('Retour')}
           </BtnBack>
           <InfoBox>
             <EventHeading>
               <HeadingItem>
-                <HeadingItemTitle>{t('дата')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Date')}</HeadingItemTitle>
                 <HeadingItemData>
                   {new Date(date).toLocaleDateString()}
                 </HeadingItemData>
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>{t('час')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Heure')}</HeadingItemTitle>
                 <HeadingItemData>{time}</HeadingItemData>
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>{t('тривалість')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Durée')}</HeadingItemTitle>
                 {events &&
                   events.map((ev, idx) => (
                     <HeadingItemData key={idx + ev.duration}>
@@ -237,7 +237,7 @@ export const EventDetails = ({ activeEvents }) => {
                   ))}
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>{t('місце')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Localisation')}</HeadingItemTitle>
                 <HeadingItemData>
                   {location} <br /> <br /> {address}
                 </HeadingItemData>
@@ -264,7 +264,7 @@ export const EventDetails = ({ activeEvents }) => {
 
             <EventHeading2>
               <HeadingItem>
-                <HeadingItemTitle>{t('категорія')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Catégorie')}</HeadingItemTitle>
                 {categories
                   .filter(
                     ct =>
@@ -283,7 +283,7 @@ export const EventDetails = ({ activeEvents }) => {
                   ))}
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>{t('Мова')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Langue')}</HeadingItemTitle>
                 <HeadingItemDataBox>
                   {language && (
                     <HeadingItemData style={{ marginRight: 5 }}>
@@ -302,14 +302,14 @@ export const EventDetails = ({ activeEvents }) => {
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>
-                  {t('місць')}
+                  {t('Nombres des places disponibles')}
                 </HeadingItemTitle>
                 <HeadingItemData>
                   {vacancies}/{seats}
                 </HeadingItemData>
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>{t('ціна')}</HeadingItemTitle>
+                <HeadingItemTitle>{t('Prix')}</HeadingItemTitle>
                 <HeadingItemData>{price}</HeadingItemData>
               </HeadingItem>
             </EventHeading2>
@@ -336,7 +336,7 @@ export const EventDetails = ({ activeEvents }) => {
             </EventDescrBox>
 
             <EventDescrBox>
-              <EventDescrBoxTitle>{t('Спеціаліст')}</EventDescrBoxTitle>
+              <EventDescrBoxTitle>{t('Le spécialiste')}</EventDescrBoxTitle>
               {specialist
                 .filter(
                   sp =>
@@ -364,7 +364,7 @@ export const EventDetails = ({ activeEvents }) => {
             data-modal="event"
             disabled={activeEvents.vacancies <= 0}
           >
-            {t('Реєстрація')}
+            {t('Inscription')}
           </BtnAccent>
         </Container>
       </EventsSection>

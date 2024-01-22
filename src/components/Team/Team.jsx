@@ -74,7 +74,7 @@ export const Team = () => {
   return (
     <Section>
       <Container>
-        <Title>{t('Наші спеціалісти')}</Title>
+        <Title>{t('Nos Spécialistes')}</Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (
@@ -120,7 +120,7 @@ export const Team = () => {
                           : specialist.description}
                       </Describe>
                       <BtnLink to={`/specialists/${specialist.specialistId}`}>
-                        <span>{t('Детальніше')}</span>
+                        <span>{t('Suivant')}</span>
                       </BtnLink>
                     </DetailsWrapper>
                   </TeamListItem>
@@ -134,7 +134,7 @@ export const Team = () => {
             aria-label="More specialists"
             onClick={() => end(8)}
           >
-            <span>{t('Показати більше')}</span>
+            <span>{t('Voir plus')}</span>
           </BtnMore>
         )}
       </Container>

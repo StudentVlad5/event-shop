@@ -26,7 +26,7 @@ export const AboutUs = () => {
   return (
     <Container>
       <AboutSection>
-        <Title>{t('Про нас')}</Title>
+        <Title>{t('A propos')}</Title>
         <Wrapper>
           <li
             data-aos="fade-right"
@@ -99,7 +99,7 @@ export const AboutUs = () => {
         </Wrapper>
       </AboutSection>
       <MessageSection>
-        <Title>{t('Є питання')}?</Title>
+        <Title>{t('Questions')}?</Title>
         <FormMessage />
       </MessageSection>
     </Container>

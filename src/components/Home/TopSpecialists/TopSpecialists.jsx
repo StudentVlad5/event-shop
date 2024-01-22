@@ -67,11 +67,11 @@ export const TopSpecialists = () => {
       }
     })();
   }, [selectedLanguage, t]);
-    
+
   return (
     <Section>
       <Container>
-        <Title>{t('Популярні спеціалісти')}</Title>
+        <Title>{t('Les spécialistes populaires')}</Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (
@@ -145,7 +145,7 @@ export const TopSpecialists = () => {
                           <BtnLink
                             to={`/specialists/${specialist.specialistId}`}
                           >
-                            <span>{t('Детальніше')}</span>
+                            <span>{t('Suivant')}</span>
                           </BtnLink>
                         </DetailsWrapper>
                       </TeamListItem>
@@ -203,7 +203,7 @@ export const TopSpecialists = () => {
                           <BtnLink
                             to={`/specialists/${specialist.specialistId}`}
                           >
-                            <span>{t('Детальніше')}</span>
+                            <span>{t('Suivant')}</span>
                           </BtnLink>
                         </DetailsWrapper>
                       </TeamListItem>
