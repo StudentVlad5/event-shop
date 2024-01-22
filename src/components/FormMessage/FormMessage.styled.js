@@ -6,7 +6,7 @@ import { BtnAccent } from 'components/baseStyles/Button.styled';
 export const FormList = styled(Form)`
   display: flex;
   flex-direction: column;
-  /* gap: 30px; */
+  gap: 30px;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     gap: 45px;
@@ -103,7 +103,7 @@ export const FormInput = styled(Field)`
 
 export const Error = styled.span`
   position: absolute;
-  bottom: -10px;
+  bottom: -15px;
   right: 0;
   z-index: 2;
 
@@ -120,14 +120,13 @@ export const Error = styled.span`
 `;
 
 export const FormBtn = styled(BtnAccent)`
-  margin-top: 30px;
+  /* margin-top: 30px;
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     margin-top: 0;
-  }
+  } */
 `;
 
 export const FormInputMessage = styled.textarea`
-  height: 158px;
   padding: 15px;
 
   font-family: ${theme.fonts[0]};
@@ -143,12 +142,12 @@ export const FormInputMessage = styled.textarea`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  /* 
+
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
-  } */
+    height: 100%;
+  }
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    height: 100%;
     max-width: 530px;
     padding: 25px 30px;
   }

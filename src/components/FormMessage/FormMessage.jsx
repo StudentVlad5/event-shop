@@ -81,12 +81,13 @@ export const FormMessage = ({ specialist }) => {
           <FieldsWrapper>
             <div>
               <FormLabel htmlFor="name">
-                <FormName>{t('Ім’я')}</FormName>
+                <FormName>{t('Le nom')}</FormName>
                 <FormInput
                   type="text"
                   name="name"
                   id="name"
-                  placeholder={specialist?.name ? specialist.name : 'Olga'}
+                  // placeholder={specialist?.name ? specialist.name : 'Olga'}
+                  placeholder={t('Le nom')}
                   value={values.name}
                   required
                 />
@@ -110,12 +111,12 @@ export const FormMessage = ({ specialist }) => {
               </FormLabel>
             </div>
             <FormLabel htmlFor="message">
-              <FormName>{t('Повідомлення')}</FormName>
+              <FormName>{t('Message')}</FormName>
               <FormInputMessage
                 type="text"
                 name="message"
                 id="message"
-                placeholder={t('Привіт! Я хотів би запитати про...')}
+                placeholder={t('Bonjour,')}
                 value={values.message}
                 required
                 rows="6"
@@ -130,7 +131,7 @@ export const FormMessage = ({ specialist }) => {
             </FormLabel>
           </FieldsWrapper>
           <FormBtn type="submit" disabled={isSubmitting} aria-label="Submit">
-            {t('Надіслати')}
+            {t('Envoyer')}
           </FormBtn>
         </FormList>
       )}

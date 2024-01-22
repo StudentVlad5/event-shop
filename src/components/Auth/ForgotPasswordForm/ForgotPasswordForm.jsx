@@ -71,10 +71,10 @@ const ForgotPasswordForm = () => {
       <Container>
         <Formik validationSchema={schemas.changePasswordSchema}>
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
-            <TitleLogin>{'Forgot Password'}</TitleLogin>
+            <TitleLogin>Forgot Password</TitleLogin>
             <FormField>
               <FormLabel htmlFor="email">
-                <span>{t('Email')}</span>
+                <span>E-mail</span>
                 {formik.errors.name && formik.touched.name ? (
                   <Error>{formik.errors.name}</Error>
                 ) : null}
@@ -106,11 +106,11 @@ const ForgotPasswordForm = () => {
               disabled={isValid}
               aria-label="submit to change password"
             >
-              {isLoading ? 'Loading' : 'Change'}{' '}
+              {isLoading ? 'Loading' : 'Change'}
             </BtnLight>
             <BoxText>
-              <span>{'Already have an account?'}</span>
-              <StyledLink to="/login">{'Log In'}</StyledLink>
+              <span>Already have an account?</span>
+              <StyledLink to="/login">Log In</StyledLink>
             </BoxText>
           </FormStyled>
         </Formik>

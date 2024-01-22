@@ -72,10 +72,10 @@ export const LoginForm = () => {
       <Container>
         <Formik validationSchema={schemas.schemasLogin}>
           <FormStyled onSubmit={formik.handleSubmit} autoComplete="off">
-            <TitleLogin hidden>{t('Log In')}</TitleLogin>
+            <TitleLogin hidden>Log In</TitleLogin>
             <FormField>
               <FormLabel htmlFor="email">
-                <span>{t('Email')}</span>
+                <span>Email</span>
                 {formik.errors.name && formik.touched.name ? (
                   <Error>{formik.errors.name}</Error>
                 ) : null}
@@ -97,7 +97,7 @@ export const LoginForm = () => {
             </FormField>
             <FormField>
               <FormLabel htmlFor="password">
-                <span>{t('Password')}</span>
+                <span>Password</span>
                 {formik.errors.name && formik.touched.name ? (
                   <Error>{formik.errors.name}</Error>
                 ) : null}
@@ -124,16 +124,14 @@ export const LoginForm = () => {
             </FormField>
             <FormContainer>
               <BoxText>
-                <StyledLink to="/forgot_password">
-                  {t('Forgot password?')}
-                </StyledLink>
+                <StyledLink to="/forgot_password">Forgot password?</StyledLink>
               </BoxText>
               <BtnLight
                 type="submit"
                 disabled={isValid}
                 aria-label="submit log in"
               >
-                {isLoading ? 'Loading' : t('Log In')}
+                {isLoading ? 'Loading' : 'Log In'}
               </BtnLight>
             </FormContainer>
           </FormStyled>

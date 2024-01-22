@@ -20,7 +20,7 @@ export const Footer = () => {
         <ContactsBox>
           {/* <Logo /> */}
           <Contacts>
-            <p>{t('Контакти')}</p>
+            <p>{t('Contactes')}</p>
             <ul>
               <li>
                 <a href="mailto:test@gmail.com" aria-label="email">
