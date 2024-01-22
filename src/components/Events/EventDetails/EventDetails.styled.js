@@ -138,7 +138,7 @@ export const EventImage = styled.img`
   width: 100%;
   height: auto;
   margin: 0 auto;
-  border-radius: 40px;
+  /* border-radius: 40px; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 1056px;
