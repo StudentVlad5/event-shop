@@ -74,67 +74,92 @@ export const FormMessage = ({ specialist }) => {
         errors,
         touched,
       }) => (
-        <FormList
-          autoComplete="off"
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-        >
-          <FieldsWrapper>
-            <LableBoxMes>
-              <FormLabel htmlFor="name">
-                <FormName>{t('Le nom')}</FormName>
-                <FormInput
-                  type="text"
-                  name="name"
-                  id="name"
-                  // placeholder={specialist?.name ? specialist.name : 'Olga'}
-                  placeholder={t('Le nom')}
-                  value={values.name}
-                  required
-                />
-                {errors.name && touched.name ? (
-                  <Error>{errors.name}</Error>
-                ) : null}
-              </FormLabel>
-              <FormLabel htmlFor="email">
-                <FormName>{t('E-mail')}</FormName>
-                <FormInput
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="test@gmail.com"
-                  value={values.email}
-                  required
-                />
-                {errors.email && touched.email ? (
-                  <Error>{errors.email}</Error>
-                ) : null}
-              </FormLabel>
-            </LableBoxMes>
-            <FormLabel htmlFor="message">
-              <FormName>{t('Message')}</FormName>
-              <FormInputMessage
-                type="text"
-                name="message"
-                id="message"
-                placeholder={t('Bonjour,')}
-                value={values.message}
-                required
-                // rows="6"
-                // cols="25"
-                onChange={e => {
-                  setFieldValue('message', e.target.value);
-                }}
-              />
-              {errors.state && touched.state ? (
-                <Error>{errors.state}</Error>
-              ) : null}
-            </FormLabel>
-          </FieldsWrapper>
-          <FormBtn type="submit" disabled={isSubmitting} aria-label="Submit">
-            {t('Envoyer')}
-          </FormBtn>
-        </FormList>
+        // <FormList
+        //   autoComplete="off"
+        //   onSubmit={handleSubmit}
+        //   onChange={handleChange}
+        // >
+        //   <FieldsWrapper>
+        //     <LableBoxMes>
+        //       <FormLabel htmlFor="name">
+        //         <FormName>{t('Le nom')}</FormName>
+        //         <FormInput
+        //           type="text"
+        //           name="name"
+        //           id="name"
+        //           // placeholder={specialist?.name ? specialist.name : 'Olga'}
+        //           placeholder={t('Le nom')}
+        //           value={values.name}
+        //           required
+        //         />
+        //         {errors.name && touched.name ? (
+        //           <Error>{errors.name}</Error>
+        //         ) : null}
+        //       </FormLabel>
+        //       <FormLabel htmlFor="email">
+        //         <FormName>{t('E-mail')}</FormName>
+        //         <FormInput
+        //           type="email"
+        //           name="email"
+        //           id="email"
+        //           placeholder="test@gmail.com"
+        //           value={values.email}
+        //           required
+        //         />
+        //         {errors.email && touched.email ? (
+        //           <Error>{errors.email}</Error>
+        //         ) : null}
+        //       </FormLabel>
+        //     </LableBoxMes>
+        //     <FormLabel htmlFor="message">
+        //       <FormName>{t('Message')}</FormName>
+        //       <FormInputMessage
+        //         type="text"
+        //         name="message"
+        //         id="message"
+        //         placeholder={t('Bonjour,')}
+        //         value={values.message}
+        //         required
+        //         // rows="6"
+        //         // cols="25"
+        //         onChange={e => {
+        //           setFieldValue('message', e.target.value);
+        //         }}
+        //       />
+        //       {errors.state && touched.state ? (
+        //         <Error>{errors.state}</Error>
+        //       ) : null}
+        //     </FormLabel>
+        //   </FieldsWrapper>
+        //   <FormBtn type="submit" disabled={isSubmitting} aria-label="Submit">
+        //     {t('Envoyer')}
+        //   </FormBtn>
+        // </FormList>
+        <>
+          <form
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              gap: 20,
+            }}
+          >
+            <label>
+              <input type="text" />
+            </label>
+            <label>
+              <input type="text" />
+            </label>
+            <label>
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+            </label>
+
+            <FormBtn type="submit" disabled={isSubmitting} aria-label="Submit">
+              {t('Envoyer')}
+            </FormBtn>
+          </form>
+        </>
       )}
     </Formik>
   );
