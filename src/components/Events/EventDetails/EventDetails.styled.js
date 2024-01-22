@@ -246,15 +246,23 @@ export const ImgBthBox = styled.div`
 export const NavLinkSpecialist = styled(NavLink)`
   color: ${theme.colors.grey2};
   font-family: ${theme.fonts[0]};
-  font-size: ${props => (props.$small ? '10px' : '12px')};
+  /* ${props => (props.$small ? '10px' : '12px')}; */
+  font-size: 17px;
   font-style: normal;
   font-weight: 500;
   line-height: 22.004px;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: underline;
+  transition: ${theme.transition};
+
+  &:hover,
+  &:focus {
+    color: ${theme.colors.accent};
+  }
+/* 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     font-size: ${props => (props.$small ? '12px' : '14px')};
-  }
+  } */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: ${props => (props.$small ? '16px' : '18px')};

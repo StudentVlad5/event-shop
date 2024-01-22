@@ -252,7 +252,10 @@ export const EventsList = ({
       </CleanFilterBtn>
       {noEvents && (
         <NoEvents>
-          {t('На дату')} {new Date(selectedDate).toLocaleDateString()}
+          {t('На дату')}{' '}
+          <span style={{ marginRight: 8 }}>
+            {new Date(selectedDate).toLocaleDateString()}
+          </span>
           {t('подій немає')}
         </NoEvents>
       )}

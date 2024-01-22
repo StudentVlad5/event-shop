@@ -19,6 +19,7 @@ import {
   QuantityWrapper,
   ArrowUpHandle,
   ArrowDownHandle,
+  TitleMesBox,
 } from './RegisterModal.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +29,6 @@ import { onFetchError, onSuccess } from 'helpers/Messages/NotifyMessages';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-
 
 export const RegisterModal = ({ activeEvents }) => {
   const { t } = useTranslation();
@@ -101,7 +101,9 @@ export const RegisterModal = ({ activeEvents }) => {
             <MdClose />
           </CloseBtn>
           <MessageSection>
-            <TitleMes>{t('Реєстрація на подію')}</TitleMes>
+            <TitleMesBox>
+              <TitleMes>{t('Реєстрація на подію')}</TitleMes>
+            </TitleMesBox>
             <Formik
               initialValues={{
                 name: '',
@@ -141,8 +143,22 @@ export const RegisterModal = ({ activeEvents }) => {
                           value={values.seats}
                           required
                         />
-                        <ArrowUpHandle onClick={(e)=>{e.preventDefault; values.seats = (Number(values.seats) + 1).toString()}}/>
-                        <ArrowDownHandle onClick={(e)=>{e.preventDefault; values.seats = (Number(values.seats) - 1).toString()}}/>
+                        <ArrowUpHandle
+                          onClick={e => {
+                            e.preventDefault;
+                            values.seats = (
+                              Number(values.seats) + 1
+                            ).toString();
+                          }}
+                        />
+                        <ArrowDownHandle
+                          onClick={e => {
+                            e.preventDefault;
+                            values.seats = (
+                              Number(values.seats) - 1
+                            ).toString();
+                          }}
+                        />
                       </QuantityWrapper>
                       {errors.seats && touched.seats ? (
                         <Error>{errors.seats}</Error>

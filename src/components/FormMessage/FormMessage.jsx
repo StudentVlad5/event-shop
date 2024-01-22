@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormList,
   FormName,
+  LableBoxMes,
 } from './FormMessage.styled';
 
 export const FormMessage = ({ specialist }) => {
@@ -79,7 +80,7 @@ export const FormMessage = ({ specialist }) => {
           onChange={handleChange}
         >
           <FieldsWrapper>
-            <div>
+            <LableBoxMes>
               <FormLabel htmlFor="name">
                 <FormName>{t('Ім’я')}</FormName>
                 <FormInput
@@ -108,7 +109,7 @@ export const FormMessage = ({ specialist }) => {
                   <Error>{errors.email}</Error>
                 ) : null}
               </FormLabel>
-            </div>
+            </LableBoxMes>
             <FormLabel htmlFor="message">
               <FormName>{t('Повідомлення')}</FormName>
               <FormInputMessage
@@ -118,8 +119,8 @@ export const FormMessage = ({ specialist }) => {
                 placeholder={t('Привіт! Я хотів би запитати про...')}
                 value={values.message}
                 required
-                rows="6"
-                cols="25"
+                // rows="6"
+                // cols="25"
                 onChange={e => {
                   setFieldValue('message', e.target.value);
                 }}
