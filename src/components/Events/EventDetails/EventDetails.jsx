@@ -302,7 +302,7 @@ export const EventDetails = ({ activeEvents }) => {
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>
-                  {t('кількість вільних місць')}
+                  {t('місць')}
                 </HeadingItemTitle>
                 <HeadingItemData>
                   {vacancies}/{seats}
