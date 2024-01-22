@@ -252,7 +252,7 @@ export const EventsList = ({
       </CleanFilterBtn>
       {noEvents && (
         <NoEvents>
-          {t('Pour cette date')} {new Date(selectedDate).toLocaleDateString()}
+          {/* {t('Pour cette date')} {new Date(selectedDate).toLocaleDateString()} */}
           {t("Il n'y a pas des evenements")}
         </NoEvents>
       )}
