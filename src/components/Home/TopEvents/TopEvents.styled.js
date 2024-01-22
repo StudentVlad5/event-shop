@@ -77,7 +77,7 @@ export const ViewportBox = styled.div`
 export const ItemImg = styled.img`
   width: 350px;
   height: 300px;
-  border-radius: 40px;
+  /* border-radius: 40px; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     width: 402px;

@@ -150,10 +150,10 @@ export const FormInputMessage = styled.textarea`
   background: ${theme.colors.white};
   border: 1px solid ${theme.colors.grey2};
   border-radius: 10px;
+
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  text-indent: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 100%;

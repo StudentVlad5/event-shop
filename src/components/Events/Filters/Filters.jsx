@@ -333,7 +333,7 @@ export const Filters = ({
                     : theme.colors.grey1
                 }
               >
-                {t('Places disponibles')}
+                {t('places disponibles')}
                 {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
               </FiltersBtnMenu>
 
@@ -351,7 +351,7 @@ export const Filters = ({
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
-                  <li>
+                  {/* <li>
                     <FiltersMenuOpenLabel>
                       <FiltersMenuOpenInput
                         type="checkbox"
@@ -362,7 +362,7 @@ export const Filters = ({
                         {t("Il n'y a pas de places libres")}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
-                  </li>
+                  </li> */}
                 </FiltersMenuOpen>
               )}
             </FiltersMenuMobileBox>

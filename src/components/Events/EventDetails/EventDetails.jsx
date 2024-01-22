@@ -207,7 +207,6 @@ export const EventDetails = ({ activeEvents }) => {
     <>
       <EventsSection>
         <Container>
-    
           <BtnBack type="button" onClick={goBack}>
             <HiArrowLeft size={16} />
             {t('Retour')}
@@ -302,16 +301,14 @@ export const EventDetails = ({ activeEvents }) => {
                 </HeadingItemDataBox>
               </HeadingItem>
               <HeadingItem>
-                <HeadingItemTitle>
-                  {t('Places disponibles')}
-                </HeadingItemTitle>
+                <HeadingItemTitle>{t('Places disponibles')}</HeadingItemTitle>
                 <HeadingItemData>
                   {vacancies}/{seats}
                 </HeadingItemData>
               </HeadingItem>
               <HeadingItem>
                 <HeadingItemTitle>{t('Prix')}</HeadingItemTitle>
-                <HeadingItemData>{price}</HeadingItemData>
+                <HeadingItemData>{price} €</HeadingItemData>
               </HeadingItem>
             </EventHeading2>
           </InfoBox>

@@ -30,7 +30,7 @@ export const EventNavLink = styled.div`
 export const EventImages = styled.img`
   width: 350px;
   height: 300px;
-  border-radius: 40px;
+  /* border-radius: 40px; */
   /* transition: ${theme.transition}; */
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
@@ -162,7 +162,7 @@ export const CleanFilterBtn = styled.button`
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 20px;
-  margin-top: 30px;
+    margin-top: 30px;
   }
 `;
 
