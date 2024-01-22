@@ -22,9 +22,8 @@ import {
   ImgBox,
   ItemImg,
   Name,
-  TeamListItem,
-} from 'components/Team/Team.styled';
-import { Pagination, BtnPagination } from './TopSpecialists.styled';
+  } from 'components/Team/Team.styled';
+import { Pagination, BtnPagination, TeamListItem } from './TopSpecialists.styled';
 import { ViewportBox } from '../TopEvents/TopEvents.styled';
 
 export const TopSpecialists = () => {

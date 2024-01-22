@@ -14,14 +14,14 @@ export const Menu = ({ onClose }) => {
       <MobileNavigation onClick={() => onClose()}>
         <ul>
           <li>
-            <NavLink to="/" aria-label="Home" data-info="Home">
+            <NavLink to="/" aria-label={t('Accueil')} data-info="Home">
               {t('Accueil')}
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/specialists"
-              aria-label="The team of specialists"
+              aria-label={t('Les spécialistes')}
               data-info="Team"
             >
               {t('Les spécialistes')}
@@ -30,7 +30,7 @@ export const Menu = ({ onClose }) => {
           <li>
             <NavLink
               to="/events"
-              aria-label="Events calendar"
+              aria-label={t('Caléndrier des evenements')}
               data-info="Events calendar"
             >
               {t('Caléndrier des evenements')}
@@ -39,7 +39,7 @@ export const Menu = ({ onClose }) => {
           <li>
             <NavLink
               to="/about"
-              aria-label="More information about us"
+              aria-label={t('A propos')}
               data-info="About"
             >
               {t('A propos')}

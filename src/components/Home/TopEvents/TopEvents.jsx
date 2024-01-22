@@ -28,6 +28,7 @@ import {
   Head,
   DateTime,
   ViewportBox,
+  EventList,
 } from './TopEvents.styled';
 
 export const TopEvents = () => {
@@ -208,46 +209,48 @@ export const TopEvents = () => {
                   .map((event, i) => {
                     return (
                       <SwiperSlide key={i}>
-                        <EventListItem>
-                          <ItemImg
-                            src={
-                              event.image
-                                ? BASE_URL_IMG +
-                                  'events/' +
-                                  event.image.split('/')[
-                                    event.image.split('/').length - 1
-                                  ]
-                                : defaultImg
-                            }
-                            alt={event.name}
-                            width="402"
-                            height="366"
-                            loading="lazy"
-                          ></ItemImg>
-                          <DetailsWrapper>
-                            <Name>{event.name}</Name>
-                            <DateTimeWrapper>
-                              <li>
-                                <Head>{t('Date')}</Head>
-                                <DateTime>
-                                  {new Date(event.date).toLocaleDateString()}
-                                </DateTime>
-                              </li>
-                              <li>
-                                <Head>{t('Heure')}</Head>
-                                <DateTime>{event.time}</DateTime>
-                              </li>
-                            </DateTimeWrapper>
-                            <Describe>
-                              {event.description.length > 50
-                                ? event.description.slice(0, 50) + ' ...'
-                                : event.description}
-                            </Describe>
-                            <BtnLink to={`/events/${event._id}`}>
-                              <span>{t('Suivant')}</span>
-                            </BtnLink>
-                          </DetailsWrapper>
-                        </EventListItem>
+                        <EventList>
+                          <EventListItem>
+                            <ItemImg
+                              src={
+                                event.image
+                                  ? BASE_URL_IMG +
+                                    'events/' +
+                                    event.image.split('/')[
+                                      event.image.split('/').length - 1
+                                    ]
+                                  : defaultImg
+                              }
+                              alt={event.name}
+                              width="402"
+                              height="366"
+                              loading="lazy"
+                            ></ItemImg>
+                            <DetailsWrapper>
+                              <Name>{event.name}</Name>
+                              <DateTimeWrapper>
+                                <li>
+                                  <Head>{t('Date')}</Head>
+                                  <DateTime>
+                                    {new Date(event.date).toLocaleDateString()}
+                                  </DateTime>
+                                </li>
+                                <li>
+                                  <Head>{t('Heure')}</Head>
+                                  <DateTime>{event.time}</DateTime>
+                                </li>
+                              </DateTimeWrapper>
+                              <Describe>
+                                {event.description.length > 50
+                                  ? event.description.slice(0, 50) + ' ...'
+                                  : event.description}
+                              </Describe>
+                              <BtnLink to={`/events/${event._id}`}>
+                                <span>{t('Suivant')}</span>
+                              </BtnLink>
+                            </DetailsWrapper>
+                          </EventListItem>
+                        </EventList>
                       </SwiperSlide>
                     );
                   })}

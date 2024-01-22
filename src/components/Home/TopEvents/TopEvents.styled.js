@@ -56,7 +56,7 @@ export const EventList = styled.ul`
   }
 `;
 
-export const EventListItem = styled.li`
+export const EventListItem = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
