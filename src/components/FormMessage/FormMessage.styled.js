@@ -18,7 +18,7 @@ export const FieldsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  /* gap: 20px; */
+  gap: 20px;
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
@@ -127,11 +127,11 @@ export const FormBtn = styled(BtnAccent)`
 `;
 
 export const LableBoxMes = styled.div`
-  margin-bottom: 20px;
+  /* margin-bottom: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     margin-bottom: 0;
-  }
+  } */
 `;
 
 export const FormInputMessage = styled.textarea`
