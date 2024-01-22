@@ -1,13 +1,19 @@
-import { Form, Field } from "formik";
-import styled from "styled-components";
-import { theme } from "components/baseStyles/Variables.styled";
-import { Section, Title } from "components/baseStyles/CommonStyle.styled";
-import ArrowUp from "../../../images/arrow_up_24px.svg";
-import ArrowDown from "../../../images/arrow_down_24px.svg";
+import { Form, Field } from 'formik';
+import styled from 'styled-components';
+import { theme } from 'components/baseStyles/Variables.styled';
+import { Section, Title } from 'components/baseStyles/CommonStyle.styled';
+import ArrowUp from '../../../images/arrow_up_24px.svg';
+import ArrowDown from '../../../images/arrow_down_24px.svg';
 
 export const MessageSection = styled(Section)`
   padding: 0;
 `;
+
+export const TitleMesBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const TitleMes = styled(Title)`
   text-align: center;
   font-size: 32px;
@@ -15,6 +21,10 @@ export const TitleMes = styled(Title)`
   font-weight: 400;
   line-height: 120%; /* 57.6px */
   margin-bottom: 15px;
+  width: 245px;
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    width: 100%;
+  }
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     font-size: 48px;
     margin-bottom: 25px;
@@ -117,14 +127,14 @@ export const FormInput = styled(Field)`
   }
 `;
 export const FormInputSeats = styled(FormInput)`
-  font-size: 36px;
+  /* font-size: 36px; */
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     padding: 14px 30px 15px;
-    font-size: 36px;
+    /* font-size: 36px; */
   }
-  &::placeholder {
+  /* &::placeholder {
     font-size: 36px;
-  }
+  } */
   &::-webkit-outer-spin-button {
     height: 80px;
     opacity: 0;
@@ -201,7 +211,7 @@ export const ArrowUpHandle = styled.div`
   right: 12px;
   height: 30px;
   width: 30px;
-  top: 8px;
+  top: 1px;
   background-image: url(${ArrowUp});
   background-size: 30px 30px;
   cursor: pointer;
@@ -224,7 +234,7 @@ export const ArrowDownHandle = styled.div`
   right: 12px;
   height: 30px;
   width: 30px;
-  bottom: 8px;
+  bottom: -2px;
   background-image: url(${ArrowDown});
   background-size: 30px 30px;
   cursor: pointer;

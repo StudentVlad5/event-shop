@@ -19,6 +19,7 @@ import {
   QuantityWrapper,
   ArrowUpHandle,
   ArrowDownHandle,
+  TitleMesBox,
 } from './RegisterModal.styled';
 import { Backdrop, CloseBtn, Modal } from 'components/baseStyles/Modal.styled';
 import { useTranslation } from 'react-i18next';

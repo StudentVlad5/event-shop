@@ -27,6 +27,17 @@ export const HeaderContainer = styled(Container)`
   justify-content: space-between;
   align-content: center;
   text-align: left;
+
+  padding: 0;
+
+  @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    padding: 0 30px;
+  }
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    max-width: ${theme.breakpoints.desktop};
+    padding: 0 80px;
+  }
 `;
 
 export const Navigation = styled.nav`
