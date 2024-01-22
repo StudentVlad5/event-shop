@@ -153,6 +153,7 @@ export const FormInputMessage = styled.textarea`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  text-indent: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 100%;
