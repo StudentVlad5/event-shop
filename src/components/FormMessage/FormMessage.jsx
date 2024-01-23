@@ -48,6 +48,12 @@ export const FormMessage = ({ specialist }) => {
     message: Yup.string().required('Required'),
   });
 
+  console.log('FormMessage ~ navigator.userAgent:', navigator.userAgent);
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    textareas = document.getElementsById('textarea');
+    textareas[i].style['margin-bottom'] = '20px';
+  }
+
   return (
     <Formik
       initialValues={{
@@ -122,8 +128,8 @@ export const FormMessage = ({ specialist }) => {
                 )}
                 value={values.message}
                 required
-                // rows="6"
-                // cols="25"
+                rows="6"
+                cols="25"
                 onChange={e => {
                   setFieldValue('message', e.target.value);
                 }}
