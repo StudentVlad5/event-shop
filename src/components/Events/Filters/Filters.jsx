@@ -347,7 +347,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('yes')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                        {t('Il y a des places libres')}
+                        {t('Il y a des places disponibles')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -359,7 +359,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('no')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                        {t("Il n'y a pas de places libres")}
+                        {t("Il n'y a pas de places disponibles")}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li> */}
@@ -584,7 +584,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('yes')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                      {t('Il y a des places libres')}
+                      {t('Il y a des places disponibles')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -596,7 +596,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('no')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                      {t("Il n'y a pas de places libres")}
+                      {t("Il n'y a pas de places disponibles")}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>

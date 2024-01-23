@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { theme } from 'components/baseStyles/Variables.styled';
-import { Container, Section } from 'components/baseStyles/CommonStyle.styled';
+import {
+  Container,
+  Section,
+  Title,
+} from 'components/baseStyles/CommonStyle.styled';
 
 import hero_mob_png from 'images/hero/hero_mob.png';
 import hero_mob_png_2x from 'images/hero/hero_mob@2x.png';
@@ -20,7 +24,7 @@ import hero_desk_webp_2x from 'images/hero/hero_desk@2x.webp';
 import hero_inf_png from 'images/hero/hero_inf.png';
 import hero_inf_webp from 'images/hero/hero_inf.webp';
 
-import hero_png from 'images/hero/hero.jpg';
+import hero_jpg from 'images/hero/hero.jpg';
 import hero_webp from 'images/hero/hero.webp';
 
 export const HeroSection = styled(Section)`
@@ -30,10 +34,10 @@ export const HeroSection = styled(Section)`
   padding: 0;
 
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   background-size: cover;
 
-  background-image: url(${hero_png});
+  background-image: url(${hero_jpg});
   background-image: -webkit-image-set(url(${hero_webp}) 1x);
   /* 
   background-image: url(${hero_mob_png});
@@ -89,6 +93,14 @@ export const HeroContainer = styled(Container)`
   }
 `;
 
+export const HeroTitle = styled(Title)`
+  margin-bottom: 0;
+
+  @media screen and (min-width: ${theme.breakpoints.desktop}) {
+    margin-bottom: 0;
+  }
+`;
+
 export const TextWrapper = styled.div`
   position: absolute;
   top: 0;
@@ -99,7 +111,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
 
   width: calc(100% - 60px);
   height: 100%;

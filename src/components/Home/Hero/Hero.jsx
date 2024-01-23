@@ -1,6 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { HeroSection, HeroContainer, TextWrapper } from './Hero.styled';
-import { Subtitle, Title } from 'components/baseStyles/CommonStyle.styled';
+import {
+  HeroSection,
+  HeroContainer,
+  HeroTitle,
+  TextWrapper,
+} from './Hero.styled';
+import { Subtitle } from 'components/baseStyles/CommonStyle.styled';
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -9,7 +14,7 @@ export const Hero = () => {
     <HeroSection>
       <HeroContainer>
         <TextWrapper>
-          <Title
+          <HeroTitle
             $white
             // data-aos="fade-right"
             data-aos="zoom-in"
@@ -17,7 +22,7 @@ export const Hero = () => {
             data-aos-duration="1000"
           >
             {t('Bienvenue sur BloomSkill')}
-          </Title>
+          </HeroTitle>
           <Subtitle
             $white
             // data-aos="fade-left"
@@ -26,6 +31,7 @@ export const Hero = () => {
             data-aos-duration="1500"
           >
             {t('une oasis créative unique pour les esprits créatifs.')}
+            <br />
             <br />
             {t(
               "Vous trouverez ici une variété de cours, des ateliers, des sessions et des consultations de groupe couvrant un large éventail de domaines - de l'art de la photographie à la maîtrise du tricot. Notre objectif est de devenir votre guide dans le monde de la créativité, où chacun peut trouver ce qui l'inspire et le fait progresser."
