@@ -15,13 +15,15 @@ export const FormList = styled(Form)`
 `;
 
 export const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  grid-gap: 20px;
+  /* gap: 20px; */
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    display: grid;
+    align-items: center;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
   }
@@ -127,11 +129,11 @@ export const FormBtn = styled(BtnAccent)`
 `;
 
 export const LableBoxMes = styled.div`
-  /* margin-bottom: 20px;
+  margin-bottom: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     margin-bottom: 0;
-  } */
+  }
 `;
 
 export const FormInputMessage = styled.textarea`
