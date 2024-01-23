@@ -4,7 +4,7 @@ export const Logo = () => {
   return (
     <SLink to="/" aria-label="logo company">
       <LogoIcon />
-      <span>BloomSkill</span>
+      {/* <span>BloomSkill</span> */}
     </SLink>
   );
 };

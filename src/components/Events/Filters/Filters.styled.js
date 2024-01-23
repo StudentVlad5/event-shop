@@ -19,7 +19,7 @@ export const FiltersBox = styled.div`
 export const FiltersBtn = styled.button`
   display: flex;
   align-items: center;
-  color: ${(props) => props.$props};;
+  color: ${props => props.$props};
   font-family: ${theme.fonts[0]};
   font-size: 20px;
   font-style: normal;
@@ -39,9 +39,6 @@ export const ArrowIcon = styled(MdKeyboardArrowRight)`
   width: 30px;
   height: 30px;
   transform: rotate(90deg);
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    /* display: none; */
-  }
 `;
 
 export const ArrowIconUp = styled(MdKeyboardArrowRight)`
@@ -49,24 +46,53 @@ export const ArrowIconUp = styled(MdKeyboardArrowRight)`
   height: 30px;
 
   transform: rotate(-90deg);
-  @media screen and (min-width: ${theme.breakpoints.desktop}) {
-    /* display: none; */
+`;
+
+export const ArrowMobileIcon = styled(MdKeyboardArrowRight)`
+  position: absolute;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  transform: rotate(90deg);
+`;
+
+export const ArrowMobileIconUp = styled(MdKeyboardArrowRight)`
+  position: absolute;
+  right: 0;
+  width: 30px;
+  height: 30px;
+
+  transform: rotate(-90deg);
+`;
+
+export const FiltersMenuMobileBox = styled.div`
+  color: ${props => props.$props};
+  position: relative;
+  &:last-child {
+    padding-top: 7px;
+  }
+  &:not(:last-child) {
+    padding: 7px 0;
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 180px;
+      border-bottom: 1px solid ${theme.colors.grey2};
+    }
   }
 `;
 
 export const FiltersMenu = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  display: block;
   position: absolute;
-  left: -15px;
+  /* left: -15px; */
   z-index: 1;
   background-color: ${theme.colors.fon};
   width: 215px;
-  padding: 10px;
-  border-radius: 0px 0px 20px 20px;
+  padding: 20px 15px;
+  border-radius: 5px;
   border: 1px solid ${theme.colors.accent};
-  border-top: 0px;
 
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     display: none;
@@ -76,7 +102,7 @@ export const FiltersMenu = styled.div`
 export const FiltersBtnMenu = styled.button`
   display: flex;
   align-items: center;
-  color: ${(props) => props.$props};
+  color: ${props => props.$props};
   font-family: ${theme.fonts[0]};
   font-size: 18px;
   font-style: normal;
@@ -85,8 +111,10 @@ export const FiltersBtnMenu = styled.button`
   text-transform: capitalize;
   background-color: transparent;
   border-color: transparent;
+  text-align: left;
   cursor: pointer;
   transition: ${theme.transition};
+  padding: 0;
 
   &:hover {
     color: ${theme.colors.accent};
@@ -101,9 +129,11 @@ export const FiltersMenuOpen = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: ${(props) => props.$props};
+  color: ${props => props.$props};
   gap: 5px;
   position: relative;
+  margin-left: 5px;
+
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     position: absolute;
     /* top: 60px; */
@@ -114,6 +144,7 @@ export const FiltersMenuOpen = styled.ul`
     border-radius: 0px 0px 20px 20px;
     border: 1px solid ${theme.colors.accent};
     border-top: 0px;
+    margin-left: 0;
   }
 `;
 
@@ -127,7 +158,7 @@ export const FiltersMenuOpenText = styled.p`
   transition: ${theme.transition};
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: ${theme.colors.accent};
   }
 
@@ -148,7 +179,7 @@ export const FiltersMenuDesktop = styled.div`
 
 export const FiltersMenuDesktopBox = styled.div`
   margin-right: 0;
-  
+
   @media screen and (min-width: ${theme.breakpoints.desktop}) {
     &:not(:last-child) {
       margin-right: 80px;
@@ -157,25 +188,25 @@ export const FiltersMenuDesktopBox = styled.div`
 `;
 
 export const LanguageIcon = styled(language)`
-  stroke: ${(props) => props.$props};
+  stroke: ${props => props.$props};
   margin-right: 5px;
 `;
 
 export const ListIcon = styled(list)`
-  stroke: ${(props) => props.$props};
-  fill: ${(props) => props.$props};
+  stroke: ${props => props.$props};
+  fill: ${props => props.$props};
   margin-right: 5px;
 `;
 
 export const LocationIcon = styled(location)`
-  stroke: ${(props) => props.$props};
-  fill: ${(props) => props.$props} ;
+  stroke: ${props => props.$props};
+  fill: ${props => props.$props};
   margin-right: 5px;
 `;
 
 export const ChairIcon = styled(chair)`
-  stroke: ${(props) => props.$props};
-  fill: ${(props) => props.$props};
+  stroke: ${props => props.$props};
+  fill: ${props => props.$props};
   margin-right: 5px;
 `;
 
@@ -206,12 +237,4 @@ export const FiltersMenuOpenInput = styled.input`
     display: block;
     transition: fill 0.2s ease-in-out;
   }
-`;
-
-export const FiltersMenuMobileBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: ${(props) => props.$props};
 `;
