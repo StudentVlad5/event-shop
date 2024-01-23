@@ -17,7 +17,7 @@
   "Suivant": "Подробнее",
   "Le nom": "Имя",
   "Message": "Сообщение",
-  "Bonjour,": "Привет! Я бы хотел узнать про …",
+  "Bonjour, Je voudrais poser une question sur...": "Привет! Я бы хотел узнать про …",
   "S'inscrire à l'evenement": "Регистрация на мероприятие",
   "Inscription": "Регистрация",
   "Places": "Мест",
@@ -48,6 +48,6 @@
   "Catégorie": "категория",
   "places disponibles": "свободных мест",
   "Prix": "цена",
-  "Il y a des places libres": "Есть свободные места",
-  "Il n'y a pas de places libres": "Свободных мест нет"
+  "Il y a des places disponibles": "Есть свободные места",
+  "Il n'y a pas de places disponibles": "Свободных мест нет"
 }

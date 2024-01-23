@@ -46,8 +46,12 @@ export const FormLabel = styled.label`
   width: 100%;
   height: 100%;
 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
   @supports (-webkit-touch-callout: none) and (not (translate: none)) {
-    &:not(:last-child) {
+    &:last-child {
       margin-bottom: 20px;
     }
   }
@@ -160,8 +164,6 @@ export const FormInputMessage = styled.textarea`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  text-indent: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 100%;
