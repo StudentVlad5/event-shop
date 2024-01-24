@@ -26,6 +26,7 @@ export const BtnPagination = styled.div`
 
   cursor: pointer;
   transition: ${theme.transition};
+  user-select: none;
 
   &:hover,
   &:focus {
