@@ -15,7 +15,7 @@ import default_user_img from "../../../images/defaultUserPhoto.jpg";
 import { useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import { getUser, getUserAvatar } from "../../../redux/auth/selectors";
-import { BASE_URL_AVATAR } from "helpers/constants";
+
 
 
 const Item = ({ title, to, icon, selected, setSelected, className }) => {
@@ -46,7 +46,7 @@ const Sidebar = () => {
   let avatar;
   if (userAvatar !== '' && userAvatar !== undefined) {
   avatar =
-      BASE_URL_AVATAR + userAvatar.split('/')[userAvatar.split('/').length - 1];
+  "https://event-shop-backend.vercel.app/uploads/avatars/" + userAvatar.split('/')[userAvatar.split('/').length - 1];
   }
   return (
     <Box
