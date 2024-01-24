@@ -94,12 +94,12 @@ const Events = () => {
     events[it].image_1 ? data.image_1 = events[it].image_1 : data.image_1= "";
     events[it].image_2 ? data.image_2 = events[it].image_2 : data.image_2 = "";
     events[it].rating ? data.rating = events[it].rating : data.rating = "";
-    events[it].fr.name ? data.nameFr = events[it].fr.name : data.nameFr = "";
-    events[it].ua.name ? data.nameUa = events[it].ua.name : data.nameUa = "";
-    events[it].ru.name ? data.nameRu = events[it].ru.name : data.nameRu = "";
-    events[it].fr.description ? data.descriptionFr = events[it].fr.description : data.descriptionFr = "";
-    events[it].ua.description ? data.descriptionUa = events[it].ua.description : data.descriptionUa = "";
-    events[it].ru.description ? data.descriptionRu = events[it].ru.description : data.descriptionRu = "";
+    events[it].fr?.name ? data.nameFr = events[it].fr.name : data.nameFr = "";
+    events[it].ua?.name ? data.nameUa = events[it].ua.name : data.nameUa = "";
+    events[it].ru?.name ? data.nameRu = events[it].ru.name : data.nameRu = "";
+    events[it].fr?.description ? data.descriptionFr = events[it].fr.description : data.descriptionFr = "";
+    events[it].ua?.description ? data.descriptionUa = events[it].ua.description : data.descriptionUa = "";
+    events[it].ru?.description ? data.descriptionRu = events[it].ru.description : data.descriptionRu = "";
     listOfEvents.push(data)};
 
     async function sendImg(e) {
@@ -174,7 +174,7 @@ const Events = () => {
     { field: "categoryName_second", headerName: "Category 2", flex: 0.5, editable: true,type: "singleSelect", valueOptions: categoriesNames },
     { field: "categoryName_third", headerName: "Category 3", flex: 0.5, editable: true,type: "singleSelect", valueOptions: categoriesNames },
     { field: "duration", headerName: "Duration", flex: 0.5, editable: true },
-    { field: "rating", headerName: "Rating", flex: 0.5, editable: true, type: "singleSelect", valueOptions: ["1", "2", "3", "4", "5","6", "7", "8", "9", "10"], },
+    { field: "rating", headerName: "Rating", flex: 0.5, editable: true, type: "singleSelect", valueOptions: [1, 2, 3, 4, 5,6, 7, 8, 9, 10] },
     {
       field: "descriptionFr",
       headerName: "Description FR",
@@ -244,11 +244,11 @@ const Events = () => {
       },
     },
     { field: "image", headerName: "Image", editable: false,
-    renderCell: (params) => <><label htmlFor={params.id}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + 'events/' + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id} name={params.id} data-info={params.id} data-name="image" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
+    renderCell: (params) => <><label htmlFor={params.id}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id} name={params.id} data-info={params.id} data-name="image" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
     { field: "image_1", headerName: "Image", editable: false,
-    renderCell: (params) => <><label htmlFor={params.id + '1'}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + 'events/' + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id  + '1'} name={params.id} data-info={params.id} data-name="image_1" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
+    renderCell: (params) => <><label htmlFor={params.id + '1'}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id  + '1'} name={params.id} data-info={params.id} data-name="image_1" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
     { field: "image_2", headerName: "Image", editable: false,
-    renderCell: (params) => <><label htmlFor={params.id + '2'}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + 'events/' + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id  + '2'} name={params.id} data-info={params.id} data-name="image_2" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
+    renderCell: (params) => <><label htmlFor={params.id + '2'}><img className="eventAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputEventAvatar" type="file" id={params.id  + '2'} name={params.id} data-info={params.id} data-name="image_2" accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
   ];
   
   const [rows, setRows] = useState(listOfEvents);

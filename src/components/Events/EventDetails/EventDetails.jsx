@@ -250,7 +250,6 @@ export const EventDetails = ({ activeEvents }) => {
                 src={
                   image
                     ? BASE_URL_IMG +
-                      'events/' +
                       image.split('/')[image.split('/').length - 1]
                     : defaultImg
                 }

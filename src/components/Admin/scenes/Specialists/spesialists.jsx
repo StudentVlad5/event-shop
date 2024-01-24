@@ -23,7 +23,7 @@ import { updateSpecialistData, createSpecialistData, deleteSpecialistData, creat
 import { onLoaded, onLoading } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { getSpecialists } from '../../../../redux/specialists/operation';
-import { BASE_URL_IMG } from "helpers/constants";
+import { BASE_URL_AVATAR } from "helpers/constants";
 import default_user_img from "images/defaultUserPhoto.jpg";
 
 function EditToolbar({ setRows, setRowModesModel }) {
@@ -150,7 +150,7 @@ const Specialists = () => {
     { field: "email", headerName: "Email", flex: 0.5, editable: true },
     { field: "phone", headerName: "Phone", flex: 0.5, editable: true },
     { field: "status", headerName: "Status", flex: 0.5, editable: true, type: "singleSelect", valueOptions: ["active", "blocked"],},
-    { field: "rating", headerName: "Rating", flex: 0.5, editable: true, type: "singleSelect", valueOptions: ["1", "2", "3", "4", "5","6", "7", "8", "9", "10"], },
+    { field: "rating", headerName: "Rating", flex: 0.5, editable: true, type: "singleSelect", valueOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
     {
       field: "descriptionFr",
       headerName: "Description FR",
@@ -222,7 +222,7 @@ const Specialists = () => {
       },
     },
     { field: "image", headerName: "Image", editable: false,
-    renderCell: (params) => <><label htmlFor={params.id}><img className="specialistAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_IMG + 'avatars/' + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputSpecialistAvatar" type="file" id={params.id} name={params.id} data-info={params.id} accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
+    renderCell: (params) => <><label htmlFor={params.id}><img className="specialistAvatar" src={(params.value === undefined || params.value === "") ? default_user_img : BASE_URL_AVATAR + params.value.split('/')[params.value.split('/').length - 1]} /></label><input className="inputSpecialistAvatar" type="file" id={params.id} name={params.id} data-info={params.id} accept="image/png, image/jpeg, image/jpg, image/webp, image/.gif" onChange ={(e) => sendImg(e)}/></>, cellClassName: 'img-app-theme--cell'},
   ];
   
   const [rows, setRows] = useState(listOfSpecialists);

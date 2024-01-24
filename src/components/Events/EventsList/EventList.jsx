@@ -271,7 +271,6 @@ export const EventsList = ({
                     src={
                       event.image
                         ? BASE_URL_IMG +
-                          'events/' +
                           event.image.split('/')[
                             event.image.split('/').length - 1
                           ]
