@@ -4,7 +4,7 @@ import { fetchData } from 'services/APIservice';
 import { onLoading, onLoaded } from 'helpers/Loader/Loader';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
-import { BASE_URL_IMG } from 'helpers/constants';
+import { BASE_URL_AVATAR } from 'helpers/constants';
 import defaultImg from 'images/defaultUserPhoto.jpg';
 import {
   Container,
@@ -99,8 +99,7 @@ export const Team = () => {
                       <ItemImg
                         src={
                           specialist.image
-                            ? BASE_URL_IMG +
-                              'avatars/' +
+                            ? BASE_URL_AVATAR +
                               specialist.image.split('/')[
                                 specialist.image.split('/').length - 1
                               ]

@@ -11,7 +11,7 @@ import { onFetchError } from 'helpers/Messages/NotifyMessages';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { FormMessage } from 'components/FormMessage/FormMessage';
 import { BackButton } from 'helpers/BackLink/BackLink';
-import { BASE_URL_IMG } from 'helpers/constants';
+import { BASE_URL_AVATAR, BASE_URL_IMG } from 'helpers/constants';
 import defaultImg from 'images/defaultUserPhoto.jpg';
 import {
   Container,
@@ -171,8 +171,7 @@ export const Specialist = ({ specialist }) => {
         <Image
           src={
             image
-              ? BASE_URL_IMG +
-                'avatars/' +
+              ? BASE_URL_AVATAR +
                 image.split('/')[image.split('/').length - 1]
               : defaultImg
           }
@@ -240,7 +239,6 @@ export const Specialist = ({ specialist }) => {
                           src={
                             event.image
                               ? BASE_URL_IMG +
-                                'events/' +
                                 event.image.split('/')[
                                   event.image.split('/').length - 1
                                 ]
@@ -317,7 +315,6 @@ export const Specialist = ({ specialist }) => {
                               src={
                                 event.image
                                   ? BASE_URL_IMG +
-                                    'events/' +
                                     event.image.split('/')[
                                       event.image.split('/').length - 1
                                     ]
@@ -412,7 +409,6 @@ export const Specialist = ({ specialist }) => {
                               src={
                                 event.image
                                   ? BASE_URL_IMG +
-                                    'events/' +
                                     event.image.split('/')[
                                       event.image.split('/').length - 1
                                     ]
@@ -503,7 +499,6 @@ export const Specialist = ({ specialist }) => {
                               src={
                                 event.image
                                   ? BASE_URL_IMG +
-                                    'events/' +
                                     event.image.split('/')[
                                       event.image.split('/').length - 1
                                     ]
