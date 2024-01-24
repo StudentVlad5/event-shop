@@ -60,7 +60,7 @@ export const Filters = ({
     }));
   };
 
-  const handleFilterToggle = (filterNumber) => {
+  const handleFilterToggle = filterNumber => {
     toggleVisibility(filterNumber);
     if (activeFilter === filterNumber) {
       setActiveFilter(null);
@@ -405,7 +405,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('no')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                        {t("Il n'y a pas de places disponibles")}
+                        {t("Il n'y a pas des places disponible")}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li> */}
@@ -642,7 +642,7 @@ export const Filters = ({
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
-                <li>
+                {/* <li>
                   <FiltersMenuOpenLabel>
                     <FiltersMenuOpenInput
                       type="checkbox"
@@ -650,10 +650,10 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('no')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                      {t("Il n'y a pas de places disponibles")}
+                      {t("Il n'y a pas des places disponible")}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
-                </li>
+                </li> */}
               </FiltersMenuOpen>
             )}
           </FiltersMenuDesktopBox>
