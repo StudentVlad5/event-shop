@@ -23,13 +23,13 @@ export const Footer = () => {
             <p>{t('Contactes')}</p>
             <ul>
               <li>
-                <a href="mailto:test@gmail.com" aria-label="email">
-                  test@gmail.com
+                <a href="mailto:bloomskill@gmail.com" aria-label="email">
+                  bloomskill@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:+123456789" aria-label="phone">
-                  +123456789
+                <a href="tel:+33621538420" aria-label="phone">
+                  +33 6 21538420
                 </a>
               </li>
               <li>
