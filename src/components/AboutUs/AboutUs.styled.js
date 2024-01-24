@@ -71,7 +71,7 @@ export const ImgBox1 = styled.div`
   width: 314px;
   height: 171px;
   overflow: hidden;
-  border-radius: 29px;
+  /* border-radius: 29px; */
 
   background-repeat: no-repeat;
   background-position: top;
@@ -90,7 +90,7 @@ export const ImgBox2 = styled.div`
   width: 314px;
   height: 171px;
   overflow: hidden;
-  border-radius: 29px;
+  /* border-radius: 29px; */
 
   background-repeat: no-repeat;
   background-position: top;

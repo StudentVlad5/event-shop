@@ -34,7 +34,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/"
+                  href="https://www.facebook.com/profile.php?id=61555733189984"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="facebook"
@@ -44,7 +44,7 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="https://www.instagram.com/"
+                  href="https://www.instagram.com/bloomskill/"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="instagram"

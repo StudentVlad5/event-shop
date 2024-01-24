@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   ArrowIcon,
   ArrowIconUp,
+  ArrowMobileIcon,
+  ArrowMobileIconUp,
   ChairIcon,
   FiltersBox,
   FiltersBtn,
@@ -23,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { getFromStorage, saveToStorage } from 'services/localStorService';
+import { saveToStorage } from 'services/localStorService';
 import { theme } from 'components/baseStyles/Variables.styled';
 
 export const Filters = ({
@@ -44,17 +46,56 @@ export const Filters = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useTranslation();
+  const [activeFilter, setActiveFilter] = useState(null);
 
   const toggleFilters = () => {
     setIsShown(!isShown);
   };
 
   const toggleVisibility = idx => {
+    // setActiveFilter(idx);
     setIsOpen(prevState => ({
       ...prevState,
       [idx]: !prevState[idx],
     }));
   };
+
+  const handleFilterToggle = (filterNumber) => {
+    toggleVisibility(filterNumber);
+    if (activeFilter === filterNumber) {
+      setActiveFilter(null);
+    } else {
+      setActiveFilter(filterNumber);
+    }
+  };
+
+  const handleArrowClick = (event, idx) => {
+    event.stopPropagation();
+    toggleVisibility(idx);
+  };
+
+  const filterRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        // toggleFilters();
+        setIsOpen(prevState => ({
+          ...prevState,
+          1: false,
+          2: false,
+          3: false,
+          4: false,
+        }));
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [setIsOpen]);
 
   useEffect(() => {
     (async function getData() {
@@ -145,7 +186,7 @@ export const Filters = ({
 
   return (
     <FiltersBox>
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative' }} ref={filterRef}>
         <FiltersBtn
           onClick={toggleFilters}
           $props={
@@ -165,14 +206,16 @@ export const Filters = ({
           <FiltersMenu>
             <FiltersMenuMobileBox>
               <FiltersBtnMenu
-                onClick={() => toggleVisibility(1)}
+                // onClick={() => toggleVisibility(1)}
+                onClick={event => handleArrowClick(event, 1)}
                 $props={
                   selectedLanguages?.length > 0
                     ? theme.colors.accent
                     : theme.colors.grey1
                 }
               >
-                {t('Langue')} {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
+                {t('Langue')}{' '}
+                {isOpen[1] ? <ArrowMobileIconUp /> : <ArrowMobileIcon />}
               </FiltersBtnMenu>
 
               {isOpen[1] && (
@@ -239,7 +282,8 @@ export const Filters = ({
 
             <FiltersMenuMobileBox>
               <FiltersBtnMenu
-                onClick={() => toggleVisibility(2)}
+                // onClick={() => toggleVisibility(2)}
+                onClick={event => handleArrowClick(event, 2)}
                 $props={
                   selectedCategories?.length > 0
                     ? theme.colors.accent
@@ -247,7 +291,7 @@ export const Filters = ({
                 }
               >
                 {t('Catégories des evenements')}
-                {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
+                {isOpen[2] ? <ArrowMobileIconUp /> : <ArrowMobileIcon />}
               </FiltersBtnMenu>
               {isOpen[2] && (
                 <FiltersMenuOpen>
@@ -279,7 +323,8 @@ export const Filters = ({
 
             <FiltersMenuMobileBox>
               <FiltersBtnMenu
-                onClick={() => toggleVisibility(3)}
+                // onClick={() => toggleVisibility(3)}
+                onClick={event => handleArrowClick(event, 3)}
                 $props={
                   selectedLocations?.length > 0
                     ? theme.colors.accent
@@ -287,7 +332,7 @@ export const Filters = ({
                 }
               >
                 {t('Localisation')}
-                {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
+                {isOpen[3] ? <ArrowMobileIconUp /> : <ArrowMobileIcon />}
               </FiltersBtnMenu>
               {isOpen[3] && (
                 <FiltersMenuOpen>
@@ -326,7 +371,8 @@ export const Filters = ({
 
             <FiltersMenuMobileBox>
               <FiltersBtnMenu
-                onClick={() => toggleVisibility(4)}
+                // onClick={() => toggleVisibility(4)}
+                onClick={event => handleArrowClick(event, 4)}
                 $props={
                   selectedPlaces === 'yes' || selectedPlaces === 'no'
                     ? theme.colors.accent
@@ -334,7 +380,7 @@ export const Filters = ({
                 }
               >
                 {t('places disponibles')}
-                {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
+                {isOpen[4] ? <ArrowMobileIconUp /> : <ArrowMobileIcon />}
               </FiltersBtnMenu>
 
               {isOpen[4] && (
@@ -347,7 +393,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('yes')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                        {t('Il y a des places libres')}
+                        {t('Il y a des places disponibles')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -359,7 +405,7 @@ export const Filters = ({
                         onChange={() => handlePlacesSelect('no')}
                       />
                       <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                        {t("Il n'y a pas de places libres")}
+                        {t("Il n'y a pas de places disponibles")}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li> */}
@@ -372,7 +418,10 @@ export const Filters = ({
         <FiltersMenuDesktop>
           <FiltersMenuDesktopBox>
             <FiltersBtnMenu
-              onClick={() => toggleVisibility(1)}
+              // onClick={() => toggleVisibility(1)}
+              // onClick={event => handleArrowClick(event, 1)}
+              // onClick={() => toggleVisibility(activeFilter === 1 ? null : 1)}
+              onClick={() => handleFilterToggle(1)}
               $props={
                 selectedLanguages?.length > 0
                   ? theme.colors.accent
@@ -387,10 +436,9 @@ export const Filters = ({
                 }
               />
               {t('Langue')}
-              {isOpen[1] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
-            {isOpen[1] && (
+            {isOpen[1] && activeFilter === 1 && (
               <FiltersMenuOpen>
                 <li>
                   <FiltersMenuOpenLabel>
@@ -454,7 +502,10 @@ export const Filters = ({
 
           <FiltersMenuDesktopBox>
             <FiltersBtnMenu
-              onClick={() => toggleVisibility(2)}
+              // onClick={() => toggleVisibility(2)}
+              // onClick={event => handleArrowClick(event, 2)}
+              // onClick={() => toggleVisibility(activeFilter === 2 ? null : 2)}
+              onClick={() => handleFilterToggle(2)}
               $props={
                 selectedCategories?.length > 0
                   ? theme.colors.accent
@@ -469,10 +520,9 @@ export const Filters = ({
                 }
               />
               {t('Catégories des evenements')}
-              {isOpen[2] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
-            {isOpen[2] && (
+            {isOpen[2] && activeFilter === 2 && (
               <FiltersMenuOpen>
                 {categories.map(category => (
                   <li key={category._id}>
@@ -502,7 +552,10 @@ export const Filters = ({
 
           <FiltersMenuDesktopBox>
             <FiltersBtnMenu
-              onClick={() => toggleVisibility(3)}
+              // onClick={() => toggleVisibility(3)}
+              // onClick={event => handleArrowClick(event, 3)}
+              // onClick={() => toggleVisibility(activeFilter === 3 ? null : 3)}
+              onClick={() => handleFilterToggle(3)}
               $props={
                 selectedLocations?.length > 0
                   ? theme.colors.accent
@@ -517,9 +570,8 @@ export const Filters = ({
                 }
               />
               {t('Localisation')}
-              {isOpen[3] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
-            {isOpen[3] && (
+            {isOpen[3] && activeFilter === 3 && (
               <FiltersMenuOpen>
                 {activeEvents
                   .filter(event => event.status === 'active')
@@ -556,7 +608,10 @@ export const Filters = ({
 
           <FiltersMenuDesktopBox>
             <FiltersBtnMenu
-              onClick={() => toggleVisibility(4)}
+              // onClick={() => toggleVisibility(4)}
+              // onClick={event => handleArrowClick(event, 4)}
+              // onClick={() => toggleVisibility(activeFilter === 4 ? null : 4)}
+              onClick={() => handleFilterToggle(4)}
               $props={
                 selectedPlaces === 'yes' || selectedPlaces === 'no'
                   ? theme.colors.accent
@@ -571,10 +626,9 @@ export const Filters = ({
                 }
               />
               {t('Places disponibles')}
-              {isOpen[4] ? <ArrowIconUp /> : <ArrowIcon />}
             </FiltersBtnMenu>
 
-            {isOpen[4] && (
+            {isOpen[4] && activeFilter === 4 && (
               <FiltersMenuOpen>
                 <li>
                   <FiltersMenuOpenLabel>
@@ -584,7 +638,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('yes')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'yes'}>
-                      {t('Il y a des places libres')}
+                      {t('Il y a des places disponibles')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>
@@ -596,7 +650,7 @@ export const Filters = ({
                       onChange={() => handlePlacesSelect('no')}
                     />
                     <FiltersMenuOpenText checked={selectedPlaces === 'no'}>
-                      {t("Il n'y a pas de places libres")}
+                      {t("Il n'y a pas de places disponibles")}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>

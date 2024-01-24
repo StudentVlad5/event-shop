@@ -117,11 +117,13 @@ export const FormMessage = ({ specialist }) => {
                 type="text"
                 name="message"
                 id="message"
-                placeholder={t('Bonjour,')}
+                placeholder={t(
+                  'Bonjour, Je voudrais poser une question sur...'
+                )}
                 value={values.message}
                 required
-                // rows="6"
-                // cols="25"
+                rows="6"
+                cols="25"
                 onChange={e => {
                   setFieldValue('message', e.target.value);
                 }}

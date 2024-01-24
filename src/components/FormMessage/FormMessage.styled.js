@@ -15,13 +15,15 @@ export const FormList = styled(Form)`
 `;
 
 export const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  grid-gap: 20px;
+  /* gap: 20px; */
   width: 100%;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
+    display: grid;
+    align-items: center;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
   }
@@ -45,12 +47,6 @@ export const FormLabel = styled.label`
 
   width: 100%;
   height: 100%;
-
-  @supports (-webkit-touch-callout: none) and (not (translate: none)) {
-    &:not(:last-child) {
-      margin-bottom: 20px;
-    }
-  }
 `;
 
 export const FormName = styled.span`
@@ -133,16 +129,16 @@ export const FormBtn = styled(BtnAccent)`
 `;
 
 export const LableBoxMes = styled.div`
-  /* margin-bottom: 20px;
+  margin-bottom: 20px;
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     margin-bottom: 0;
-  } */
+  }
 `;
 
 export const FormInputMessage = styled.textarea`
   width: 100%;
-  height: 158px;
+  /* height: 158px; */
   padding: 15px;
   resize: none;
 
@@ -161,7 +157,11 @@ export const FormInputMessage = styled.textarea`
   -moz-appearance: none;
   appearance: none;
 
-  text-indent: 20px;
+  @supports (-webkit-touch-callout: none) and (not (translate: none)) {
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
 
   @media screen and (min-width: ${theme.breakpoints.tablet}) {
     height: 100%;

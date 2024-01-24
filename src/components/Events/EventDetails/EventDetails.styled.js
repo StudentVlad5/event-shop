@@ -44,7 +44,7 @@ export const EventHeading = styled.ul`
     padding: 15px 40px;
     gap: 40px;
 
-    border-radius: 40px 0px 0px 0px;
+    /* border-radius: 40px 0px 0px 0px; */
     background-color: ${theme.colors.fon};
 
     position: absolute;
@@ -65,7 +65,7 @@ export const EventHeading2 = styled.ul`
     padding: 15px 40px;
     gap: 40px;
 
-    border-radius: 0px 0px 40px 0px;
+    /* border-radius: 0px 0px 40px 0px; */
     background-color: ${theme.colors.fon};
 
     position: absolute;
