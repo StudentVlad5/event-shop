@@ -103,29 +103,6 @@ const Calendar = ({
     );
   };
 
-  // const renderHeader = () => {
-  //   const dateFormat = "MMMMMMMMM yyyy";
-  //   const currentMonthFormat = "MMMMMMMMM";
-  //   const nextMonthFormat = "MMMMMMMMM";
-
-  //   const currentMonthName = format(currentMonth, currentMonthFormat);
-  //   const nextMonthName = format(addMonths(currentMonth, 1), nextMonthFormat);
-
-  //   return (
-  //     <div className="header row flex-middle">
-  //       <div className="col col-center">
-  //         {currentMonthName !== nextMonthName ? (
-  //           <span>
-  //             {currentMonthName} - {nextMonthName}
-  //           </span>
-  //         ) : (
-  //           <span>{currentMonthName}</span>
-  //         )}
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
   const renderDays = () => {
     const dateFormat = 'EEE';
     const days = [];
@@ -163,13 +140,16 @@ const Calendar = ({
             }}
           >
             <span
+              // className={`cell number ${
+              //   isSameDay(day, new Date())
+              //     ? 'today'
+              //     : isSameDay(day, selectedDate)
+              //     ? 'selected'
+              //     : ''
+              // }`}
               className={`cell number ${
-                isSameDay(day, new Date())
-                  ? 'today'
-                  : isSameDay(day, selectedDate)
-                  ? 'selected'
-                  : ''
-              }`}
+                isSameDay(day, new Date()) ? 'today' : ''
+              } ${isSameDay(day, selectedDate) ? 'selected' : ''}`}
             >
               {formattedDate}
             </span>

@@ -333,7 +333,7 @@ export const EventDetails = ({ activeEvents }) => {
             </EventDescrBox>
 
             <EventDescrBox>
-              <EventDescrBoxTitle>{t('Le spécialiste')}</EventDescrBoxTitle>
+              <EventDescrBoxTitle>{t("L'expert")}</EventDescrBoxTitle>
               {specialist
                 .filter(
                   sp =>

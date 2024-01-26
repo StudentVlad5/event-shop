@@ -4,6 +4,7 @@ import { BASE_URL_IMG } from 'helpers/constants';
 import {
   BtnLightEvents,
   CleanFilterBtn,
+  CleanFilterBtnBox,
   DetailsBox,
   DetailsBoxDiscr,
   Event,
@@ -247,9 +248,12 @@ export const EventsList = ({
 
   return (
     <>
-      <CleanFilterBtn onClick={handleCleanFilter}>
-        {t('Enlever les filtres')}
-      </CleanFilterBtn>
+      <CleanFilterBtnBox>
+        <CleanFilterBtn onClick={handleCleanFilter}>
+          {t('Enlever les filtres')}
+        </CleanFilterBtn>
+      </CleanFilterBtnBox>
+
       {noEvents && (
         <NoEvents>
           {/* {t('Pour cette date')} {new Date(selectedDate).toLocaleDateString()} */}

@@ -230,7 +230,7 @@ export const Filters = ({
                       <FiltersMenuOpenText
                         checked={selectedLanguages.includes('Fr')}
                       >
-                        {t('Francaise')}
+                        {t('Francais')}
                       </FiltersMenuOpenText>
                     </FiltersMenuOpenLabel>
                   </li>
@@ -450,7 +450,7 @@ export const Filters = ({
                     <FiltersMenuOpenText
                       checked={selectedLanguages.includes('Fr')}
                     >
-                      {t('Francaise')}
+                      {t('Francais')}
                     </FiltersMenuOpenText>
                   </FiltersMenuOpenLabel>
                 </li>

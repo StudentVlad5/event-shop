@@ -169,4 +169,8 @@ export const CleanFilterBtn = styled.button`
 export const BtnLightEvents = styled(BtnLight)`
   margin-top: 45px;
 `;
-// export const EventDetailTitle = styled.p``
+
+export const CleanFilterBtnBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
