@@ -70,7 +70,7 @@ export const TopSpecialists = () => {
   return (
     <Section>
       <Container>
-        <Title>{t('Les spécialistes populaires')}</Title>
+        <Title>{t('Les top experts')}</Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (

@@ -280,7 +280,7 @@ border-radius: 50%;
 border: 1px solid #3A3A3A;
 }
 .calendar .body .today {
-  border-radius: 1px;
+  border-radius: 7px;
   border-bottom: 3px solid ${theme.colors.accent};
   /* border-left: 10px solid transparent; */
   /* border-image: linear-gradient(45deg, #ff1a79 0%, #eb82b3 40%); */

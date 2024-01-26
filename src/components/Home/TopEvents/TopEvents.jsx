@@ -155,7 +155,7 @@ export const TopEvents = () => {
   return (
     <EventsSection>
       <Container>
-        <Title>{t('Les prochains evenements')}</Title>
+        <Title>{t('Les événements à venir')}</Title>
         <BtnLinkText to={`/events`}>
           <span>{t('Autres evenements')}</span>
         </BtnLinkText>

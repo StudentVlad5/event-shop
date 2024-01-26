@@ -53,7 +53,8 @@ export const Contacts = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-end;
     gap: 30px;
 
     @media screen and (max-width: ${theme.breakpoints.tablet_only}) {

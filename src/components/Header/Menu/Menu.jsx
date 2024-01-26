@@ -21,19 +21,19 @@ export const Menu = ({ onClose }) => {
           <li>
             <NavLink
               to="/specialists"
-              aria-label={t('Les spécialistes')}
+              aria-label={t('Les experts')}
               data-info="Team"
             >
-              {t('Les spécialistes')}
+              {t('Les experts')}
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/events"
-              aria-label={t('Caléndrier des evenements')}
+              aria-label={t('Caléndrier des événements')}
               data-info="Events calendar"
             >
-              {t('Caléndrier des evenements')}
+              {t('Caléndrier des événements')}
             </NavLink>
           </li>
           <li>

@@ -74,7 +74,7 @@ export const Team = () => {
   return (
     <Section>
       <Container>
-        <Title>{t('Nos Spécialistes')}</Title>
+        <Title>{t('Nos experts')}</Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
         {specialists.length > 0 && !error && (

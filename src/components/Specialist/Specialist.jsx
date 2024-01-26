@@ -200,7 +200,8 @@ export const Specialist = ({ specialist }) => {
       </DescriptionSection>
       <EventsSection>
         <Title>
-          {t('Les prochains evenements')} {firstName(name)}
+          {t('Les prochains evenements à un expert')} 
+          {/* {firstName(name)} */}
         </Title>
         {isLoading ? onLoading() : onLoaded()}
         {error && onFetchError(t('Whoops, something went wrong'))}
@@ -209,7 +210,7 @@ export const Specialist = ({ specialist }) => {
           !error && (
             <Subtitle>
               {t(
-                'Nous sommes désolés, le spécialiste ne fait pas les ateliers ces prochains jours'
+                "Nous sommes désolés, l'expert ne fait pas les ateliers ces prochains jours"
               )}
             </Subtitle>
           )}
@@ -556,7 +557,7 @@ export const Specialist = ({ specialist }) => {
           )}
       </EventsSection>
       <MessageSection>
-        <Title>{t('Vous avez des question au spécialiste')}?</Title>
+        <Title>{t('Vous avez des question à un expert?')}?</Title>
         <FormMessage specialist={specialist} />
       </MessageSection>
     </Container>
