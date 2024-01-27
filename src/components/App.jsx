@@ -19,6 +19,7 @@ export const App = () => {
   const isRefreshing = useSelector(selectIsRefreshing);
   const permission = useSelector(getPermission);
 
+
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
