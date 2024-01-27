@@ -114,9 +114,7 @@ export const Team = () => {
                     <DetailsWrapper>
                       <Name>{specialist.name}</Name>
                       <Describe>
-                        {specialist.description.length > 100
-                          ? specialist.description.slice(0, 100) + ' ...'
-                          : specialist.description}
+                      {specialist.description.split('|&|').join(' ').length > 100 ? specialist.description.split('|&|').join(' ').slice(0, 100) + ' ...' : specialist.description.split('|&|').join(' ')}
                       </Describe>
                       <BtnLink to={`/specialists/${specialist.specialistId}`}>
                         <span>{t('Suivant')}</span>

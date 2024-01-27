@@ -136,9 +136,9 @@ export const TopSpecialists = () => {
                         <DetailsWrapper style={{ paddingBottom: '3px' }}>
                           <Name>{specialist.name}</Name>
                           <Describe>
-                            {specialist.description.length > 100
-                              ? specialist.description.slice(0, 100) + ' ...'
-                              : specialist.description}
+                          {specialist.description.split('|&|').join(' ').length > 100
+                              ? specialist.description.split('|&|').join(' ').slice(0, 100) + ' ...'
+                              : specialist.description.split('|&|').join(' ')}
                           </Describe>
                           <BtnLink
                             to={`/specialists/${specialist.specialistId}`}
@@ -193,9 +193,9 @@ export const TopSpecialists = () => {
                         <DetailsWrapper style={{ paddingBottom: '3px' }}>
                           <Name>{specialist.name}</Name>
                           <Describe>
-                            {specialist.description.length > 100
-                              ? specialist.description.slice(0, 100) + ' ...'
-                              : specialist.description}
+                            {specialist.description.split('|&|').join(' ').length > 100
+                              ? specialist.description.split('|&|').join(' ').slice(0, 100) + ' ...'
+                              : specialist.description.split('|&|').join(' ')}
                           </Describe>
                           <BtnLink
                             to={`/specialists/${specialist.specialistId}`}
