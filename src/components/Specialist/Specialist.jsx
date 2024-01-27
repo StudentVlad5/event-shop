@@ -193,7 +193,7 @@ export const Specialist = ({ specialist }) => {
       </DescriptionSection>
       <EventsSection>
         <Title>
-          {t('Les prochains evenements à un expert')} 
+          {t("Evénements d'expert à venir à un expert")} 
           {/* {firstName(name)} */}
         </Title>
         {isLoading ? onLoading() : onLoaded()}
