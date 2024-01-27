@@ -95,7 +95,7 @@ const AdminPage = () => {
       } finally {
         setIsLoading(false);
       }
-      setTimeout(()=>getData(), 60000)
+      // setTimeout(()=>getData(), 60000)
     })();
   }, []);
 
@@ -114,7 +114,7 @@ const AdminPage = () => {
       } finally {
         setIsLoading(false);
       }
-      setTimeout(()=>getData(), 60000)
+      // setTimeout(()=>getData(), 60000)
     })();
   }, []);
 
@@ -132,7 +132,7 @@ const AdminPage = () => {
         setError(error);
       } finally {
         setIsLoading(false);
-        setTimeout(()=>getData(), 60000)
+        // setTimeout(()=>getData(), 60000)
       }
     })();
   }, []);
