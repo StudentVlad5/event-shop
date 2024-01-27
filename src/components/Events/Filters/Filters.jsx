@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { StatusContext } from 'components/ContextStatus/ContextStatus';
 import { fetchData } from 'services/APIservice';
 import { onFetchError } from 'helpers/Messages/NotifyMessages';
-import { saveToStorage } from 'services/localStorService';
+// import { saveToStorage } from 'services/localStorService';
 import { theme } from 'components/baseStyles/Variables.styled';
 
 export const Filters = ({
@@ -133,11 +133,11 @@ export const Filters = ({
     if (languageIndex !== -1) {
       const updatedLanguages = [...selectedLanguages];
       updatedLanguages.splice(languageIndex, 1);
-      saveToStorage('filterSelectedLanguages', updatedLanguages);
+      // saveToStorage('filterSelectedLanguages', updatedLanguages);
       setSelectedLanguages(updatedLanguages);
     } else {
       const updatedLanguages = [...selectedLanguages, language];
-      saveToStorage('filterSelectedLanguages', updatedLanguages);
+      // saveToStorage('filterSelectedLanguages', updatedLanguages);
       setSelectedLanguages(updatedLanguages);
     }
   };
@@ -148,11 +148,11 @@ export const Filters = ({
     if (categoryIndex !== -1) {
       const updatedCategories = [...selectedCategories];
       updatedCategories.splice(categoryIndex, 1);
-      saveToStorage('filterSelectedCategories', updatedCategories);
+      // saveToStorage('filterSelectedCategories', updatedCategories);
       setSelectedCategories(updatedCategories);
     } else {
       const updatedCategories = [...selectedCategories, category];
-      saveToStorage('filterSelectedCategories', updatedCategories);
+      // saveToStorage('filterSelectedCategories', updatedCategories);
       setSelectedCategories(updatedCategories);
     }
   };
@@ -163,21 +163,21 @@ export const Filters = ({
     if (locationIndex !== -1) {
       const updatedLocations = [...selectedLocations];
       updatedLocations.splice(locationIndex, 1);
-      saveToStorage('filterSelectedLocation', updatedLocations);
+      // saveToStorage('filterSelectedLocation', updatedLocations);
       setSelectedLocations(updatedLocations);
     } else {
       const updatedLocations = [...selectedLocations, location];
-      saveToStorage('filterSelectedLocation', updatedLocations);
+      // saveToStorage('filterSelectedLocation', updatedLocations);
       setSelectedLocations(updatedLocations);
     }
   };
 
   const handlePlacesSelect = places => {
     if (selectedPlaces === places) {
-      saveToStorage('filterSelectedPlaces', '');
+      // saveToStorage('filterSelectedPlaces', '');
       setSelectedPlaces('');
     } else {
-      saveToStorage('filterSelectedPlaces', places);
+      // saveToStorage('filterSelectedPlaces', places);
       setSelectedPlaces(places);
     }
   };
@@ -438,7 +438,7 @@ export const Filters = ({
               {t('Langue')}
             </FiltersBtnMenu>
 
-            {isOpen[1] && activeFilter === 1 && (
+            {isOpen[1] && (
               <FiltersMenuOpen>
                 <li>
                   <FiltersMenuOpenLabel>
@@ -522,7 +522,7 @@ export const Filters = ({
               {t('Catégories des evenements')}
             </FiltersBtnMenu>
 
-            {isOpen[2] && activeFilter === 2 && (
+            {isOpen[2]  && (
               <FiltersMenuOpen>
                 {categories.map(category => (
                   <li key={category._id}>
@@ -571,7 +571,7 @@ export const Filters = ({
               />
               {t('Localisation')}
             </FiltersBtnMenu>
-            {isOpen[3] && activeFilter === 3 && (
+            {isOpen[3] && (
               <FiltersMenuOpen>
                 {activeEvents
                   .filter(event => event.status === 'active')
@@ -628,7 +628,7 @@ export const Filters = ({
               {t('Places disponibles')}
             </FiltersBtnMenu>
 
-            {isOpen[4] && activeFilter === 4 && (
+            {isOpen[4] &&  (
               <FiltersMenuOpen>
                 <li>
                   <FiltersMenuOpenLabel>

@@ -49,21 +49,21 @@ const Calendar = ({
       setCurrentWeekNumber(getWeek(subWeeks(currentMonth, 1)));
       getCurrentWeekDates(subWeeks(currentMonth, 1));
       setSelectedDate(null);
-      saveToStorage('selectedDate', null);
+      // saveToStorage('selectedDate', null);
     }
     if (btnType === 'next') {
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeekNumber(getWeek(addWeeks(currentMonth, 1)));
       getCurrentWeekDates(addWeeks(currentMonth, 1));
       setSelectedDate(null);
-      saveToStorage('selectedDate', null);
+      // saveToStorage('selectedDate', null);
     }
   };
 
   const onDateClickHandle = (day, dayStr) => {
     setSelectedDate(day);
     showDetailsHandle(dayStr);
-    saveToStorage('selectedDate', day);
+    // saveToStorage('selectedDate', day);
   };
 
   const getCurrentWeekDates = weekNumber => {

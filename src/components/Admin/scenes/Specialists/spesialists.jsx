@@ -89,8 +89,8 @@ const Specialists = () => {
       onFetchError("File does not support. You must use .png, .jpeg .webp .gif  or .jpg ");
         return false;
      }
-     if (file.size > 500000) {
-      onFetchError("Please upload a file smaller than 5 MB");
+     if (file.size > 2000000) {
+      onFetchError("Please upload a file smaller than 2 MB");
        return false;
      }
       setIsLoading(true);
